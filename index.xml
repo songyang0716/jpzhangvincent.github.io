@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Learn From Data</title>
+    <link>/index.xml</link>
+    <description>Recent content on Learn From Data</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy;2016 Vincent Zhang</copyright>
+    <lastBuildDate>Sat, 17 Dec 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Online Data Science Classes in R</title>
+      <link>/blog/ds_courses/</link>
+      <pubDate>Sat, 17 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/ds_courses/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;Summary: A list of the data science courses I’ve taken, my ratings on them, and comments for future learners.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#prerequisites&#34;&gt;Prerequisites&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#courses-ive-taken&#34;&gt;Courses I’ve Taken&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#getting-started-in-data-science&#34;&gt;Getting Started in Data Science&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#getting-started-in-r&#34;&gt;Getting Started in R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#r-studio-courses&#34;&gt;R Studio Courses&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#machine-learning-courses&#34;&gt;Machine Learning Courses&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#sql-database&#34;&gt;SQL Databases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#other-courses&#34;&gt;Other Courses&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#wrap-up&#34;&gt;Wrap-Up&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;While working as a marine biologist, I decided to switch career tracks slightly and pursue data science. I already had experience in mathematics, R programming and data visualization but filling in other knowledge gaps led me to searching the internet for the best places to learn these skills.&lt;/p&gt;
+&lt;p&gt;With the price tags on both formal education and data science bootcamps ranging from $15,000 - $40,000 (after I’ve already completed both a Bachelors and Masters degree) I wanted to look for a more cost-effective solution.&lt;/p&gt;
+&lt;p&gt;Enter the &lt;a href=&#34;http://datasciencemasters.org/&#34;&gt;Open Source Data Science Master’s Program&lt;/a&gt;. This fantastic resource lists several books, websites, and free (or low-cost) online courses to help you become a data scientist. While the main project is focused on using python tools and resources, a repository for R tools is &lt;a href=&#34;https://github.com/datasciencemasters/go/blob/master/r-resources.md&#34;&gt;also available&lt;/a&gt;. You can find &lt;a href=&#34;http://davidventuri.com/data-science-masters/&#34;&gt;other collections&lt;/a&gt; like this aimed at helping data-scientists-to-be find the resources most likely to help them succeed in the field.&lt;/p&gt;
+&lt;p&gt;I am not planning to re-invent the wheel or develop my own data science curriculum, but finding a comprehensive list of places to look for good information has been invaluable for me so far in learning data science and I want to pay it forward.&lt;/p&gt;
+&lt;p&gt;So here we go. A list (and my comments) on the classes I have taken so far.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;prerequisites&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Prerequisites&lt;/h1&gt;
+&lt;p&gt;Anyone is welcome to use this list as they wish (&lt;strong&gt;obviously&lt;/strong&gt;), but here are a few notes about my level of baseline knowledge before starting this journey.&lt;/p&gt;
+&lt;p&gt;I already had a solid background in:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Statistics&lt;/li&gt;
+&lt;li&gt;Calculus&lt;/li&gt;
+&lt;li&gt;Mathematics&lt;/li&gt;
+&lt;li&gt;General programming knowledge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;and experience in using R for specific purposes. If you don’t have these background skills yet (particularly statistics), I’d highly recommend starting there.&lt;/p&gt;
+&lt;p&gt;I’d suggest looking for courses offered at &lt;a href=&#34;https://www.coursera.org&#34;&gt;Coursera&lt;/a&gt;, &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;, &lt;a href=&#34;https://www.udemy.com/&#34;&gt;Udemy&lt;/a&gt;, and &lt;a href=&#34;https://www.khanacademy.org/&#34;&gt;Khan Academy&lt;/a&gt; to fill in those gaps.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;courses-ive-taken&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Courses I’ve Taken&lt;/h1&gt;
+&lt;div id=&#34;getting-started-in-data-science&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Getting Started in Data Science&lt;/h2&gt;
+&lt;p&gt;Looking for a general “introduction to the field” class? I took:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.coursera.org/learn/data-scientists-tools&#34;&gt;Data Scientist’s Toolbox&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.coursera.org&#34;&gt;Coursera&lt;/a&gt; and Johns Hopkins University
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Beginner&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $29 (for certificate / free to audit)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: Suggested 4 weeks&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: If you’re brand new to the field, take this course. If you’re already familiar with R and general data science topics, you can skip this one.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;getting-started-in-r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Getting Started in R&lt;/h2&gt;
+&lt;p&gt;While I’ve been programming and conducting analysis in R for years, I had only been using it for specific purposes and decided to fill in any knowledge gaps I had with the statistical language. Here’s what I took:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.coursera.org/learn/r-programming&#34;&gt;R Programming&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.coursera.org&#34;&gt;Coursera&lt;/a&gt; and Johns Hopkins University
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Intermediate&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $49 (for certificate / free to audit)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: Suggested 4 weeks&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: The lectures do a good job of familiarizing you with the basics of R programming, but the assignments often felt far too advanced given the basic subject matter of the course.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/courses/free-introduction-to-r&#34;&gt;Introduction to R&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Beginner&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: FREE&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 4 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: This interactive platform is excellent for teaching you the very basics.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/courses/intermediate-r&#34;&gt;Intermediate R&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Intermediate&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $29/month for unlimited access to DataCamp’s entire course library&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 6 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: Video courses mixed in with interactive exercises help make these more complicated concepts easier. Also has option of a 2nd &lt;a href=&#34;https://www.datacamp.com/courses/intermediate-r-practice&#34;&gt;practice course&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/courses/importing-data-in-r-part-1&#34;&gt;Importing and Cleaning Data&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Beginner&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $29/month for unlimited access to DataCamp’s entire course library&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 3 Hours (Total 10 for both parts and case studies)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: Great overview course to importing any kind of data into R. Also has a &lt;a href=&#34;https://www.datacamp.com/courses/importing-data-in-r-part-2&#34;&gt;Part 2 course&lt;/a&gt; and a course with &lt;a href=&#34;https://www.datacamp.com/courses/importing-cleaning-data-in-r-case-studies&#34;&gt;case studies&lt;/a&gt; for practice.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/courses/cleaning-data-in-r&#34;&gt;Cleaning Data in R&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Beginner&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $29/month for unlimited access to DataCamp’s entire course library&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 4 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: If you need help turning a messy dataset into a clean one, this course will do the trick. The focus is primarily on the &lt;code&gt;tidyr&lt;/code&gt; package.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/courses/writing-functions-in-r&#34;&gt;Writing Functions in R&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Intermediate&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $29/month for unlimited access to DataCamp’s entire course library&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 4 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: This course is taught by &lt;a href=&#34;http://cwick.co.nz/&#34;&gt;Charlotte&lt;/a&gt; and &lt;a href=&#34;http://hadley.nz/&#34;&gt;Hadley&lt;/a&gt; Wickham and is wonderful. Functions are challenging to write but this course made it seem simple.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/courses/dplyr-data-manipulation-r-tutorial&#34;&gt;Data Manipulation in R with dplyr&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Intermediate&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $29/month for unlimited access to DataCamp’s entire course library&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 4 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: If I could give this class 6 stars, I would. It’s well taught and it certainly kicked off my love of the &lt;code&gt;dplyr&lt;/code&gt; package.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rstudio-courses&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;RStudio Courses&lt;/h2&gt;
+&lt;p&gt;Until recently, I only ever used R in the command interface, but after these courses on using RStudio and RMarkdown, I’m never looking back. &lt;strong&gt;Fun fact&lt;/strong&gt;: This website was written using RStudio!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/courses/working-with-the-rstudio-ide-part-1&#34;&gt;Working with RStudio IDE&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Beginner&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $29/month for unlimited access to DataCamp’s entire course library&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 3 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: The class was simple and helpful in orienting me to some of the basic features of RStudio.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/courses/reporting-with-r-markdown&#34;&gt;Reporting with RMarkdown&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Beginner&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $29/month for unlimited access to DataCamp’s entire course library&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 3 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: I had no idea how simple RMarkdown could be before this course. Now I use RMarkdown all the time. In fact, each of my &lt;a href=&#34;./blog&#34;&gt;blog posts&lt;/a&gt; and &lt;a href=&#34;./portfolio&#34;&gt;projects&lt;/a&gt; were written using RMarkdown, making report-writing simple.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;machine-learning-courses&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Machine Learning Courses&lt;/h2&gt;
+&lt;p&gt;As I’m sure you’ve read by now, machine learning is an often sought after for data scientists, so having a good foundation is key. I’ve taken:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/courses/introduction-to-machine-learning-with-r&#34;&gt;Introduction to Machine Learning&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Intermediate - Advanced&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $29/month for unlimited access to DataCamp’s entire course library&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 6 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: This class gave me a good foundation of &lt;em&gt;how&lt;/em&gt; to do some machine learning, but some of the theory behind it seemed to be a little lacking.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/courses/machine-learning-toolbox&#34;&gt;Machine Learning Toolbox&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Intermediate - Advanced&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $29/month for unlimited access to DataCamp’s entire course library&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 4 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: Honestly, I got through this course and didn’t feel like I understood &lt;em&gt;why&lt;/em&gt; I was being asked to do any of the specific tasks. It was only after completing the course that I realized that the &lt;code&gt;caret&lt;/code&gt; package (which they focus on throughout the course) is super useful.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://lagunita.stanford.edu/courses/HumanitiesSciences/StatLearning/Winter2016/info&#34;&gt;Statistical Learning&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://lagunita.stanford.edu/dashboard&#34;&gt;Stanford University Lagunita&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Intermediate - Advanced&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: FREE&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 15+ Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: While you can complete assignments for credit in this course, I’ve been enjoying it as a YouTube playlist of videos that accompanies the book &lt;a href=&#34;http://www-bcf.usc.edu/~gareth/ISL/&#34;&gt;Introduction to Statistical Learning&lt;/a&gt;. The material is thorough and has helped clear up some misconceptions for me, but the pace is a bit slow for my taste.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/community/open-courses/kaggle-r-tutorial-on-machine-learning&#34;&gt;Kaggle R Tutorial for Machine Learning&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Intermediate&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: FREE&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 1 Hour&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: This course helps walk you through submitting your first entry to a &lt;a href=&#34;https://www.kaggle.com&#34;&gt;Kaggle&lt;/a&gt; competition. It is fun and very helpful for submitting an entry, but probably not worth your time if you aren’t planning on using Kaggle.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sql-database&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;SQL Database&lt;/h2&gt;
+&lt;p&gt;While the &lt;a href=&#34;https://www.datacamp.com/courses/importing-data-in-r-part-1&#34;&gt;Importing and Cleaning Data&lt;/a&gt; class from &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt; covers how to import data from a SQL database into R, most job postings require that you have experience with SQL queries. Here are the courses I’ve taken:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.codecademy.com/learn/learn-sql&#34;&gt;Learn SQL&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.codeacademy.com&#34;&gt;CodeAcademy&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Beginner&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: FREE&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 1-2 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: This quick interactive course introduces the most basic topics needed for querying SQL databases. If you’ve been using &lt;code&gt;dplyr&lt;/code&gt; in R, this should be an easy transition.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.codecademy.com/learn/sql-table-transformation&#34;&gt;SQL Table Transformation&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.codeacademy.com&#34;&gt;CodeAcademy&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Intermediate&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: FREE&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 1-2 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: The course builds on the learnings from the Learn SQL course. It’s still relatively simple and interactive.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.codecademy.com/learn/sql-analyzing-business-metrics&#34;&gt;SQL Analyzing Business Metrics&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.codeacademy.com&#34;&gt;CodeAcademy&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Intermediate&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: FREE&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 1-2 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: The course also builds on the learnings from the Learn SQL course. It’s still relatively simple and interactive. The material included covers more advanced aggregates.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;other-courses&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Other Courses&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;https://www.datacamp.com/courses/manipulating-time-series-data-in-r-with-xts-zoo&#34;&gt;Manipulating Time Series Data in R with xts and zoo&lt;/a&gt;&lt;/strong&gt; by &lt;a href=&#34;https://www.datacamp.com&#34;&gt;DataCamp&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;My Rating&lt;/strong&gt;: &lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-half-o&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;i class=&#34;fa fa-star-o&#34;&gt;&lt;/i&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Difficulty Level&lt;/strong&gt;: Intermediate&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cost&lt;/strong&gt;: $29/month for unlimited access to DataCamp’s entire course library&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Time to Complete&lt;/strong&gt;: 4 Hours&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Comments&lt;/strong&gt;: While this course does an OK job of explaining how to use the &lt;code&gt;xts&lt;/code&gt; package to analyze time series, the &lt;em&gt;why&lt;/em&gt; of it isn’t necessarily explained well.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;wrap-up&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Wrap-Up&lt;/h1&gt;
+&lt;p&gt;As I said, this is by no means a total list of every course that you should take to become a data scientist, and I plan to make add new courses to this list as I continue learning. Feel free to comment below about some of your favorite (or least favorite) online courses or &lt;a href=&#34;./contact&#34;&gt;reach out&lt;/a&gt; to me with questions.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Happy learning!&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+&lt;link href=&#34;#####../content/blog/ds_courses_files/font-awesome/css/font-awesome.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Get in touch</title>
+      <link>/contact/</link>
+      <pubDate>Sun, 06 Nov 2016 13:00:25 +0530</pubDate>
+      
+      <guid>/contact/</guid>
+      <description>&lt;p&gt;When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then&lt;/p&gt;
+
+&lt;p&gt;Effects present letters inquiry no an removed or friends. Desire behind latter me though in. Supposing shameless am he engrossed up additions. My possible peculiar together to. Desire so better am cannot he up before points. Remember mistaken opinions it pleasure of debating. Court front maids forty if aware their at. Chicken use are pressed removed.&lt;/p&gt;
+
+&lt;p&gt;Able an hope of body. Any nay shyness article matters own removal nothing his forming. Gay own additions education satisfied the perpetual. If he cause manor happy. Without farther she exposed saw man led. Along on happy could cease green oh.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Machine Learning from Disaster</title>
+      <link>/projects/Titanic_md/</link>
+      <pubDate>Sat, 05 Nov 2016 18:25:22 +0530</pubDate>
+      
+      <guid>/projects/Titanic_md/</guid>
+      <description>&lt;p&gt;Kaggle Playground Competition&lt;/p&gt;
+
+&lt;p&gt;Data exploration and machine learning in RMarkdown.
+&lt;/p&gt;
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#loading-necessary-packages&#34;&gt;Loading Necessary Packages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#importing-data&#34;&gt;Importing Data&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#feature-engineering&#34;&gt;Feature Engineering&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#names-and-titles&#34;&gt;Names and Titles&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#sibsp-and-parch-for-family-size&#34;&gt;SibSp and Parch for Family Size&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ticket-numbers-and-travel-groups&#34;&gt;Ticket Numbers and Travel Groups&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#missing-data&#34;&gt;Missing Data&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#missing-fare&#34;&gt;Missing Fare&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#missing-embarkment&#34;&gt;Missing Embarkment&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#missing-age&#34;&gt;Missing Age&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#modeling-for-survival&#34;&gt;Modeling for Survival&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#creating-traincontrol&#34;&gt;Creating trainControl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#fitting-a-random-forest-model&#34;&gt;Fitting a random forest model&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#fitting-a-glmnet-model&#34;&gt;Fitting a glmnet model&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#comparing-model-fit&#34;&gt;Comparing model fit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#predicting-survival&#34;&gt;Predicting Survival&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#preparing-the-prediction-for-kaggle&#34;&gt;Preparing the prediction for Kaggle&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#testing-with-kaggle&#34;&gt;Testing with Kaggle&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;introduction-1&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;This is my first project on Kaggle and my first attempt at machine learning. I&amp;rsquo;ll do my best to illustrate what I&amp;rsquo;ve down and the logic behind my actions, but feedback is very much welcome and appreciated!&lt;/p&gt;
+
+&lt;h3 id=&#34;loading-necessary-packages&#34;&gt;Loading Necessary Packages&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# For data manipulation and tidying
+library(dplyr)
+
+# For data visualizations
+library(ggplot2)
+
+# For modeling and predictions
+library(caret)
+library(glmnet)
+library(ranger)
+library(e1071)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;importing-data&#34;&gt;Importing Data&lt;/h3&gt;
+
+&lt;p&gt;The data were downloaded directly from the &lt;a href=&#34;https://www.kaggle.com/c/titanic/data&#34;&gt;Kaggle Website&lt;/a&gt;. Before binding the training and test sets into a single data file, I added a column called &amp;ldquo;Dataset&amp;rdquo; and labelled rows from the training file &amp;ldquo;train&amp;rdquo; and rows from the testing file &amp;ldquo;test&amp;rdquo;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;train &amp;lt;- read.csv(file = &amp;quot;train.csv&amp;quot;, header = TRUE, stringsAsFactors = FALSE)
+train$Dataset &amp;lt;- &amp;quot;train&amp;quot;
+
+test &amp;lt;- read.csv(file = &amp;quot;test.csv&amp;quot;, header = TRUE, stringsAsFactors = FALSE)
+test$Dataset &amp;lt;- &amp;quot;test&amp;quot;
+
+full &amp;lt;- bind_rows(train, test)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The full dataset can then be inspected:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;str(full)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## &#39;data.frame&#39;:    1309 obs. of  13 variables:
+##  $ PassengerId: int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Survived   : int  0 1 1 1 0 0 0 0 1 1 ...
+##  $ Pclass     : int  3 1 3 1 3 3 1 3 3 2 ...
+##  $ Name       : chr  &amp;quot;Braund, Mr. Owen Harris&amp;quot; &amp;quot;Cumings, Mrs. John Bradley (Florence Briggs Thayer)&amp;quot; &amp;quot;Heikkinen, Miss. Laina&amp;quot; &amp;quot;Futrelle, Mrs. Jacques Heath (Lily May Peel)&amp;quot; ...
+##  $ Sex        : chr  &amp;quot;male&amp;quot; &amp;quot;female&amp;quot; &amp;quot;female&amp;quot; &amp;quot;female&amp;quot; ...
+##  $ Age        : num  22 38 26 35 35 NA 54 2 27 14 ...
+##  $ SibSp      : int  1 1 0 1 0 0 0 3 0 1 ...
+##  $ Parch      : int  0 0 0 0 0 0 0 1 2 0 ...
+##  $ Ticket     : chr  &amp;quot;A/5 21171&amp;quot; &amp;quot;PC 17599&amp;quot; &amp;quot;STON/O2. 3101282&amp;quot; &amp;quot;113803&amp;quot; ...
+##  $ Fare       : num  7.25 71.28 7.92 53.1 8.05 ...
+##  $ Cabin      : chr  &amp;quot;&amp;quot; &amp;quot;C85&amp;quot; &amp;quot;&amp;quot; &amp;quot;C123&amp;quot; ...
+##  $ Embarked   : chr  &amp;quot;S&amp;quot; &amp;quot;C&amp;quot; &amp;quot;S&amp;quot; &amp;quot;S&amp;quot; ...
+##  $ Dataset    : chr  &amp;quot;train&amp;quot; &amp;quot;train&amp;quot; &amp;quot;train&amp;quot; &amp;quot;train&amp;quot; ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It appears that several of these variables should be represented as factors and thus should be reclassified.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;factor_variables &amp;lt;- c(&amp;quot;PassengerId&amp;quot;, &amp;quot;Survived&amp;quot;, &amp;quot;Pclass&amp;quot;, &amp;quot;Sex&amp;quot;, 
+    &amp;quot;Embarked&amp;quot;, &amp;quot;Dataset&amp;quot;)
+full[factor_variables] &amp;lt;- lapply(full[factor_variables], function(x) as.factor(x))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We are now left with the following variables:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Passenger ID&lt;/strong&gt; : A seemingly unique number assigned to each passenger&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Survived&lt;/strong&gt; : A binary indicator of survival (0 = died, 1 = survived)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Pclass&lt;/strong&gt; : A proxy for socio-economic status (1 = upper, 3 = lower)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Name&lt;/strong&gt; : Passenger&amp;rsquo;s Name. For wedded women, her husband&amp;rsquo;s name appears first and her maiden name appears in parentheses&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Sex&lt;/strong&gt; : General indication of passenger&amp;rsquo;s sex&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Age&lt;/strong&gt; : Age of passenger (or approximate age). Passengers under the age of 1 year have fractional ages&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;SibSp&lt;/strong&gt; : A count of the passenger&amp;rsquo;s siblings or spouses aboard&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Parch&lt;/strong&gt; : A count of the passenger&amp;rsquo;s parents or siblings aboard&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Ticket&lt;/strong&gt; : The number printed on the ticket. The numbering system is not immediately apparent&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Fare&lt;/strong&gt; : The price for the ticket (presumably in pounds, shillings, and pennies)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Cabin&lt;/strong&gt; : Cabin number occupied by the passenger (this field is quite empty)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Embarked&lt;/strong&gt; : The port from which the passenger boarded the ship&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Dataset&lt;/strong&gt; : Whether this particular row was a part of the training or testing dataset&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;feature-engineering&#34;&gt;Feature Engineering&lt;/h2&gt;
+
+&lt;h3 id=&#34;names-and-titles&#34;&gt;Names and Titles&lt;/h3&gt;
+
+&lt;p&gt;At first glance, the &amp;ldquo;Name&amp;rdquo; column doesn&amp;rsquo;t help too much as there are 1307 unique names, however, this column also includes embedded title information that may be of interest. I decided to use &lt;a href=&#34;https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf&#34;&gt;regular expressions&lt;/a&gt; and the &lt;code&gt;gsub()&lt;/code&gt; functions to extract the titles into a new variable.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;names &amp;lt;- full$Name
+
+titles &amp;lt;- gsub(&amp;quot;^.*, (.*?)\\..*$&amp;quot;, &amp;quot;\\1&amp;quot;, names)
+
+full$Titles &amp;lt;- titles
+
+unique(full$Titles)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Mr&amp;quot;           &amp;quot;Mrs&amp;quot;          &amp;quot;Miss&amp;quot;         &amp;quot;Master&amp;quot;      
+##  [5] &amp;quot;Don&amp;quot;          &amp;quot;Rev&amp;quot;          &amp;quot;Dr&amp;quot;           &amp;quot;Mme&amp;quot;         
+##  [9] &amp;quot;Ms&amp;quot;           &amp;quot;Major&amp;quot;        &amp;quot;Lady&amp;quot;         &amp;quot;Sir&amp;quot;         
+## [13] &amp;quot;Mlle&amp;quot;         &amp;quot;Col&amp;quot;          &amp;quot;Capt&amp;quot;         &amp;quot;the Countess&amp;quot;
+## [17] &amp;quot;Jonkheer&amp;quot;     &amp;quot;Dona&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s a bit more manageable: only 18 unique titles. Time to see how many times each title was used. I decided to make a table separated by sex.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(full$Sex, full$Title)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##         
+##          Capt Col Don Dona  Dr Jonkheer Lady Major Master Miss Mlle Mme
+##   female    0   0   0    1   1        0    1     0      0  260    2   1
+##   male      1   4   1    0   7        1    0     2     61    0    0   0
+##         
+##           Mr Mrs  Ms Rev Sir the Countess
+##   female   0 197   2   0   0            1
+##   male   757   0   0   8   1            0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It looks like Captain, Don, Dona, Jonkheer, Lady, Madame, Sir and the Countess were each only used once. I&amp;rsquo;ll leave Captain separate, but the rest should be combined with similar categories.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Don&lt;/strong&gt; : A Spanish/Portuguese/Italian title used with, but not instead of, a name.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dona&lt;/strong&gt; : Female version of &amp;ldquo;Don&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Jonkheer&lt;/strong&gt; : Dutch honorific of nobility&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lady&lt;/strong&gt; : English honorific of nobility&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Madame&lt;/strong&gt; : French, polite form of address for a woman&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sir&lt;/strong&gt; : Honorific address (male)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;the Countess&lt;/strong&gt; : Rank of nobility (female)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It seems that most of the rarely used titles indicate some form of nobility. That&amp;rsquo;s easy to check with another table comparing &lt;code&gt;Pclass&lt;/code&gt; and &lt;code&gt;Titles&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(full$Pclass, full$Titles)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##    
+##     Capt Col Don Dona  Dr Jonkheer Lady Major Master Miss Mlle Mme  Mr Mrs
+##   1    1   4   1    1   6        1    1     2      5   60    2   1 159  77
+##   2    0   0   0    0   2        0    0     0     11   50    0   0 150  55
+##   3    0   0   0    0   0        0    0     0     45  150    0   0 448  65
+##    
+##      Ms Rev Sir the Countess
+##   1   0   0   1            1
+##   2   1   8   0            0
+##   3   1   0   0            0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Since Don, Jonkheer, and Sir are all of similar usage, and each represent only one first-class man, I combined them into the category &amp;ldquo;Sir&amp;rdquo;. Dona, Lady, Madame, and the Countess each only represent one first-class woman, so I combined them into the category &amp;ldquo;Lady&amp;rdquo;. These values were substituted using the &lt;code&gt;gsub&lt;/code&gt; function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full$Titles &amp;lt;- gsub(&amp;quot;Dona|Lady|Madame|the Countess&amp;quot;, &amp;quot;Lady&amp;quot;, 
+    full$Titles)
+full$Titles &amp;lt;- gsub(&amp;quot;Don|Jonkheer|Sir&amp;quot;, &amp;quot;Sir&amp;quot;, full$Titles)
+
+unique(full$Titles)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Mr&amp;quot;     &amp;quot;Mrs&amp;quot;    &amp;quot;Miss&amp;quot;   &amp;quot;Master&amp;quot; &amp;quot;Sir&amp;quot;    &amp;quot;Rev&amp;quot;    &amp;quot;Dr&amp;quot;    
+##  [8] &amp;quot;Mme&amp;quot;    &amp;quot;Ms&amp;quot;     &amp;quot;Major&amp;quot;  &amp;quot;Lady&amp;quot;   &amp;quot;Mlle&amp;quot;   &amp;quot;Col&amp;quot;    &amp;quot;Capt&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: If you are planning to replicate the above substitution without any RegEx, make sure that you substitute &amp;ldquo;Dona&amp;rdquo; before substituting &amp;ldquo;Don&amp;rdquo;! Otherwise, &amp;ldquo;Dona&amp;rdquo; becomes &amp;ldquo;Sira&amp;rdquo; (as the &amp;ldquo;Don&amp;rdquo; part was replaced with &amp;ldquo;Sir&amp;rdquo;) and your second substitution won&amp;rsquo;t find or replace &amp;ldquo;Dona&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Lastly for the titles, they should be factors, not character strings.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full$Titles &amp;lt;- as.factor(full$Titles)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;These titles could certainly be condensed more, but for the time being, I am going to leave them separated as is.&lt;/p&gt;
+
+&lt;p&gt;I have some thoughts about wanting to split up the names further to find family groups, but since many familial relationships (cousins, nieces/nephews, aunts/uncles, fiances, mistresses, in-laws, children with a nanny or close friends) aren&amp;rsquo;t reported in any way in this data set, I&amp;rsquo;ll have to think a little longer about the most appropriate way to find actual family groups.&lt;/p&gt;
+
+&lt;h3 id=&#34;sibsp-and-parch-for-family-size&#34;&gt;SibSp and Parch for Family Size&lt;/h3&gt;
+
+&lt;p&gt;Since the SibSp and Parch variables each give some indication as to close family members that were also aboard the ship, it would make sense to calculate family size as a combination of SibSp, Parch and the passenger in question.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full &amp;lt;- mutate(full, FamilySize = SibSp + Parch + 1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s visualize family size&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../Titanic_md_files/figure-markdown_github/unnamed-chunk-11-1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Wow! Lots of people without immediate family with them. Perhaps these people were traveling with other family members/friends that weren&amp;rsquo;t captured in the SibSp / Parch variables.&lt;/p&gt;
+
+&lt;h3 id=&#34;ticket-numbers-and-travel-groups&#34;&gt;Ticket Numbers and Travel Groups&lt;/h3&gt;
+
+&lt;p&gt;I&amp;rsquo;ve decided that another possible way to discern groups that were travelling together is to look at the ticket numbers. It appears that families or groups who purchased their tickets together have identical ticket numbers, thus quantifying the number of families or traveling groups. A quick look at the unique ticket numbers indicates there are 929 of them in the full data set (out of a possible 1309 passengers).&lt;/p&gt;
+
+&lt;p&gt;It seems the easiest way to separate these tickets is to create a new column:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full$TravelGroup &amp;lt;- NA
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then arrange the data by ticket number using the &lt;code&gt;arrange()&lt;/code&gt; function from the &lt;code&gt;dplyr&lt;/code&gt; package.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full2 &amp;lt;- arrange(full, Ticket)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Take a look at the first few rows of results&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;head(full2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##   PassengerId Survived Pclass
+## 1         258        1      1
+## 2         505        1      1
+## 3         760        1      1
+## 4         263        0      1
+## 5         559        1      1
+## 6         586        1      1
+##                                                       Name    Sex Age
+## 1                                     Cherry, Miss. Gladys female  30
+## 2                                    Maioni, Miss. Roberta female  16
+## 3 Rothes, the Countess. of (Lucy Noel Martha Dyer-Edwards) female  33
+## 4                                        Taussig, Mr. Emil   male  52
+## 5                   Taussig, Mrs. Emil (Tillie Mandelbaum) female  39
+## 6                                      Taussig, Miss. Ruth female  18
+##   SibSp Parch Ticket  Fare Cabin Embarked Dataset Titles FamilySize
+## 1     0     0 110152 86.50   B77        S   train   Miss          1
+## 2     0     0 110152 86.50   B79        S   train   Miss          1
+## 3     0     0 110152 86.50   B77        S   train   Lady          1
+## 4     1     1 110413 79.65   E67        S   train     Mr          3
+## 5     1     1 110413 79.65   E67        S   train    Mrs          3
+## 6     0     2 110413 79.65   E68        S   train   Miss          3
+##   TravelGroup
+## 1          NA
+## 2          NA
+## 3          NA
+## 4          NA
+## 5          NA
+## 6          NA
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To verify that this is working so far, I inspected the first ticket number listed (110152) on the &lt;a href=&#34;https://www.encyclopedia-titanica.org/titanic-passengers-and-crew/&#34;&gt;Titanic Passenger and Crew&lt;/a&gt; table of Encyclopedia Titanica. That dataset lists the same three passengers owned those tickets, verified that the 3 women were traveling together, and indicated that two of the women (Miss Gladys Cherry and the Countess of Rothes) were cousins and the 3rd woman in their party (Miss Roberta Elizabeth Mary Maioni) was their servant. Looking at unique Ticket ID may be the only way to know that these women were travelling together. I&amp;rsquo;m feeling good that unique ticket numbers may be a good way to look at family/traveling groups, so full steam ahead!&lt;/p&gt;
+
+&lt;p&gt;Next, I need to generate a &amp;ldquo;TravelGroup&amp;rdquo; number. To do this, I will use the &lt;code&gt;transform&lt;/code&gt; function looking for matching unique Ticket numbers.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full2 &amp;lt;- (transform(full2, TravelGroup = match(Ticket, unique(Ticket))))
+
+# Can&#39;t forget to make those Travel Groups into factors!
+full2$TravelGroup &amp;lt;- as.factor(full2$TravelGroup)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This generates 929 unique Travel Groups, which is the same number of unique Ticket numbers. So far so good.&lt;/p&gt;
+
+&lt;p&gt;It may also be of interest to look at group size. We can generate this using the &lt;code&gt;group_by()&lt;/code&gt; and &lt;code&gt;mutate&lt;/code&gt; functions in &lt;code&gt;dplyr&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full3 &amp;lt;- full2 %&amp;gt;% group_by(TravelGroup) %&amp;gt;% mutate(GroupSize = n()) %&amp;gt;% 
+    ungroup()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;How does Travel Group Size compare to Family Group Size that we calculated earlier?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../Titanic_md_files/figure-markdown_github/unnamed-chunk-17-1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;img src=&#34;../Titanic_md_files/figure-markdown_github/unnamed-chunk-17-2.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;They look pretty close, again showing that most people were potentially travelling alone.&lt;/p&gt;
+
+&lt;p&gt;Now to check if those with the unique Ticket IDs were really travelling alone:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;filtered &amp;lt;- filter(full3, GroupSize == 1)
+
+# How many were listed as being onboard with siblings or
+# spouses?
+fSibSp &amp;lt;- filtered[filtered$SibSp &amp;gt; 0, ]
+nrow(fSibSp)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## [1] 42
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# How many were listed as being onboard with parents or
+# children?
+fParch &amp;lt;- filtered[filtered$Parch &amp;gt; 0, ]
+nrow(fParch)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## [1] 16
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# How many of those people overlapped both groups?
+sum(fSibSp$PassengerId %in% fParch$PassengerId)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## [1] 8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Oops! Looks like we were counting 50 passengers as solo-riders when they were actually riding with family. Given the current information, I&amp;rsquo;m not sure how to know to tell who was travelling together. Manually summing SibSp and Parch to estimate family size doesn&amp;rsquo;t account for other types of groups that were travelling together and looking only at unique Ticket Number doesn&amp;rsquo;t account for some travelling with family who purchased a separate ticket. I could override the GroupSize for those 50 that weren&amp;rsquo;t actually riding solo, but their TravelGroup number won&amp;rsquo;t be accurate. For the time being, I&amp;rsquo;m going to leave TravelGroup and GroupSize as is.&lt;/p&gt;
+
+&lt;h2 id=&#34;missing-data&#34;&gt;Missing Data&lt;/h2&gt;
+
+&lt;p&gt;At this point, I&amp;rsquo;m feeling pretty good about the Feature Engineering that I&amp;rsquo;ve done so far. Time to correct for missing data!&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s take a look at what has NA values:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;summary(full3)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##   PassengerId   Survived   Pclass      Name               Sex     
+##  1      :   1   0   :549   1:323   Length:1309        female:466  
+##  2      :   1   1   :342   2:277   Class :character   male  :843  
+##  3      :   1   NA&#39;s:418   3:709   Mode  :character               
+##  4      :   1                                                     
+##  5      :   1                                                     
+##  6      :   1                                                     
+##  (Other):1303                                                     
+##       Age            SibSp            Parch          Ticket         
+##  Min.   : 0.17   Min.   :0.0000   Min.   :0.000   Length:1309       
+##  1st Qu.:21.00   1st Qu.:0.0000   1st Qu.:0.000   Class :character  
+##  Median :28.00   Median :0.0000   Median :0.000   Mode  :character  
+##  Mean   :29.88   Mean   :0.4989   Mean   :0.385                     
+##  3rd Qu.:39.00   3rd Qu.:1.0000   3rd Qu.:0.000                     
+##  Max.   :80.00   Max.   :8.0000   Max.   :9.000                     
+##  NA&#39;s   :263                                                        
+##       Fare            Cabin           Embarked  Dataset        Titles   
+##  Min.   :  0.000   Length:1309         :  2    test :418   Mr     :757  
+##  1st Qu.:  7.896   Class :character   C:270    train:891   Miss   :260  
+##  Median : 14.454   Mode  :character   Q:123                Mrs    :197  
+##  Mean   : 33.295                      S:914                Master : 61  
+##  3rd Qu.: 31.275                                           Dr     :  8  
+##  Max.   :512.329                                           Rev    :  8  
+##  NA&#39;s   :1                                                 (Other): 18  
+##    FamilySize      TravelGroup     GroupSize     
+##  Min.   : 1.000   779    :  11   Min.   : 1.000  
+##  1st Qu.: 1.000   105    :   8   1st Qu.: 1.000  
+##  Median : 1.000   776    :   8   Median : 1.000  
+##  Mean   : 1.884   336    :   7   Mean   : 2.102  
+##  3rd Qu.: 2.000   455    :   7   3rd Qu.: 3.000  
+##  Max.   :11.000   460    :   7   Max.   :11.000  
+##                   (Other):1261
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Looks like we are missing values in the &amp;ldquo;Survived&amp;rdquo; variable (which is to be expected since this is a combination of the training and test datasets), &amp;ldquo;Fare&amp;rdquo;, &amp;ldquo;Embarked&amp;rdquo;, and quite a few in the &amp;ldquo;Age&amp;rdquo; column. We&amp;rsquo;ll start with &amp;ldquo;Fare&amp;rdquo;.&lt;/p&gt;
+
+&lt;h3 id=&#34;missing-fare&#34;&gt;Missing Fare&lt;/h3&gt;
+
+&lt;p&gt;Which passenger has no fare information?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full3[(which(is.na(full3$Fare))), 1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1 × 1
+##   PassengerId
+##        &amp;lt;fctr&amp;gt;
+## 1        1044
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Looks like Passenger number 1044 has no listed Fare.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Resort the dataset by Passenger Number
+full4 &amp;lt;- arrange(full3, PassengerId)
+
+# Where did this passenger leave from? What was their class?
+full4[1044, c(3, 12)]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1 × 2
+##   Pclass Embarked
+##   &amp;lt;fctr&amp;gt;   &amp;lt;fctr&amp;gt;
+## 1      3        S
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Looks like he left from &amp;rsquo;S&amp;rsquo; (Southampton) as a 3rd class passenger. Let&amp;rsquo;s see what other people of the same class and embarkment port paid for their tickets.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../Titanic_md_files/figure-markdown_github/unnamed-chunk-22-1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full4 %&amp;gt;% filter(Pclass == &amp;quot;3&amp;quot; &amp;amp; Embarked == &amp;quot;S&amp;quot;) %&amp;gt;% summarise(missing_fare = median(Fare, 
+    na.rm = TRUE))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1 × 1
+##   missing_fare
+##          &amp;lt;dbl&amp;gt;
+## 1         8.05
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Looks like the median cost for a 3rd class passenger leaving out of Southampton was 8.05. That seems like a logical value for this passenger to have paid.&lt;/p&gt;
+
+&lt;p&gt;Time to replace that NA with 8.05&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full4$Fare[1044] &amp;lt;- 8.05
+
+summary(full4$Fare)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   7.896  14.450  33.280  31.280 512.300
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hooray! No more NA values for Fare.&lt;/p&gt;
+
+&lt;h3 id=&#34;missing-embarkment&#34;&gt;Missing Embarkment&lt;/h3&gt;
+
+&lt;p&gt;Which passengers have no listed embarkment port?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full4$Embarked[full4$Embarked == &amp;quot;&amp;quot;] &amp;lt;- NA
+
+full4[(which(is.na(full4$Embarked))), 1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2 × 1
+##   PassengerId
+##        &amp;lt;fctr&amp;gt;
+## 1          62
+## 2         830
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Ok, so Passenger numbers 62 and 830 are each missing their embarkment ports. Let&amp;rsquo;s look at their class of ticket and their fare.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full4[c(62, 830), c(1, 3, 10)]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2 × 3
+##   PassengerId Pclass  Fare
+##        &amp;lt;fctr&amp;gt; &amp;lt;fctr&amp;gt; &amp;lt;dbl&amp;gt;
+## 1          62      1    80
+## 2         830      1    80
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Both passengers had first class tickets that they spent 80 (pounds?) on. Let&amp;rsquo;s see the embarkment ports of others who bought similar kinds of tickets.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full4 %&amp;gt;% group_by(Embarked, Pclass) %&amp;gt;% filter(Pclass == &amp;quot;1&amp;quot;) %&amp;gt;% 
+    summarise(mfare = median(Fare), n = n())
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## Source: local data frame [4 x 4]
+## Groups: Embarked [?]
+## 
+##   Embarked Pclass   mfare     n
+##     &amp;lt;fctr&amp;gt; &amp;lt;fctr&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt;
+## 1        C      1 76.7292   141
+## 2        Q      1 90.0000     3
+## 3        S      1 52.0000   177
+## 4       NA      1 80.0000     2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Looks like the median price for a first class ticket departing from &amp;lsquo;C&amp;rsquo; (Charbourg) was 77 (in comparison to our 80). While first class tickets departing from &amp;lsquo;Q&amp;rsquo; were only slightly more expensive (median price 90), only 3 first class passengers departed from that port. It seems far more likely that passengers 62 and 830 departed with the other 141 first-class passengers from Charbourg.&lt;/p&gt;
+
+&lt;p&gt;Now to replace their NA values with &amp;lsquo;C&amp;rsquo;. And drop any unused levels.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Assign empty embark ports to &#39;C&#39;
+full4$Embarked[c(62, 830)] &amp;lt;- &amp;quot;C&amp;quot;
+
+# Drop unused levels (since there should be no more blanks)
+full4$Embarked &amp;lt;- droplevels(full4$Embarked)
+
+# Check to make sure there are no NA&#39;s or blanks
+levels(full4$Embarked)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;C&amp;quot; &amp;quot;Q&amp;quot; &amp;quot;S&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Yay! No more NA values for Embarked.&lt;/p&gt;
+
+&lt;h3 id=&#34;missing-age&#34;&gt;Missing Age&lt;/h3&gt;
+
+&lt;p&gt;This one is a bit trickier. 263 passengers have no age listed. Taking a median age of all passengers doesn&amp;rsquo;t seem like the best way to solve this problem, so it may be easiest to try to predict the passengers&amp;rsquo; age based on other known information.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;ve decided to use the &lt;code&gt;caret&lt;/code&gt; package for predicting age.&lt;/p&gt;
+
+&lt;p&gt;Generate a random forest model on the full dataset (minus the age values that are NA)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;predicted_age &amp;lt;- train(Age ~ Pclass + Sex + SibSp + Parch + Fare + 
+    Embarked + Titles + FamilySize + GroupSize, tuneGrid = data.frame(mtry = c(2, 
+    3, 7)), data = full4[!is.na(full4$Age), ], method = &amp;quot;ranger&amp;quot;, 
+    trControl = trainControl(method = &amp;quot;cv&amp;quot;, number = 10, repeats = 10, 
+        verboseIter = TRUE), importance = &amp;quot;impurity&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at what factors were the most important in modeling age:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../Titanic_md_files/figure-markdown_github/unnamed-chunk-30-1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Wow! Looks like it was a good idea to split out Titles!&lt;/p&gt;
+
+&lt;p&gt;Now to use this information to predict the ages of passengers with missing ages and filling in their NA values.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;full4$Age[is.na(full4$Age)] &amp;lt;- predict(predicted_age, full4[is.na(full4$Age), 
+    ])
+
+# Check the summary to make sure there are no more NA values
+summary(full4$Age)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.17   22.00   28.50   29.72   37.00   80.00
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s take a quick look at the age distribution of passengers with originally known ages, and the age distribution of the entire group (known and predicted ages) to make sure we didn&amp;rsquo;t terribly skew the distribution.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../Titanic_md_files/figure-markdown_github/unnamed-chunk-32-1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;img src=&#34;../Titanic_md_files/figure-markdown_github/unnamed-chunk-32-2.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Hmm, seems to have shifted a bit, but that could be due to a greater lack of age information collected for middle-aged passengers.&lt;/p&gt;
+
+&lt;h2 id=&#34;modeling-for-survival&#34;&gt;Modeling for Survival&lt;/h2&gt;
+
+&lt;p&gt;First things first, I need to split out the test and training data back into separate data sets, now called &lt;code&gt;train_complete&lt;/code&gt; and &lt;code&gt;test_complete&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;train_complete &amp;lt;- full4[full4$Dataset == &amp;quot;train&amp;quot;, ]
+test_complete &amp;lt;- full4[full4$Dataset == &amp;quot;test&amp;quot;, ]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Because I plan on using the &lt;code&gt;caret&lt;/code&gt; package for all of my modeling, I&amp;rsquo;m going to generate a standard &lt;code&gt;trainControl&lt;/code&gt; so that those tuning parameters remain consistent throughout the various models.&lt;/p&gt;
+
+&lt;h3 id=&#34;creating-traincontrol&#34;&gt;Creating trainControl&lt;/h3&gt;
+
+&lt;p&gt;I will create a system that will perform 10 repeats of a 10-Fold cross-validation of the data.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;myControl &amp;lt;- trainControl(method = &amp;quot;cv&amp;quot;, number = 10, repeats = 10, 
+    verboseIter = TRUE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;fitting-a-random-forest-model&#34;&gt;Fitting a random forest model&lt;/h3&gt;
+
+&lt;p&gt;The first type of model I&amp;rsquo;d like to use is a random forest model (using the &lt;code&gt;ranger&lt;/code&gt; and &lt;code&gt;caret&lt;/code&gt; packages).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;rf_model &amp;lt;- train(Survived ~ Age + Pclass + Sex + SibSp + Parch + 
+    Fare + Embarked + Titles + FamilySize + TravelGroup + GroupSize, 
+    tuneGrid = data.frame(mtry = c(2, 5, 8, 10, 15)), data = train_complete, 
+    method = &amp;quot;ranger&amp;quot;, trControl = myControl, importance = &amp;quot;impurity&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;fitting-a-glmnet-model&#34;&gt;Fitting a glmnet model&lt;/h3&gt;
+
+&lt;p&gt;Next, we&amp;rsquo;ll try a glmnet model, also from the &lt;code&gt;caret&lt;/code&gt; package.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;glm_model &amp;lt;- train(Survived ~ Age + Pclass + Sex + SibSp + Parch + 
+    Fare + Embarked + Titles + FamilySize + TravelGroup + GroupSize, 
+    method = &amp;quot;glmnet&amp;quot;, tuneGrid = expand.grid(alpha = 0:1, lambda = seq(1e-04, 
+        1, length = 20)), data = train_complete, trControl = myControl)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;comparing-model-fit&#34;&gt;Comparing model fit&lt;/h3&gt;
+
+&lt;p&gt;Now that we have a random forest model and a glmnet model, it&amp;rsquo;s time to compare their fit.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Create a list of models
+models &amp;lt;- list(rf = rf_model, glmnet = glm_model)
+
+# Resample the models
+resampled &amp;lt;- resamples(models)
+
+# Generate a summary
+summary(resampled)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## summary.resamples(object = resampled)
+## 
+## Models: rf, glmnet 
+## Number of resamples: 10 
+## 
+## Accuracy 
+##          Min. 1st Qu. Median   Mean 3rd Qu.   Max. NA&#39;s
+## rf     0.7667  0.7893 0.8146 0.8250  0.8669 0.8889    0
+## glmnet 0.7889  0.8118 0.8531 0.8418  0.8624 0.9101    0
+## 
+## Kappa 
+##          Min. 1st Qu. Median   Mean 3rd Qu.   Max. NA&#39;s
+## rf     0.5215  0.5375 0.6083 0.6239  0.7092 0.7613    0
+## glmnet 0.5535  0.6026 0.6842 0.6617  0.7027 0.8117    0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Plot the differences between model fits
+dotplot(resampled, metric = &amp;quot;Accuracy&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;../Titanic_md_files/figure-markdown_github/unnamed-chunk-37-1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Looks like the glmnet model is slightly more accurate than the random forest model, so we&amp;rsquo;ll use that to predict the survival rate.&lt;/p&gt;
+
+&lt;p&gt;Ok, time to make some predictions.&lt;/p&gt;
+
+&lt;h2 id=&#34;predicting-survival&#34;&gt;Predicting Survival&lt;/h2&gt;
+
+&lt;p&gt;Although I generated two models above, the glmnet model provided higher accuracy, so I&amp;rsquo;ll use that model to predict survival in the test set.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Reorder the data by Passenger ID number
+test_complete &amp;lt;- test_complete %&amp;gt;% arrange(PassengerId)
+
+# Make predicted survival values
+my_prediction &amp;lt;- predict(glm_model, test_complete)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;preparing-the-prediction-for-kaggle&#34;&gt;Preparing the prediction for Kaggle&lt;/h3&gt;
+
+&lt;p&gt;The instructions on Kaggle indicate that they are expecting a csv file with 2 columns: Passenger ID and Survived. I need to make sure that my data are arranged properly.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# Create a data frame with two columns: PassengerId &amp;amp;
+# Survived where Survived contains my predictions.
+my_solution_5 &amp;lt;- data.frame(PassengerID = test$PassengerId, Survived = my_prediction)
+
+# Write the solution to a csv file
+write.csv(my_solution_5, file = &amp;quot;my_solution_5.csv&amp;quot;, row.names = FALSE)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;testing-with-kaggle&#34;&gt;Testing with Kaggle&lt;/h3&gt;
+
+&lt;p&gt;Looks like that submission scored 0.80383! Not bad!!&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;I&amp;rsquo;d love to hear any feedback you may have on this process. Thanks in advance!&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;Only about &lt;strong&gt;5 - 10%&lt;/strong&gt; of my time was spent working with animals. The rest was spent designing experiments and working with data.&lt;/p&gt;
+&lt;p&gt;When a co-worker introduced me by saying “This is Amber, she does data analysis”, I realized that, indeed, I was a data analyst (who happened to work with marine data).&lt;/p&gt;
+&lt;p&gt;So, I decided to pursue the analytical side of my work and enter the world of data science. I’ve been taking &lt;a href=&#34;https://proquestionasker.github.io/blog/ds_courses/&#34;&gt;lots of classes&lt;/a&gt;, working on &lt;a href=&#34;../portfolio/&#34;&gt;lots of personal projects&lt;/a&gt;, joining local Meetups, and looking for work in the field.&lt;/p&gt;
+&lt;p&gt;I’m always looking for new people to chat with and new problems to solve, so feel free to reach out to me!&lt;/p&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
