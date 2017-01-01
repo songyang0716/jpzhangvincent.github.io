@@ -18,11 +18,11 @@
   
   <url>
     <loc>/about/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
     <loc>/about/</loc>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -44,12 +44,6 @@
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2016-12-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/machine-learning/</loc>
     <lastmod>2016-11-05T18:25:22+05:30</lastmod>
     <priority>0</priority>
@@ -63,6 +57,12 @@
   
   <url>
     <loc>/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2016-12-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

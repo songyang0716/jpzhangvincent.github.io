@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Learn From Data</title>
+    <title>Vincent Zhang</title>
     <link>/index.xml</link>
-    <description>Recent content on Learn From Data</description>
+    <description>Recent content on Vincent Zhang</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2016 Vincent Zhang</copyright>
@@ -265,12 +265,7 @@
       <pubDate>Sun, 06 Nov 2016 13:00:25 +0530</pubDate>
       
       <guid>/contact/</guid>
-      <description>&lt;p&gt;When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then&lt;/p&gt;
-
-&lt;p&gt;Effects present letters inquiry no an removed or friends. Desire behind latter me though in. Supposing shameless am he engrossed up additions. My possible peculiar together to. Desire so better am cannot he up before points. Remember mistaken opinions it pleasure of debating. Court front maids forty if aware their at. Chicken use are pressed removed.&lt;/p&gt;
-
-&lt;p&gt;Able an hope of body. Any nay shyness article matters own removal nothing his forming. Gay own additions education satisfied the perpetual. If he cause manor happy. Without farther she exposed saw man led. Along on happy could cease green oh.&lt;/p&gt;
-</description>
+      <description></description>
     </item>
     
     <item>
@@ -946,15 +941,14 @@ write.csv(my_solution_5, file = &amp;quot;my_solution_5.csv&amp;quot;, row.names
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 
-&lt;div id=&#34;tldr&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;TL;DR&lt;/h3&gt;
+&lt;div id=&#34;fill-in-later&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Fill in later&lt;/h3&gt;
 &lt;p&gt;I’m a marine biologist and science communicator by training, but I’m taking all of the data analysis, statistics, and mathematical modeling skills I’ve learned (and continue to learn) and I’m now applying them to new problems.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;the-long-version&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;The Long Version&lt;/h3&gt;
+&lt;div id=&#34;the-fun-facts&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;The Fun Facts&lt;/h3&gt;
 &lt;p&gt;I’ve always loved science, exploration, and discovery. My natural curiosity, love of animals and the environment, and constant pursuit of knowledge led me into a marine biology and chemistry double major in college (BS/BA) and a Master’s degree in Marine Sciences. That generally leads people to think that I was “playing with animals” all day.&lt;/p&gt;
 &lt;p&gt;And while I &lt;em&gt;did&lt;/em&gt; get to work with some amazing animals over the years…&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;images/all_animals.png&#34; width=&#34;90%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Only about &lt;strong&gt;5 - 10%&lt;/strong&gt; of my time was spent working with animals. The rest was spent designing experiments and working with data.&lt;/p&gt;
 &lt;p&gt;When a co-worker introduced me by saying “This is Amber, she does data analysis”, I realized that, indeed, I was a data analyst (who happened to work with marine data).&lt;/p&gt;
 &lt;p&gt;So, I decided to pursue the analytical side of my work and enter the world of data science. I’ve been taking &lt;a href=&#34;https://proquestionasker.github.io/blog/ds_courses/&#34;&gt;lots of classes&lt;/a&gt;, working on &lt;a href=&#34;../portfolio/&#34;&gt;lots of personal projects&lt;/a&gt;, joining local Meetups, and looking for work in the field.&lt;/p&gt;
