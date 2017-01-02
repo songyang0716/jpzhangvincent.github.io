@@ -2,7 +2,7 @@
 <html lang="en-us">
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>My Curated List of Learning Data Science</title>
+<title>TravisTorrent Data Challenge</title>
 <meta name="description" content="Describe your website">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="all,follow">
@@ -19,13 +19,6 @@
 
 <link href="../../css/custom.css" rel="stylesheet">
 <link rel="shortcut icon" href="../../img/favicon.png">
-
-
-
-<link href="../../rmarkdown-libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-
-
-
 
 
 </head>
@@ -118,18 +111,18 @@
             <div class="row">
                   <div class="col-sm-4">
                     <div class="image">
-                      <img src="../../blog/img/DataSci_Classes.jpg" class="img-responsive" alt="">
+                      <img src="../../projects/GHTravis_md_files/travis.png" class="img-responsive" alt="">
                     </div>
                   </div>
 
                   <div class="col-md-8">
-                      <h2>My Curated List of Learning Data Science</h2>
+                      <h2>TravisTorrent Data Challenge</h2>
                           <p class="author-category">
                             Vincent Zhang
                           </p>
 
                           <p class="date-comments">
-                          <i class="fa fa-calendar-o"></i> January 2, 2016
+                          <i class="fa fa-calendar-o"></i> January 2, 2017
                           </p>
 
                           
@@ -144,12 +137,48 @@
 
 
 
-<p>Summary: A list of the data science resources I’ve learned from/planned to learn, my ratings on them, and comments for future learners.</p>
-<!--more-->
+<p>
+You can embed an R code chunk like this:</p>
 
+<pre><code class="language-r">summary(cars)
+</code></pre>
 
+<pre><code>##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+</code></pre>
 
+<pre><code class="language-r">fit &lt;- lm(dist ~ speed, data = cars)
+fit
+</code></pre>
 
+<pre><code>## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Coefficients:
+## (Intercept)        speed  
+##     -17.579        3.932
+</code></pre>
+
+<h1 id="including-plots">Including Plots</h1>
+
+<p>You can also embed plots. See Figure @ref(fig:pie) for example:</p>
+
+<pre><code class="language-r">par(mar = c(0, 1, 0, 1))
+pie(
+  c(280, 60, 20),
+  c('Sky', 'Sunny side of pyramid', 'Shady side of pyramid'),
+  col = c('#0292D8', '#F7EA39', '#C4B632'),
+  init.angle = -50, border = NA
+)
+</code></pre>
+
+<p><img src="GHTravis_files/figure-markdown_github/pie-1.png" alt="A fancy pie chart." /></p>
       
        </div>
      </div>
