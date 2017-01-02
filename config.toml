@@ -1,3 +1,4 @@
+relativeurls = true
 baseurl = "https://jpzhangvincent.github.io/"
 title = "Vincent Zhang"
 theme = "hugo-creative-portfolio-theme"
@@ -30,7 +31,7 @@ googleAnalytics = ""
      # - send a dummy email yourself to confirm your account
      # - click the confirm link in the email from www.formspree.io
      # - you're done. Happy mailing!
-  email = "AmberThomasMSc@gmail.com"
+  email = "jpzhang@ucdavis.edu"
 
   # Nav links in the side bar
   [[params.navlinks]]
