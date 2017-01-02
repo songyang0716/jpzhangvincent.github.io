@@ -1,0 +1,67 @@
+---
+date: "2016-01-02"
+title: "TravisTorrent Data Mining Challenge"
+showonlyimage: false
+draft: false
+output:
+  md_document:
+    variant: markdown_github
+image: "projects/GHTravis_files/travis.png"
+weight: 1
+type: "post"
+author: "Vincent Zhang"
+summary:  TravisTorrent is a freely available data set synthesized from Travis CI and GitHub, which also serves as a current data challenge from The International Conference on Mining Software Repositories(MSR).
+---
+
+```{r, include = FALSE}
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+Summary: TravisTorrent is a freely available data set synthesized from Travis CI and GitHub, which also serves as a current data challenge from The International Conference on Mining Software Repositories(MSR). 
+
+<!--more-->
+ You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+fit <- lm(dist ~ speed, data = cars)
+fit
+```
+
+# Including Plots
+
+You can also embed plots. See Figure \@ref(fig:pie) for example:
+
+```{r pie, fig.cap='A fancy pie chart.'}
+par(mar = c(0, 1, 0, 1))
+pie(
+  c(280, 60, 20),
+  c('Sky', 'Sunny side of pyramid', 'Shady side of pyramid'),
+  col = c('#0292D8', '#F7EA39', '#C4B632'),
+  init.angle = -50, border = NA
+)
+```
+
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+

@@ -3,17 +3,17 @@
   
   <url>
     <loc>/blog/ds_courses/</loc>
-    <lastmod>2016-12-17T00:00:00+00:00</lastmod>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/projects/GHTravis_md/</loc>
+    <lastmod>2017-01-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/contact/</loc>
     <lastmod>2016-11-06T13:00:25+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>/projects/Titanic_md/</loc>
-    <lastmod>2016-11-05T18:25:22+05:30</lastmod>
   </url>
   
   <url>
@@ -27,7 +27,7 @@
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2016-12-17T00:00:00+00:00</lastmod>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -39,19 +39,25 @@
   
   <url>
     <loc>/tags/data-viz/</loc>
-    <lastmod>2016-11-05T18:25:22+05:30</lastmod>
+    <lastmod>2017-01-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/machine-learning/</loc>
-    <lastmod>2016-11-05T18:25:22+05:30</lastmod>
+    <loc>/tags/github/</loc>
+    <lastmod>2017-01-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/projects/</loc>
-    <lastmod>2016-11-05T18:25:22+05:30</lastmod>
+    <lastmod>2017-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/sql/</loc>
+    <lastmod>2017-01-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -62,7 +68,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2016-12-17T00:00:00+00:00</lastmod>
+    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
