@@ -1,6 +1,6 @@
 +++
 showonlyimage = false
-draft = false
+draft = true
 image = "projects/Titanic_md_files/Titanic.jpg"
 date = "2016-11-05T18:25:22+05:30"
 title = "Machine Learning from Disaster"
