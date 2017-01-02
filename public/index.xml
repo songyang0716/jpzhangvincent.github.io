@@ -46,7 +46,9 @@
       <description>&lt;p&gt;Summary: TravisTorrent is a freely available data set synthesized from Travis CI and GitHub, which also serves as a current data challenge from The International Conference on Mining Software Repositories(MSR).&lt;/p&gt;
 
 &lt;p&gt;
-You can embed an R code chunk like this:&lt;/p&gt;
+Just testing for now&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;You can embed an R code chunk like this:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;summary(cars)
 &lt;/code&gt;&lt;/pre&gt;
