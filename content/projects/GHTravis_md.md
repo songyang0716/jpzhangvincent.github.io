@@ -57,4 +57,4 @@ pie(
 )
 ```
 
-![A fancy pie chart.](GHTravis_files/figure-markdown_github/pie-1.png)
+<img src="../GHTravis_md_files/figure-markdown_github/pie-1.png" class="img-responsive" style="display: block; margin: auto;" />
