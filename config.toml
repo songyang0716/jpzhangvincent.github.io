@@ -62,6 +62,6 @@ googleAnalytics = ""
   
   #Adding widgets to the sidebar
   [params.widgets]
-    categories = false
-    tags = false
-    search = false
+    categories = true
+    tags = true
+    search = true
