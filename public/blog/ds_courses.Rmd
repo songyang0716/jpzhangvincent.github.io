@@ -1,44 +1,39 @@
 ---
-date: "2016-01-02"
+date: "2017-01-01"
 title: "My Curated List of Learning Data Science"
-showonlyimage: true
+showonlyimage: false
 draft: false
-image: "blog/img/DataSci_Classes.jpg"
+image: "blog/img/DataSci_Resources.jpg"
 weight: 1
 type: "post"
 author: "Vincent Zhang"
-summary: A list of the data science resources I've learned from/planned to learn, my ratings on them, and comments for future learners.
+description: "This is a growing list of data science resources I've learned from or planned to learn. "
 ---
 
 ```{r, include = FALSE}
 htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 ```
 
-Summary: A list of the data science resources I've learned from/planned to learn, my ratings on them, and comments for future learners.
-
-<!--more-->
  
-
-    
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-    
-    
-
-
-
-
+-   [Introduction](#introduction)
+-   [Blogs](#blogs)
+-   [Podcasts](#podcasts)
+-   [Books and Online Tutorials/Courses by Topics](#bookonline-courses-by-topics)
+    -   [General Guidance](#getting-started-in-data-science)
+    -   [Probability and Statistics](#probability-and-statistics)
+    -   [Time Series](#time-series)
+    -   [Bayesian Inference](#bayesian-inference)
+    -   [Machine Learning](#machine-learning)
+    -   [R Programming](#r-programming)
+    -   [Python Programming](#python-programming)
+    -   [SQL Databases](#sql-database)
+    -   [Data Structure and Algorithms](#data-structure-and-algorithms)
+    -   [Deep Learning](#deep-learning)
+    -   [Big Data Tools](#big-data-tools)
+    -   [Others](#others)
 
 
-
+Will update soon!  
 
 
 

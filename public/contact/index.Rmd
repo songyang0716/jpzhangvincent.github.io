@@ -1,0 +1,7 @@
+---
+title: "Get in Touch"
+type: "contact"
+---
+
+Feel free to give me feedbacks :)
+

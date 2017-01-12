@@ -2,73 +2,100 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/blog/ds_courses/</loc>
-    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <loc>https://jpzhangvincent.github.io/blog/ds_courses/</loc>
+    <lastmod>2017-01-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/projects/GHTravis_md/</loc>
+    <loc>https://jpzhangvincent.github.io/projects/GHTravis_md/</loc>
     <lastmod>2017-01-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/contact/</loc>
-    <lastmod>2016-11-06T13:00:25+05:30</lastmod>
+    <loc>https://jpzhangvincent.github.io/blog/ChinaAirQualityAnalysis/</loc>
+    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://jpzhangvincent.github.io/about/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://jpzhangvincent.github.io/about/</loc>
   </url>
   
   <url>
-    <loc>/blog/</loc>
-    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <loc>https://jpzhangvincent.github.io/tags/air-quality/</loc>
+    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/contact/</loc>
-    <lastmod>2016-11-06T13:00:25+05:30</lastmod>
+    <loc>https://jpzhangvincent.github.io/blog/</loc>
+    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/data-viz/</loc>
-    <lastmod>2017-01-02T00:00:00+00:00</lastmod>
+    <loc>https://jpzhangvincent.github.io/contact/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/github/</loc>
-    <lastmod>2017-01-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/projects/</loc>
+    <loc>https://jpzhangvincent.github.io/tags/data-viz/</loc>
     <lastmod>2017-01-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/sql/</loc>
+    <loc>https://jpzhangvincent.github.io/tags/eda/</loc>
+    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jpzhangvincent.github.io/contact/</loc>
+  </url>
+  
+  <url>
+    <loc>https://jpzhangvincent.github.io/tags/github/</loc>
     <lastmod>2017-01-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://jpzhangvincent.github.io/projects/</loc>
+    <lastmod>2017-01-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2016-01-02T00:00:00+00:00</lastmod>
+    <loc>https://jpzhangvincent.github.io/tags/r/</loc>
+    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jpzhangvincent.github.io/tags/sql/</loc>
+    <lastmod>2017-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jpzhangvincent.github.io/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jpzhangvincent.github.io/tags/timeseries/</loc>
+    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jpzhangvincent.github.io/</loc>
+    <lastmod>2017-01-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
