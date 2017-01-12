@@ -1,0 +1,306 @@
+---
+date: "2016-01-10"
+title: "Air Quality in China"
+showonlyimage: false
+draft: false
+image: "blog/img/AirQuality.JPG"
+weight: 0
+type: "post"
+author: "Vincent Zhang"
+description: "PART I - Exploratory Data Analysis of Air quality in Chinese cities."
+tags: [
+"EDA",
+"R", "TimeSeries", "Air Quality"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+-   [Introduction](#introduction)
+-   [Exploratory Data Analysis](#exploratory-data-analysis)
+    -   [Library Setup](#getting-started-in-data-science)
+    -   [Getting the data](#getting-the-data)
+    -   [Crude Time series plot](#crude-time-series-plot)
+    -   [Radar plot for comparing air pollution levels](#radar-plot-for-comparing-air-pollution-levels)
+    -   [Get more data for other cities in a parallel way](#get-more-data-for-other-cities-in-a-parallel-way)
+    -   [Interactive Time Series plots for different cities](#interactive-time-series-plots-for-different-cities)
+    -   [Stacked Bar Chart](#stacked-bar-chart)
+    -   [Aggregated Monthly Time Series Plots](#aggregated-monthly-time-series-plots)
+-   [Wrap-Up](#wrap-up)    
+
+
+# Introduction
+
+Air pollution is a severe problem in China. It has been heartbroken for people to see that smog hangs heavy over cities, where children grow up with asthma and other respiratory illnesses. PM 2.5 is a measurement of small particulate matter in the air and it's the main cause of the serious smog problem. 
+
+> PM2.5 is readily inhalable and penetrates deep into the lungs. PM2.5 allow for many 
+> chemicals harmful to human health to be carried into our internal organs, causing a wide 
+> range of illnesses and mortality, including cancer (especially lung cancer), stroke and 
+> damage to unborn children. They have a strong association with most types of respiratory 
+> illnesses, heart disease and even mortality.
+
+There is no doubt that the increasing pressure and concerns from the public stresses the government to take this problem very seriously. However, as many researches suggests, solving the air pollution crisis in China is probably a complex and long-haul process caused by burning coal in factories and power plants and oil combustion by vehicles, which would take firm and multi-faceted efforts from the government and the public to overcome it. I'm interested in writing a series of posts to analyze the trend of air quality in Chinese cities and understand its seasonal/event impacts. In this blog post, we want to be able to answer the following questions
+
+* What are the trends of pm2.5 in Chinese cities? This is an exploratory data analysis, which helps us draw insights for time series analysis.   
+* Can we identify and quantify the seasonal effects in air quality? It is known that winter season affects the air quality because the coal burnning is usually supplied for heating in northern China.
+* What would the impact of Spring festival be for the air quality this year? Spring festival is the most important festival in China. It is the peak time when people commute for home and even maybe celebrate with fireworks.
+
+# Exploratory Data Analysis
+
+## Library Setup
+```{r , message=FALSE}
+# API scraping
+library(parallel)
+library(multidplyr) # parallel processing
+library(ropenaq) # sourced from OpenAQ, see https://github.com/ropensci/ropenaq
+# Data Munging
+library(tidyverse)
+library(lubridate)
+# Data Visualization
+library(ggplot2)
+library(scales)
+library(ggseas)
+library(ggmap)
+library(dygraphs)
+library(radarchart)
+library(plotly)
+# Time Series Analysis
+library(xts)
+```
+
+## Getting the data
+
+With the `ropenaq` pacakge, there are 5 cities in China available for us to get the air quality data. 
+```{r}
+cities_tableChina <- aq_cities(country="CN")
+cities_tableChina
+```
+
+Let's focus on Beijing first. There are nearly 22,400 observations with many observations per day. 
+
+```{r}
+how_many <- attr(aq_measurements(city = "Beijing"), "meta")
+n <- how_many$found
+results_ls <- list()
+# Limit is 1000 observations at once, so we bring them all in 1000 at a time:
+for(i in 1:ceiling(n / 1000)){
+   results_ls[[i]] <- aq_measurements(country = "CN", city = "Beijing", parameter = "pm25",
+                                      limit = 1000, page = i)   
+   cat(i)
+}
+
+# convert into a data frame:
+results_df <- do.call("rbind", results_ls) %>%
+   arrange(dateLocal)
+```
+
+## Time series plot for Beijing city
+
+With filtering out some nonsense/missing values, we draw the rough time series plot first to observe the trend. Note that 
+```{r}
+# draw exploratory graph
+results_df %>% filter(value > 0) %>% 
+   ggplot(aes(x = dateLocal, y = value)) + 
+   geom_line() +
+   ggtitle("PM 2.5 Trend in Beijing") +
+   scale_y_continuous("Value", label = comma) +
+   labs(x = "", caption = "Source: OpenAQ")
+```
+
+It seems hard to see the trend clearly due to too many data points. Let's try to just plot the daily average pm2.5 trend, namely, the trimmed mean average observation for each day.We can see the spikes are mostly in the winter season of a year.
+```{r}
+bj_df <- results_df %>% filter(value > 0) %>% mutate(Day = as.Date(dateLocal))
+
+bj_df %>%
+  group_by(Day) %>% 
+  summarise(avgvalue = mean(value, tr = 0.1, na.rm = TRUE)) %>% 
+  ggplot(aes(x = Day, y = avgvalue)) + geom_line() +
+  ggtitle("PM 2.5 Trend in Beijing")
+              
+```
+
+## Radar plot 
+
+To get a more clear sense, We can add a column to indicate the daily polution level according to the [summary](http://aqicn.org/scale/), so that it will allow us to see how many days categorized by different air pollution levels for 2014, 2015 and 2016. 
+```{r}
+bj_daydf <- bj_df %>% 
+  filter(between(Day, as.Date('2014-01-01'), as.Date('2016-12-31'))) %>% 
+  group_by(Day) %>% summarise(avgvalue = mean(value, tr = 0.1, na.rm = TRUE)) %>%
+  mutate(pollution_level = case_when(
+  findInterval(.$avgvalue, c(0, 51)) == 1 ~ "Good",
+  findInterval(.$avgvalue, c(51, 101)) == 1 ~ "Moderate",
+  findInterval(.$avgvalue, c(101, 150)) == 1 ~ "Unhealthy(SensitiveGroups)",
+  findInterval(.$avgvalue, c(151, 201)) == 1 ~ "Unhealthy",
+  findInterval(.$avgvalue, c(201, 300)) == 1 ~ "VeryUnhealthy",
+  .$avgvalue > 300 ~ "Hazardous"
+)) 
+```
+
+It's worth mentioning that the number of measurement(days) is not consistent across three years. We prefer to compute the relative percentage as the metric to compare the differences.
+```{r}
+#bj_daydf %>% mutate(Year = as.numeric(format(Day, "%Y"))) %>%  group_by(Year) %>% 
+#  summarise(num_days = n())
+
+# add the relative percentage 
+bj_daydf %>% mutate(Year = as.numeric(format(Day, "%Y"))) %>% 
+  group_by(pollution_level, Year) %>% 
+  summarise(num_days = n()) %>% 
+  group_by(Year) %>% 
+  mutate(per = round(num_days/sum(num_days)*100, 2)) %>% 
+  ungroup()
+```
+
+Based on the daily time series, here I use the interactive radar plot to compare the yearly changes of air pollution levels in terms of percentage. A little bit surprisingly, it shows the air quality in Beijing does improve, especially when comparing year 2016 and 2014, which somehow reflects the findings from the [report](http://www.huffingtonpost.com/entry/china-air-pollution-2014_us_568e592ce4b0a2b6fb6ecb73). However, as the report mentions, the country isn't in the clear yet:(.
+```{r}
+radarplot_dt <- bj_daydf %>% mutate(Year = as.numeric(format(Day, "%Y"))) %>% 
+  group_by(pollution_level, Year) %>% 
+  summarise(num_days = n()) %>% 
+  group_by(Year) %>% 
+  mutate(per = round(num_days/sum(num_days)*100, 2)) %>% 
+  ungroup() %>% select(pollution_level, Year, per) %>% 
+  reshape2::dcast(pollution_level ~ Year, value.var = "per") %>%  
+  rename(Label = pollution_level)
+
+chartJSRadar(radarplot_dt, maxScale = 55, showToolTipLabel=TRUE)
+```
+
+## Get more data for other cities in a parallel way
+
+Let's obtain the time series for other cities and combine them together. We will use the `parallel` and `multidplyr` packages to scrape the data, which is usually suggested to do this kind of task in parallel. I got inspirations from the [post](http://www.mattdancho.com/code-tools/2016/12/18/multidplyr.html) to apply on my case. 
+```{r}
+getCityAirQualityData <- function(city_str){
+  how_many <- attr(aq_measurements(city = city_str), "meta")
+  n <- how_many$found
+  results_ls <- list()
+# Limit is 1000 observations at once, so we bring them all in 1000 at a time:
+  for(i in 1:ceiling(n / 1000)){
+     results_ls[[i]] <- aq_measurements(country = "CN", city = city_str, parameter = "pm25",
+                                        limit = 1000, page = i)   
+  }
+
+  # convert into a data frame:
+  results_df <- do.call("rbind", results_ls) %>% arrange(dateLocal) %>% 
+    filter(value > 0) %>% mutate(Day = as.Date(dateLocal)) %>% 
+  filter(between(Day, as.Date('2014-01-01'), as.Date('2016-12-31'))) 
+  results_df
+}
+```
+
+```{r}
+# Assign groups
+cities <- as_tibble(data.frame(cities = c("Chengdu", "Guangzhou", "Shanghai", "Shenyang"), stringsAsFactors = FALSE))
+# Creat the cluster
+cl <- detectCores()
+group <- rep(1:cl, length.out = nrow(cities))
+cityToScrape <- bind_cols(tibble(group), cities)
+cluster <- create_cluster(cores = cl)
+# PArtition by group
+by_group <- cityToScrape %>%
+    partition(group, cluster = cluster)
+# SETUP CLUSTERS
+by_group %>%
+    # Assign libraries
+    cluster_library("tidyverse") %>%
+    cluster_library("lubridate") %>%
+    cluster_library("stringr") %>%
+    cluster_library("ropenaq") %>%
+    # Assign values (use this to load functions or data to each core)
+    cluster_assign_value("getCityAirQualityData", getCityAirQualityData) 
+```
+
+We are set to run the parallel code in the awsome `dplyr` way. It obviously speeds up the scraping task comparing to waiting for scraping page by page for each city. 
+```{r}
+start <- proc.time() # Start clock
+cities_in_parallel <- by_group %>% # Use by_group party_df
+    mutate(
+        pm2.5data = map(.x = cities, ~ getCityAirQualityData(city_str = .x))
+        ) %>%
+    collect() %>% # Special collect() function to recombine partitions
+    as_tibble()   # Convert to tibble
+time_elapsed_parallel <- proc.time() - start # End clock
+time_elapsed_parallel
+```
+
+```{r}
+aq_df <- cities_in_parallel %>% unnest() %>% ungroup %>% 
+  select(-group, -cities) %>% 
+  bind_rows(list(., 
+                 bj_df %>%filter(between(Day, as.Date('2014-01-01'), as.Date('2016-12-31')))  ))
+```
+
+## Time Series plots for comparison
+
+With the PM2.5 time series of 5 cities, I created the interactive Time Series plot using the wonderful `dygraphs` library to compare them. This interactive visualization would be more convinient for people to explore the trends. For example, observing the spikes, one can further research the phenomemon during the period.
+```{r}
+aq_ts_df <- aq_df %>% select(city, Day, value) %>% group_by(city, Day) %>%
+  summarise(avgvalue = mean(value, tr = 0.1, na.rm = TRUE)) %>% 
+  ungroup() %>% select(Day, city, avgvalue) %>% 
+  reshape2::dcast(Day ~ city, value.var = "avgvalue") 
+
+aq_xts <- as.xts(aq_ts_df[-1],order.by = aq_ts_df$Day)
+```
+
+```{r}
+dygraph(aq_xts, main = "PM2.5 Trends in Chinese cities") %>% dyRangeSelector()
+```
+
+## Stacked Bar Chart
+
+What if we compare the pollution levels for different cities in 2016? We can see Chengdu city has the worst air quality condition, while Guangzhou seems to have beter air quality condition in the comparison.  
+```{r}
+p<- aq_df %>% select(city, Day, value) %>% 
+  filter(between(Day, as.Date('2016-01-01'), as.Date('2016-12-31'))) %>% 
+  group_by(Day, city) %>% summarise(avgvalue = mean(value, tr = 0.1, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate(pollution_level = case_when(
+  findInterval(.$avgvalue, c(0, 51)) == 1 ~ "Good",
+  findInterval(.$avgvalue, c(51, 101)) == 1 ~ "Moderate",
+  findInterval(.$avgvalue, c(101, 150)) == 1 ~ "Unhealthy(SensitiveGroups)",
+  findInterval(.$avgvalue, c(151, 201)) == 1 ~ "Unhealthy",
+  findInterval(.$avgvalue, c(201, 300)) == 1 ~ "VeryUnhealthy",
+  .$avgvalue > 300 ~ "Hazardous")) %>% 
+  group_by(pollution_level, city) %>% 
+  summarise(num_days = n()) %>% 
+  group_by(city) %>% 
+  mutate(per = round(num_days/sum(num_days)*100, 2)) %>% 
+  ungroup() %>% 
+  select(pollution_level, city, per) %>% 
+  ggplot(aes(x = city, fill = pollution_level)) +   
+  geom_bar(stat="identity", position="fill", aes(y = per)) + 
+  scale_y_continuous(labels = percent_format()) +
+  ggtitle("Percentage of Days at different Air Pollution levels in 2016") + 
+  labs(x = "City" , y = "Percentage")
+
+ggplotly(p)
+```
+
+## Aggregated Monthly Time Series Plots
+
+Since we are interested to investigate a broad annual seasonal pattern and there are some irregularities in our data, it would be more helpful to further aggregate on the monthly basis. We can then show the monthly time series plots with the seasonal adjustment. Note that we can only compute the seasonal adjustment for time series of air quality in Beijing since other time series have less than 2 periods. We can observe the seasonal effect of winter season(November - January) is mostly apparent in Beijing. It also seems the air quality is worse during the winters in Shanghai and Chengdu.
+```{r, fig.width=10, fig.height=8.5, message=FALSE}
+# monthly aggregation graphic:
+aq_df %>%
+  mutate(Month = substring(Day, 1, 7)) %>% group_by(city, Month) %>%
+  summarise(avgvalue = mean(value, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  mutate(Month = as.Date(paste0(Month, "-15"))) %>%
+  ggplot(aes(x = Month, y = avgvalue)) + 
+   facet_wrap(~ city, ncol = 1, scale = "free_y") + 
+    geom_line(colour = "grey50", linetype = 2) +
+   stat_stl(s.window = "periodic", frequency = 12, colour = "steelblue") +
+   ggtitle("Airborne fine particulate matter in Chinese cities (PM2.5)",
+           subtitle = "Showing original and seasonally adjusted") +
+   labs(x = "Seasonal adjustment", 
+        y = "Trimmed mean monthly PM2.5 concentration",
+        caption = "Data: U.S. Embassy and Consulates in China")
+   
+```
+
+# Wrap up
+
+In this post, we show how to get the data and how to slice and dice the data in different ways for exploratory data analysis. We found that the air quality in Beijing does indeed improve but still about 25% of times PM2.5 is larger than 100, which could pose various degrees of risks to health. Furthermore, we can identify winter season is a seasonal effect typically for cities like Beijing, Chengdu, Shenyang and Shanghai in northern China. As the PM2.5 trend is an key indicator for the air pollution in China, we should keep close eyes on it and take effective and strict actions to prevent the smog problem break out in winters.
+
+Next, we will focus on the air quality condition in Beijing to do more in-depth time series anlysis. Stay tuned for the next post. :)
+
+Thank you for reading! Please let me know if you have any feedback or suggestions.

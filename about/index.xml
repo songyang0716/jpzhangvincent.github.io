@@ -2,28 +2,40 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>About on Vincent Zhang</title>
-    <link>/about/index.xml</link>
+    <link>https://jpzhangvincent.github.io/about/index.xml</link>
     <description>Recent content in About on Vincent Zhang</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2016 Vincent Zhang</copyright>
-    <atom:link href="/about/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://jpzhangvincent.github.io/about/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>About Me</title>
-      <link>/about/</link>
+      <link>https://jpzhangvincent.github.io/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
+      <guid>https://jpzhangvincent.github.io/about/</guid>
       <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 
-&lt;div id=&#34;fill-in-later&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Fill in later&lt;/h3&gt;
+&lt;div id=&#34;who-am-i&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Who am I?&lt;/h3&gt;
+&lt;p&gt;I’m a Masters graduate student studying Computer Science and Statistics at UC Davis. I’m very enthusiatic about data science. I have been inspired by the active community of data science and benefited a lot from reading others’ blogs and tutorials, for example, a list on this &lt;a href=&#34;https://github.com/rushter/data-science-blogs&#34;&gt;page&lt;/a&gt;. So I decided to create my data science portfolio to keep track on my learning process to being a well-rounded data scientist. At the same time, it’s a great opportunity to share my knowledge and give back to the community. Also, I’m also looking for data scientist jobs and I’d love to hear from you if any questions or feedbacks.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;the-fun-facts&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;The Fun Facts&lt;/h3&gt;
+&lt;div id=&#34;why-data-science&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Why Data Science?&lt;/h3&gt;
+&lt;p&gt;I think using algorithmic thinking and programming to do the right statistics in practice is the most cool thing!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“There are three kinds of lies: lies, damned lies, and statistics.” By Mark Twain&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;images/joke.png&#34; width=&#34;360&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;whats-the-plan&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;What’s the plan?&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;images/RoadToDataScientist.png&#34; width=&#34;775&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Really? Just keep learning and practicing.&lt;/p&gt;
+&lt;p&gt;By the way, this blog is created with the new &lt;code&gt;blogdown&lt;/code&gt; package and thanks to this great &lt;a href=&#34;https://proquestionasker.github.io/blog/Making_Site/&#34;&gt;tutorial&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
 

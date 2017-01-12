@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Projects on Vincent Zhang</title>
-    <link>/projects/index.xml</link>
+    <link>https://jpzhangvincent.github.io/projects/index.xml</link>
     <description>Recent content in Projects on Vincent Zhang</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2016 Vincent Zhang</copyright>
     <lastBuildDate>Mon, 02 Jan 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://jpzhangvincent.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>TravisTorrent Data Challenge</title>
-      <link>/projects/GHTravis_md/</link>
+      <link>https://jpzhangvincent.github.io/projects/GHTravis_md/</link>
       <pubDate>Mon, 02 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>/projects/GHTravis_md/</guid>
-      <description>&lt;p&gt;Summary: TravisTorrent is a freely available data set synthesized from Travis CI and GitHub, which also serves as a current data challenge from The International Conference on Mining Software Repositories(MSR).&lt;/p&gt;
+      <guid>https://jpzhangvincent.github.io/projects/GHTravis_md/</guid>
+      <description>&lt;p&gt;TravisTorrent is a freely available data set synthesized from Travis CI and GitHub, which also serves as a current data challenge from The International Conference on Mining Software Repositories(MSR).&lt;/p&gt;
 
 &lt;p&gt;
-Just testing for now&amp;hellip;&lt;/p&gt;
+Just testing for now&amp;hellip; Will update later :)&lt;/p&gt;
 
 &lt;p&gt;You can embed an R code chunk like this:&lt;/p&gt;
 
