@@ -1,4 +1,3 @@
-relativeurls = true
 baseurl = "https://jpzhangvincent.github.io/"
 title = "Vincent Zhang"
 theme = "hugo-creative-portfolio-theme"

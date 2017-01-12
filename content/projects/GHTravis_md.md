@@ -12,10 +12,10 @@ tags = [
 author = "Vincent Zhang"
 +++
 
-Summary: TravisTorrent is a freely available data set synthesized from Travis CI and GitHub, which also serves as a current data challenge from The International Conference on Mining Software Repositories(MSR).
+TravisTorrent is a freely available data set synthesized from Travis CI and GitHub, which also serves as a current data challenge from The International Conference on Mining Software Repositories(MSR).
 
 <!--more-->
-Just testing for now...
+Just testing for now... Will update later :)
 
 You can embed an R code chunk like this:
 
