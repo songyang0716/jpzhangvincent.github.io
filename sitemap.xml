@@ -17,6 +17,18 @@
   </url>
   
   <url>
+    <loc>/about/index_files/d3-legend/README/</loc>
+  </url>
+  
+  <url>
+    <loc>/about/index_files/d3/README/</loc>
+  </url>
+  
+  <url>
+    <loc>/about/index_files/radarchart/README/</loc>
+  </url>
+  
+  <url>
     <loc>/about/</loc>
     <priority>0</priority>
   </url>
