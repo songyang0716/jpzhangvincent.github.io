@@ -24,8 +24,47 @@ library(knitr)
 knitr::include_graphics("images/RoadToDataScientist.png")
 ```
 
+Where am I?
 
-Really? Just keep learning and practicing. 
+```{r echo=FALSE}
+library(d3radarR)
+ds_skills <- list(
+  list(
+    key = "Now",
+    values = list(
+      list(axis = "Fundamentals", value = 85/100),
+      list(axis = "Statistics", value = 85/100),
+      list(axis = "Programming", value = 75/100),
+      list(axis = "Machine Learning", value = 80/100),
+      list(axis = "Text Mining/NLP", value = 75/100),
+      list(axis = "Visualization", value = 90/100),
+      list(axis = "Big Data", value = 60/100),
+      list(axis = "Data Ingestion", value = 70/100),
+      list(axis = "Data Munging", value = 90/100),
+      list(axis = "Toolbox", value = 70/100)
+    )
+  ),
+  list(
+    key = "6-Month Goal",
+    values = list(
+      list(axis = "Fundamentals", value = 95/100),
+      list(axis = "Statistics", value = 90/100),
+      list(axis = "Programming", value = 85/100),
+      list(axis = "Machine Learning", value = 90/100),
+      list(axis = "Text Mining/NLP", value = 75/100),
+      list(axis = "Visualization", value = 95/100),
+      list(axis = "Big Data", value = 70/100),
+      list(axis = "Data Ingestion", value = 70/100),
+      list(axis = "Data Munging", value = 95/100),
+      list(axis = "Toolbox", value = 80/100)
+    )
+  )  
+)
+
+d3radar( ds_skills )
+```
+
+Just keep learning and practicing. 
 
 By the way, this blog is created with the new `blogdown` package and thanks to this great [tutorial](https://proquestionasker.github.io/blog/Making_Site/).
 
