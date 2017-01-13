@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blog on Vincent Zhang</title>
-    <link>https://jpzhangvincent.github.io/blog/index.xml</link>
+    <link>/blog/index.xml</link>
     <description>Recent content in Blog on Vincent Zhang</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2016 Vincent Zhang</copyright>
     <lastBuildDate>Sun, 10 Jan 2016 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://jpzhangvincent.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Air Quality in China</title>
-      <link>https://jpzhangvincent.github.io/blog/ChinaAirQualityAnalysis/</link>
+      <link>/blog/ChinaAirQualityAnalysis/</link>
       <pubDate>Sun, 10 Jan 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://jpzhangvincent.github.io/blog/ChinaAirQualityAnalysis/</guid>
+      <guid>/blog/ChinaAirQualityAnalysis/</guid>
       <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
@@ -346,10 +346,10 @@ aq_df %&amp;gt;%
     
     <item>
       <title>My Curated List of Learning Data Science</title>
-      <link>https://jpzhangvincent.github.io/blog/ds_courses/</link>
+      <link>/blog/ds_courses/</link>
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://jpzhangvincent.github.io/blog/ds_courses/</guid>
+      <guid>/blog/ds_courses/</guid>
       <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
