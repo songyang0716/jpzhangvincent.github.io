@@ -57,6 +57,952 @@
     </item>
     
     <item>
+      <title>Predict when Stephen Curry shoots the ball</title>
+      <link>/projects/PMC-project/</link>
+      <pubDate>Fri, 13 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/PMC-project/</guid>
+      <description>&lt;p&gt;IIDATA 2017 Predictive Modeling Competition is hosted by UC Davis. This year the challenge is to predict when Stephen Curry shoots the ball, given the movement tracking data from sportVU.
+&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#iidata-2017-predictive-modeling-competition&#34;&gt;IIDATA 2017 Predictive Modeling Competition&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#exploratory-data-analysis&#34;&gt;Exploratory Data Analysis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#first-shot&#34;&gt;Fisrt Shot&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#to-be-continued&#34;&gt;To be continued&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;IIDATA 2017 Predictive Modeling Competition&lt;/h2&gt;
+&lt;p&gt;
+&lt;strong&gt;IIDATA&lt;/strong&gt; is a one-day data science convention hosted by UC Davis undergraduate students. This year will be on Feb.4, 20117. There will be hands-on workshops, tech talks and modeling competitions in this event. I think it would be a good learning opportunity for people interesed in data science to attend. For more information, please visit the &lt;a href=&#34;http://www.iidata.net/&#34;&gt;website&lt;/a&gt;. Lately, the organization team released their dataset for the Predictive Modeling Competition(PMC). This year the challenge is quite interesting. &lt;/p&gt;
+
+&lt;p&gt;&lt;i&gt;Given Stephen Curry’s distance to ball, hoops and the opposing team’s defenders, can 
+you determine when he is releasing the ball?&lt;/i&gt;&lt;/p&gt;
+
+&lt;p&gt;
+They also have a leaderboard with more detailed information about the competition &lt;a href=&#34;https://pmc-leaderboard.com/&#34;&gt;here&lt;/a&gt;, especially the submission format.
+&lt;/p&gt;
+
+&lt;h2&gt; Data &lt;/h2&gt;
+
+&lt;p&gt;This dataset contains temporal snapshots taken every 0.04 seconds during the November 12th, 2015 Golden State Warriors vs. Minnesota Timberwolves game (upon which Curry is on the court). It was told that Curry took **24** shots. For each shot, you are expected to find when he is releasing the ball from his hands with as much accuracy as possible. The data source is from [SportVU](https://www.stats.com/sportvu-basketball/). These are the variables:
+&lt;ul type=&#34;disc&#34;&gt;
+&lt;li&gt;“Time” - time left in the game (In fractional minutes)&lt;/li&gt;
+&lt;li&gt;“currylhoop” - distance from Curry to the left hoop&lt;/li&gt;
+&lt;li&gt;“curryrhoop” - distance from Curry to the right hoop&lt;/li&gt;
+&lt;li&gt;“balllhoop” - distance from the ball to the left hoop&lt;/li&gt;
+&lt;li&gt;“ballrhoop” - distance from the ball to the right hoop&lt;/li&gt;
+&lt;li&gt;“def1dist” - distance from the 1st defender to Curry&lt;/li&gt;
+&lt;li&gt;“def2dist” - distance from the 2nd defender to Curry&lt;/li&gt;
+&lt;li&gt;“def3dist” - distance from the 3rd defender to Curry&lt;/li&gt;
+&lt;li&gt;“def4dist” - distance from the 4th defender to Curry&lt;/li&gt;
+&lt;li&gt;“def5dist” - distance from the 5th defender to Curry&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;p&gt;It is a little bit surprise to me at first because it&#39;s not a typically supervised learning problem. There are some challenges or ambiguities involved: 
+&lt;ol type=&#34;a&#34;&gt;
+&lt;li&gt;They don&#39;t provide the actual times that Curry shot the balls. This makes it difficult to apply a supervised learning algorithm. Maybe it leaves for competitors to get the information so that it&#39;s possible to use in a supervised training and testing framework, since it allows competitors to ultilize other data/resources. On the other hand, it&#39;s possible to be treated as a unsupervised problem, for example, anomaly detection based on the activity patterns. So I see there are two direction here.&lt;/li&gt;
+&lt;li&gt;Note that they will evaluate the final score of our algorithm/model with another new dataset. So we need to be careful about generalization ability of our model.&lt;/li&gt;
+&lt;li&gt;Interestingly, it asks to predict the interval of times and it would evaluate an overall score based on the following formula. 
+&lt;div&gt;
+$$score = \frac{\sum_{i=1}^{|s|}I_{T_i}\frac{1}{1+s_{i2}-s_{i1}}}{|T|+(|S|-|T|)^2}$$&lt;/div&gt;
+where &lt;div&gt; $$S_i: \{(s_{i1}, s_{i2})\mid s_{i1} \leq s_{i2}\}, \| T\|=24, \|S\|\geq \|T\|, I_{T_i}:\{1 \mid S_i \in T_i\}$$. &lt;/div&gt;
+
+Thus, there is room and trade-off for us to determine the interval of the times to get a higher overall prediction score to win the competition.
+&lt;/li&gt; 
+&lt;/ol&gt;
+&lt;/p&gt;
+
+&lt;h2&gt; Load Libraries&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import matplotlib.pylab as pylab
+params = {&#39;legend.fontsize&#39;: &#39;x-large&#39;,
+         &#39;axes.labelsize&#39;: &#39;x-large&#39;,
+         &#39;axes.titlesize&#39;:&#39;x-large&#39;,
+         &#39;xtick.labelsize&#39;:&#39;x-large&#39;,
+         &#39;ytick.labelsize&#39;:&#39;x-large&#39;}
+pylab.rcParams.update(params)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;pd.set_option(&#39;display.max_colwidth&#39;, -1)
+plt.rcdefaults()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sns.set(style=&amp;quot;whitegrid&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df = pd.read_csv(&amp;quot;curry.csv&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df.head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;time&lt;/th&gt;
+      &lt;th&gt;curryball&lt;/th&gt;
+      &lt;th&gt;currylhoop&lt;/th&gt;
+      &lt;th&gt;curryrhoop&lt;/th&gt;
+      &lt;th&gt;balllhoop&lt;/th&gt;
+      &lt;th&gt;ballrhoop&lt;/th&gt;
+      &lt;th&gt;def1dist&lt;/th&gt;
+      &lt;th&gt;def2dist&lt;/th&gt;
+      &lt;th&gt;def3dist&lt;/th&gt;
+      &lt;th&gt;def4dist&lt;/th&gt;
+      &lt;th&gt;def5dist&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;47.925333&lt;/td&gt;
+      &lt;td&gt;0.965270&lt;/td&gt;
+      &lt;td&gt;15.652612&lt;/td&gt;
+      &lt;td&gt;92.829463&lt;/td&gt;
+      &lt;td&gt;16.323108&lt;/td&gt;
+      &lt;td&gt;91.876879&lt;/td&gt;
+      &lt;td&gt;8.603274&lt;/td&gt;
+      &lt;td&gt;16.950232&lt;/td&gt;
+      &lt;td&gt;27.471575&lt;/td&gt;
+      &lt;td&gt;30.409634&lt;/td&gt;
+      &lt;td&gt;35.474795&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;47.924500&lt;/td&gt;
+      &lt;td&gt;0.797786&lt;/td&gt;
+      &lt;td&gt;15.223746&lt;/td&gt;
+      &lt;td&gt;93.094109&lt;/td&gt;
+      &lt;td&gt;15.935113&lt;/td&gt;
+      &lt;td&gt;92.307938&lt;/td&gt;
+      &lt;td&gt;8.298388&lt;/td&gt;
+      &lt;td&gt;16.730251&lt;/td&gt;
+      &lt;td&gt;27.240581&lt;/td&gt;
+      &lt;td&gt;30.249721&lt;/td&gt;
+      &lt;td&gt;35.246274&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;47.923833&lt;/td&gt;
+      &lt;td&gt;1.035342&lt;/td&gt;
+      &lt;td&gt;14.806208&lt;/td&gt;
+      &lt;td&gt;93.324333&lt;/td&gt;
+      &lt;td&gt;15.593023&lt;/td&gt;
+      &lt;td&gt;92.293618&lt;/td&gt;
+      &lt;td&gt;7.992415&lt;/td&gt;
+      &lt;td&gt;16.471735&lt;/td&gt;
+      &lt;td&gt;26.975070&lt;/td&gt;
+      &lt;td&gt;30.059684&lt;/td&gt;
+      &lt;td&gt;34.973485&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;47.923167&lt;/td&gt;
+      &lt;td&gt;2.126335&lt;/td&gt;
+      &lt;td&gt;14.375951&lt;/td&gt;
+      &lt;td&gt;93.577226&lt;/td&gt;
+      &lt;td&gt;15.994375&lt;/td&gt;
+      &lt;td&gt;91.469738&lt;/td&gt;
+      &lt;td&gt;7.693763&lt;/td&gt;
+      &lt;td&gt;16.237772&lt;/td&gt;
+      &lt;td&gt;26.712746&lt;/td&gt;
+      &lt;td&gt;29.885916&lt;/td&gt;
+      &lt;td&gt;34.705748&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;47.922500&lt;/td&gt;
+      &lt;td&gt;2.704138&lt;/td&gt;
+      &lt;td&gt;13.937750&lt;/td&gt;
+      &lt;td&gt;93.836626&lt;/td&gt;
+      &lt;td&gt;15.895369&lt;/td&gt;
+      &lt;td&gt;91.200628&lt;/td&gt;
+      &lt;td&gt;7.393487&lt;/td&gt;
+      &lt;td&gt;15.996931&lt;/td&gt;
+      &lt;td&gt;26.437723&lt;/td&gt;
+      &lt;td&gt;29.697227&lt;/td&gt;
+      &lt;td&gt;34.429396&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df.shape
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;(55615, 18)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sum(map(lambda i,j: i&amp;lt;j, curry_df[&#39;currylhoop&#39;],curry_df[&#39;curryrhoop&#39;]))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;50636
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;50636/55615.0 #maybe a data problem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;0.9104737930414456
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;exploratory-data-analysis&#34;&gt;Exploratory Data Analysis&lt;/h2&gt;
+
+&lt;p&gt;As we know, Stephen Curry is a special shooter in the NBA history, especially in 2015-2016 Season. Using the movement data is a way to understand his shooting pattern, which would be helpful for us to infer his shot times.&lt;/p&gt;
+
+&lt;p&gt;First, since Stephen Curry is known for his 3-point and long-distance shots, the changes of distances between Curry and the hoop can tell something about how Stephen Curry released the ball, 3-point or layup. It&amp;rsquo;s tricky to notice that the dataset include all the movement data of Curry on the field, which means he may play offense or defense. Through some research about the specific game online, we know for the first half, the left hoop is the goal of Golden Warriors, and vice versa. It could be useful to come up with some clever ways later to identify whether Curry is in attacking mode.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def getQuarter(x):
+    if x &amp;gt;=36: 
+        return 1
+    elif 36 &amp;gt; x &amp;gt;= 24:
+        return 2
+    elif 24 &amp;gt;= x &amp;gt;= 12:
+        return 3
+    else:
+        return 4
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df[&#39;quarter&#39;] = map(lambda x: getQuarter(x), curry_df[&#39;time&#39;])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df[&#39;curryhoop_min&#39;] = map(lambda i,j: min(i,j), curry_df[&#39;currylhoop&#39;] ,curry_df[&#39;curryrhoop&#39;] )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df = curry_df.reset_index()
+plt.figure(figsize=(100,40))
+plt.plot(curry_df[&#39;index&#39;], curry_df[&#39;curryhoop_min&#39;], &#39;-&#39;)
+plt.title(&amp;quot;Closest Distance between Hoop and Curry over time&amp;quot;, fontsize = 50)
+plt.xlabel(&#39;Index&#39;, fontsize=30)
+plt.ylabel(&#39;Distance&#39;, fontsize=30)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;../PMC-project_files/output_17_1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We have to transform the &lt;strong&gt;&lt;code&gt;time&lt;/code&gt;&lt;/strong&gt; variable to make it more understandable and easy to inteprete.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def getMinSecInQuarter(time, quarter):
+    mins = int(time - 12 * (4-quarter))
+    secs = int(((time - 12 * (4-quarter))-mins)*60)
+    millisecs = round((((time - 12 * (4-quarter))-mins)*60)- secs,2)
+    return pd.Series({&#39;minute&#39;: mins,&#39;second&#39;:secs, &#39;milisecs&#39;: millisecs})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df = curry_df.merge(curry_df.apply(lambda row: getMinSecInQuarter(row[&#39;time&#39;],row[&#39;quarter&#39;]), axis = 1), left_index=True, right_index=True)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;h2&gt;First Shot&lt;/h2&gt;
+&lt;p&gt; Let&amp;rsquo;s try to use our reasoning first. As we know when a ball is shot, the distance between the player and the ball will increase while the distance between the ball and the hoop will decrease. So we define &lt;em&gt;ballhoopmin&lt;/em&gt; as the actual distance between the ball and the hoop. Thus, we can infer that if the ratio between &lt;em&gt;curryball&lt;/em&gt; and &lt;em&gt;ballhoopmin&lt;/em&gt; is large, it&amp;rsquo;s likely that the ball is in the fly.&lt;/p&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df[&#39;ballhoop_min&#39;] = map(lambda i, j: min(i,j), curry_df[&#39;balllhoop&#39;], curry_df[&#39;ballrhoop&#39;])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df.head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;time&lt;/th&gt;
+      &lt;th&gt;curryball&lt;/th&gt;
+      &lt;th&gt;currylhoop&lt;/th&gt;
+      &lt;th&gt;curryrhoop&lt;/th&gt;
+      &lt;th&gt;balllhoop&lt;/th&gt;
+      &lt;th&gt;ballrhoop&lt;/th&gt;
+      &lt;th&gt;def1dist&lt;/th&gt;
+      &lt;th&gt;def2dist&lt;/th&gt;
+      &lt;th&gt;def3dist&lt;/th&gt;
+      &lt;th&gt;def4dist&lt;/th&gt;
+      &lt;th&gt;def5dist&lt;/th&gt;
+      &lt;th&gt;quarter&lt;/th&gt;
+      &lt;th&gt;milisecs&lt;/th&gt;
+      &lt;th&gt;minute&lt;/th&gt;
+      &lt;th&gt;second&lt;/th&gt;
+      &lt;th&gt;curryhoop_min&lt;/th&gt;
+      &lt;th&gt;ballhoop_min&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;47.925333&lt;/td&gt;
+      &lt;td&gt;0.965270&lt;/td&gt;
+      &lt;td&gt;15.652612&lt;/td&gt;
+      &lt;td&gt;92.829463&lt;/td&gt;
+      &lt;td&gt;16.323108&lt;/td&gt;
+      &lt;td&gt;91.876879&lt;/td&gt;
+      &lt;td&gt;8.603274&lt;/td&gt;
+      &lt;td&gt;16.950232&lt;/td&gt;
+      &lt;td&gt;27.471575&lt;/td&gt;
+      &lt;td&gt;30.409634&lt;/td&gt;
+      &lt;td&gt;35.474795&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.52&lt;/td&gt;
+      &lt;td&gt;11.0&lt;/td&gt;
+      &lt;td&gt;55.0&lt;/td&gt;
+      &lt;td&gt;15.652612&lt;/td&gt;
+      &lt;td&gt;16.323108&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;47.924500&lt;/td&gt;
+      &lt;td&gt;0.797786&lt;/td&gt;
+      &lt;td&gt;15.223746&lt;/td&gt;
+      &lt;td&gt;93.094109&lt;/td&gt;
+      &lt;td&gt;15.935113&lt;/td&gt;
+      &lt;td&gt;92.307938&lt;/td&gt;
+      &lt;td&gt;8.298388&lt;/td&gt;
+      &lt;td&gt;16.730251&lt;/td&gt;
+      &lt;td&gt;27.240581&lt;/td&gt;
+      &lt;td&gt;30.249721&lt;/td&gt;
+      &lt;td&gt;35.246274&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.47&lt;/td&gt;
+      &lt;td&gt;11.0&lt;/td&gt;
+      &lt;td&gt;55.0&lt;/td&gt;
+      &lt;td&gt;15.223746&lt;/td&gt;
+      &lt;td&gt;15.935113&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;47.923833&lt;/td&gt;
+      &lt;td&gt;1.035342&lt;/td&gt;
+      &lt;td&gt;14.806208&lt;/td&gt;
+      &lt;td&gt;93.324333&lt;/td&gt;
+      &lt;td&gt;15.593023&lt;/td&gt;
+      &lt;td&gt;92.293618&lt;/td&gt;
+      &lt;td&gt;7.992415&lt;/td&gt;
+      &lt;td&gt;16.471735&lt;/td&gt;
+      &lt;td&gt;26.975070&lt;/td&gt;
+      &lt;td&gt;30.059684&lt;/td&gt;
+      &lt;td&gt;34.973485&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.43&lt;/td&gt;
+      &lt;td&gt;11.0&lt;/td&gt;
+      &lt;td&gt;55.0&lt;/td&gt;
+      &lt;td&gt;14.806208&lt;/td&gt;
+      &lt;td&gt;15.593023&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;47.923167&lt;/td&gt;
+      &lt;td&gt;2.126335&lt;/td&gt;
+      &lt;td&gt;14.375951&lt;/td&gt;
+      &lt;td&gt;93.577226&lt;/td&gt;
+      &lt;td&gt;15.994375&lt;/td&gt;
+      &lt;td&gt;91.469738&lt;/td&gt;
+      &lt;td&gt;7.693763&lt;/td&gt;
+      &lt;td&gt;16.237772&lt;/td&gt;
+      &lt;td&gt;26.712746&lt;/td&gt;
+      &lt;td&gt;29.885916&lt;/td&gt;
+      &lt;td&gt;34.705748&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.39&lt;/td&gt;
+      &lt;td&gt;11.0&lt;/td&gt;
+      &lt;td&gt;55.0&lt;/td&gt;
+      &lt;td&gt;14.375951&lt;/td&gt;
+      &lt;td&gt;15.994375&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;47.922500&lt;/td&gt;
+      &lt;td&gt;2.704138&lt;/td&gt;
+      &lt;td&gt;13.937750&lt;/td&gt;
+      &lt;td&gt;93.836626&lt;/td&gt;
+      &lt;td&gt;15.895369&lt;/td&gt;
+      &lt;td&gt;91.200628&lt;/td&gt;
+      &lt;td&gt;7.393487&lt;/td&gt;
+      &lt;td&gt;15.996931&lt;/td&gt;
+      &lt;td&gt;26.437723&lt;/td&gt;
+      &lt;td&gt;29.697227&lt;/td&gt;
+      &lt;td&gt;34.429396&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.35&lt;/td&gt;
+      &lt;td&gt;11.0&lt;/td&gt;
+      &lt;td&gt;55.0&lt;/td&gt;
+      &lt;td&gt;13.937750&lt;/td&gt;
+      &lt;td&gt;15.895369&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df[&#39;dist_ratio&#39;] = curry_df[&#39;curryball&#39;] / curry_df[&#39;ballhoop_min&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s see whether we can observe any pattern of this distance ratio. We can see that there are some obvious spikes, which are probably what we are looking for. Next, we can extract those corresponding times.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;plt.figure(figsize=(100,40))
+plt.plot(curry_df[&#39;index&#39;], curry_df[&#39;dist_ratio&#39;], &#39;-&#39;)
+plt.title(&amp;quot;Distance Ratio over time&amp;quot;, fontsize = 50)
+plt.xlabel(&#39;Index&#39;, fontsize=30)
+plt.ylabel(&#39;Distance Ratio&#39;, fontsize=30)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;../PMC-project_files/output_26_1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Find the times with the top 24 highest spikes
+curry_df.nlargest(24, &#39;dist_ratio&#39;)[[&amp;quot;time&amp;quot;, &amp;quot;dist_ratio&amp;quot;, &amp;quot;curryhoop_min&amp;quot;,&amp;quot;quarter&amp;quot;]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;time&lt;/th&gt;
+      &lt;th&gt;dist_ratio&lt;/th&gt;
+      &lt;th&gt;curryhoop_min&lt;/th&gt;
+      &lt;th&gt;quarter&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42425&lt;/th&gt;
+      &lt;td&gt;14.455500&lt;/td&gt;
+      &lt;td&gt;363.651664&lt;/td&gt;
+      &lt;td&gt;18.843438&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42433&lt;/th&gt;
+      &lt;td&gt;14.450167&lt;/td&gt;
+      &lt;td&gt;363.327192&lt;/td&gt;
+      &lt;td&gt;19.129749&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42434&lt;/th&gt;
+      &lt;td&gt;14.449500&lt;/td&gt;
+      &lt;td&gt;241.701580&lt;/td&gt;
+      &lt;td&gt;19.158059&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;17819&lt;/th&gt;
+      &lt;td&gt;31.062000&lt;/td&gt;
+      &lt;td&gt;240.649549&lt;/td&gt;
+      &lt;td&gt;34.829993&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42435&lt;/th&gt;
+      &lt;td&gt;14.448833&lt;/td&gt;
+      &lt;td&gt;176.939222&lt;/td&gt;
+      &lt;td&gt;19.185484&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42431&lt;/th&gt;
+      &lt;td&gt;14.451500&lt;/td&gt;
+      &lt;td&gt;115.415805&lt;/td&gt;
+      &lt;td&gt;19.068632&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42424&lt;/th&gt;
+      &lt;td&gt;14.456167&lt;/td&gt;
+      &lt;td&gt;113.908181&lt;/td&gt;
+      &lt;td&gt;18.783849&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;824&lt;/th&gt;
+      &lt;td&gt;47.375833&lt;/td&gt;
+      &lt;td&gt;111.561951&lt;/td&gt;
+      &lt;td&gt;36.922632&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42437&lt;/th&gt;
+      &lt;td&gt;14.447500&lt;/td&gt;
+      &lt;td&gt;106.837579&lt;/td&gt;
+      &lt;td&gt;19.243607&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42426&lt;/th&gt;
+      &lt;td&gt;14.454833&lt;/td&gt;
+      &lt;td&gt;92.652413&lt;/td&gt;
+      &lt;td&gt;18.893214&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42436&lt;/th&gt;
+      &lt;td&gt;14.448167&lt;/td&gt;
+      &lt;td&gt;87.928430&lt;/td&gt;
+      &lt;td&gt;19.214337&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42430&lt;/th&gt;
+      &lt;td&gt;14.452167&lt;/td&gt;
+      &lt;td&gt;82.046262&lt;/td&gt;
+      &lt;td&gt;19.041845&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42432&lt;/th&gt;
+      &lt;td&gt;14.450833&lt;/td&gt;
+      &lt;td&gt;77.040831&lt;/td&gt;
+      &lt;td&gt;19.100626&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42439&lt;/th&gt;
+      &lt;td&gt;14.446167&lt;/td&gt;
+      &lt;td&gt;74.102692&lt;/td&gt;
+      &lt;td&gt;19.302154&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42450&lt;/th&gt;
+      &lt;td&gt;14.438833&lt;/td&gt;
+      &lt;td&gt;67.965220&lt;/td&gt;
+      &lt;td&gt;19.557624&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42438&lt;/th&gt;
+      &lt;td&gt;14.446833&lt;/td&gt;
+      &lt;td&gt;65.596627&lt;/td&gt;
+      &lt;td&gt;19.276922&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42451&lt;/th&gt;
+      &lt;td&gt;14.438167&lt;/td&gt;
+      &lt;td&gt;63.899451&lt;/td&gt;
+      &lt;td&gt;19.572023&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42428&lt;/th&gt;
+      &lt;td&gt;14.453500&lt;/td&gt;
+      &lt;td&gt;60.944564&lt;/td&gt;
+      &lt;td&gt;18.977573&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42427&lt;/th&gt;
+      &lt;td&gt;14.454167&lt;/td&gt;
+      &lt;td&gt;60.595256&lt;/td&gt;
+      &lt;td&gt;18.935209&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;17820&lt;/th&gt;
+      &lt;td&gt;31.061333&lt;/td&gt;
+      &lt;td&gt;57.896951&lt;/td&gt;
+      &lt;td&gt;34.785746&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;17818&lt;/th&gt;
+      &lt;td&gt;31.062667&lt;/td&gt;
+      &lt;td&gt;56.580318&lt;/td&gt;
+      &lt;td&gt;34.883618&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42440&lt;/th&gt;
+      &lt;td&gt;14.445500&lt;/td&gt;
+      &lt;td&gt;54.899058&lt;/td&gt;
+      &lt;td&gt;19.330957&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42423&lt;/th&gt;
+      &lt;td&gt;14.456833&lt;/td&gt;
+      &lt;td&gt;53.134837&lt;/td&gt;
+      &lt;td&gt;18.717561&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42429&lt;/th&gt;
+      &lt;td&gt;14.452833&lt;/td&gt;
+      &lt;td&gt;50.605485&lt;/td&gt;
+      &lt;td&gt;19.012620&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;However, it turns out that the corresponding top 24 &amp;ldquo;time points&amp;rdquo; include the noise that many duplicated pointed are counted in a short time period. As we researched online, it just doesn&amp;rsquo;t make sense to have most shots happened in the third quarter.&lt;/p&gt;
+
+&lt;h2 id=&#34;to-be-continued&#34;&gt;To be continued&lt;/h2&gt;
+
+&lt;p&gt;We found we can scrape the actual shot times by Curry on the official NBA statistics website &lt;a href=&#34;http://stats.nba.com/game/#!/0021500125/playbyplay/&#34;&gt;here&lt;/a&gt;. Although we are not supposed to use it as the submission, we can use it as a way to evaluate and tune our pattern regconition algorithm.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import requests
+
+shots_url = &#39;http://stats.nba.com/stats/playbyplayv2?EndPeriod=10&amp;amp;EndRange=55800&amp;amp;GameID=0021500125&amp;amp;RangeType=2&amp;amp;Season=2015-16&amp;amp;SeasonType=Regular+Season&amp;amp;StartPeriod=1&amp;amp;StartRange=0&#39;
+
+# request the URL and parse the JSON
+response = requests.get(shots_url)
+response.raise_for_status() # raise exception if invalid response
+shot_logs = response.json()[&#39;resultSets&#39;][0][&#39;rowSet&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;headers = response.json()[&#39;resultSets&#39;][0][&#39;headers&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;shots_df = pd.DataFrame(shot_logs, columns = headers)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;shots_df.head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;GAME_ID&lt;/th&gt;
+      &lt;th&gt;EVENTNUM&lt;/th&gt;
+      &lt;th&gt;EVENTMSGTYPE&lt;/th&gt;
+      &lt;th&gt;EVENTMSGACTIONTYPE&lt;/th&gt;
+      &lt;th&gt;PERIOD&lt;/th&gt;
+      &lt;th&gt;WCTIMESTRING&lt;/th&gt;
+      &lt;th&gt;PCTIMESTRING&lt;/th&gt;
+      &lt;th&gt;HOMEDESCRIPTION&lt;/th&gt;
+      &lt;th&gt;NEUTRALDESCRIPTION&lt;/th&gt;
+      &lt;th&gt;VISITORDESCRIPTION&lt;/th&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;th&gt;PLAYER2_TEAM_CITY&lt;/th&gt;
+      &lt;th&gt;PLAYER2_TEAM_NICKNAME&lt;/th&gt;
+      &lt;th&gt;PLAYER2_TEAM_ABBREVIATION&lt;/th&gt;
+      &lt;th&gt;PERSON3TYPE&lt;/th&gt;
+      &lt;th&gt;PLAYER3_ID&lt;/th&gt;
+      &lt;th&gt;PLAYER3_NAME&lt;/th&gt;
+      &lt;th&gt;PLAYER3_TEAM_ID&lt;/th&gt;
+      &lt;th&gt;PLAYER3_TEAM_CITY&lt;/th&gt;
+      &lt;th&gt;PLAYER3_TEAM_NICKNAME&lt;/th&gt;
+      &lt;th&gt;PLAYER3_TEAM_ABBREVIATION&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;0021500125&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;8:16 PM&lt;/td&gt;
+      &lt;td&gt;12:00&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;0021500125&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;8:16 PM&lt;/td&gt;
+      &lt;td&gt;12:00&lt;/td&gt;
+      &lt;td&gt;Jump Ball Towns vs. Ezeli: Tip to Green&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;Golden State&lt;/td&gt;
+      &lt;td&gt;Warriors&lt;/td&gt;
+      &lt;td&gt;GSW&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;203110&lt;/td&gt;
+      &lt;td&gt;Draymond Green&lt;/td&gt;
+      &lt;td&gt;1.610613e+09&lt;/td&gt;
+      &lt;td&gt;Golden State&lt;/td&gt;
+      &lt;td&gt;Warriors&lt;/td&gt;
+      &lt;td&gt;GSW&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;0021500125&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;8:16 PM&lt;/td&gt;
+      &lt;td&gt;11:46&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;Green 15&#39; Jump Shot (2 PTS) (Curry 1 AST)&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;Golden State&lt;/td&gt;
+      &lt;td&gt;Warriors&lt;/td&gt;
+      &lt;td&gt;GSW&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;0021500125&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;8:17 PM&lt;/td&gt;
+      &lt;td&gt;11:31&lt;/td&gt;
+      &lt;td&gt;MISS Wiggins 20&#39; Jump Shot&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;0021500125&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;8:17 PM&lt;/td&gt;
+      &lt;td&gt;11:30&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;Curry REBOUND (Off:0 Def:1)&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+      &lt;td&gt;None&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;5 rows × 33 columns&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Thus, we can identify the times of Curry&amp;rsquo;s shots based on the descriptions in the column &lt;strong&gt;&lt;code&gt;VISITORDESCRIPTION&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;pattern = r&#39;Curry.*(Layup|Shot)&#39;
+shots_df[shots_df[&#39;VISITORDESCRIPTION&#39;].str.contains(pattern, na=False)][[&#39;PERIOD&#39;, &#39;PCTIMESTRING&#39;,&#39;VISITORDESCRIPTION&#39;]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;C:\Users\jpzha\Anaconda2\lib\site-packages\ipykernel\__main__.py:2: UserWarning: This pattern has match groups. To actually get the groups, use str.extract.
+  from ipykernel import kernelapp as app
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;PERIOD&lt;/th&gt;
+      &lt;th&gt;PCTIMESTRING&lt;/th&gt;
+      &lt;th&gt;VISITORDESCRIPTION&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;10:54&lt;/td&gt;
+      &lt;td&gt;Curry 28&#39; 3PT Jump Shot (3 PTS)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;16&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;9:48&lt;/td&gt;
+      &lt;td&gt;Curry 25&#39; 3PT Jump Shot (9 PTS) (Barnes 1 AST)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;30&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;8:07&lt;/td&gt;
+      &lt;td&gt;MISS Curry 3&#39; Layup&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;41&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;6:51&lt;/td&gt;
+      &lt;td&gt;Curry 24&#39; 3PT Jump Shot (12 PTS) (Ezeli 2 AST)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;74&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;3:38&lt;/td&gt;
+      &lt;td&gt;Curry 18&#39; Pullup Jump Shot (16 PTS)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;86&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2:13&lt;/td&gt;
+      &lt;td&gt;MISS Curry  3PT Jump Shot&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;91&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1:50&lt;/td&gt;
+      &lt;td&gt;Curry  Layup (18 PTS) (Bogut 1 AST)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;95&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0:53&lt;/td&gt;
+      &lt;td&gt;MISS Curry 7&#39; Floating Jump Shot&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;101&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0:12&lt;/td&gt;
+      &lt;td&gt;Curry 24&#39; 3PT Jump Shot (21 PTS) (Iguodala 1 AST)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;185&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;4:13&lt;/td&gt;
+      &lt;td&gt;MISS Curry 27&#39; 3PT Jump Shot&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;191&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;3:25&lt;/td&gt;
+      &lt;td&gt;Curry 11&#39; Floating Jump Shot (23 PTS) (Green 6 AST)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;220&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;0:00&lt;/td&gt;
+      &lt;td&gt;Curry 2&#39; Driving Layup (25 PTS)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;254&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;8:33&lt;/td&gt;
+      &lt;td&gt;MISS Curry 21&#39; Jump Shot&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;275&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;6:00&lt;/td&gt;
+      &lt;td&gt;MISS Curry 1&#39; Layup&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;284&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;5:17&lt;/td&gt;
+      &lt;td&gt;Curry 16&#39; Jump Shot (27 PTS)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;311&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;3:06&lt;/td&gt;
+      &lt;td&gt;Curry 26&#39; 3PT Jump Shot (32 PTS)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;313&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;2:39&lt;/td&gt;
+      &lt;td&gt;Curry 25&#39; 3PT Jump Shot (35 PTS) (Green 9 AST)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;315&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;2:01&lt;/td&gt;
+      &lt;td&gt;MISS Curry 25&#39; 3PT Jump Shot&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;329&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;0:25&lt;/td&gt;
+      &lt;td&gt;MISS Curry 10&#39; Floating Jump Shot&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;391&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;5:51&lt;/td&gt;
+      &lt;td&gt;Curry 26&#39; 3PT Jump Shot (38 PTS)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;393&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;5:23&lt;/td&gt;
+      &lt;td&gt;Curry 17&#39; Jump Shot (40 PTS)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;395&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;4:58&lt;/td&gt;
+      &lt;td&gt;MISS Curry 26&#39; 3PT Jump Shot&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;419&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;2:54&lt;/td&gt;
+      &lt;td&gt;MISS Curry 28&#39; 3PT Jump Shot&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;432&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;1:55&lt;/td&gt;
+      &lt;td&gt;Curry 19&#39; Jump Bank Shot (42 PTS) (Iguodala 5 AST)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;452&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;0:29&lt;/td&gt;
+      &lt;td&gt;Curry 26&#39; 3PT Jump Shot (46 PTS) (Green 12 AST)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To be continued. Stay tuned.:)&lt;/p&gt;
+
+&lt;script type=&#34;text/javascript&#34;
+  src=&#34;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#34;&gt;
+&lt;/script&gt;</description>
+    </item>
+    
+    <item>
       <title>TravisTorrent Data Challenge</title>
       <link>/projects/GHTravis_md/</link>
       <pubDate>Mon, 02 Jan 2017 00:00:00 +0000</pubDate>
@@ -445,160 +1391,6 @@ aq_df %&amp;gt;%
     </item>
     
     <item>
-      <title></title>
-      <link>/about/index_files/d3-legend/README/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/index_files/d3-legend/README/</guid>
-      <description>
-
-&lt;h1 id=&#34;d3-legend&#34;&gt;d3-legend&lt;/h1&gt;
-
-&lt;p&gt;Full documentation: &lt;a href=&#34;http://d3-legend.susielu.com&#34;&gt;http://d3-legend.susielu.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
-
-&lt;h3 id=&#34;using-just-the-minified-file&#34;&gt;Using just the minified file&lt;/h3&gt;
-
-&lt;p&gt;You must inclue the &lt;a href=&#34;http://d3js.org/&#34;&gt;d3 library&lt;/a&gt; before including the legend file. Then you can simply add the compiled js file to your website:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;d3-legend.min.js&lt;/li&gt;
-&lt;li&gt;d3-legend.js (Human readable version)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;using-cdn&#34;&gt;Using CDN&lt;/h3&gt;
-
-&lt;p&gt;You can also add latest version of &lt;a href=&#34;https://cdnjs.com/libraries/d3-legend&#34;&gt;d3-legend hosted on cdnjs&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;using-npm&#34;&gt;Using npm&lt;/h3&gt;
-
-&lt;p&gt;Already using d3? Great! You can add the d3 legend as a node module by running:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;npm i d3-svg-legend -S&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;If not, install both this way:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;npm i d3@^3.0.0 d3-svg-legend -S&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Please note, d3 is now a peer dependency, you will have to have the npm d3 module separately. This component works with any 3.x version of d3.&lt;/p&gt;
-
-&lt;p&gt;If you &lt;code&gt;require(&#39;d3-svg-legend&#39;)&lt;/code&gt; we attach to d3 as &lt;code&gt;d3.legend&lt;/code&gt;. If you&amp;rsquo;d like to use d3-legend without extending d3, &lt;code&gt;require(&#39;d3-svg-legend/no-extend&#39;)&lt;/code&gt;. For example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var d3 = require(&#39;d3&#39;)
-var legend = require(&#39;d3-svg-legend/no-extend&#39;)
-
-var svg = d3.select(&amp;quot;#svg-color-quant&amp;quot;);
-
-var quantize = d3.scale.quantize()
-    .domain([ 0, 0.15 ])
-    .range(d3.range(9).map(function(i) { return &amp;quot;q&amp;quot; + i + &amp;quot;-9&amp;quot;; }));
-
-svg.append(&amp;quot;g&amp;quot;)
-  .attr(&amp;quot;class&amp;quot;, &amp;quot;legendQuant&amp;quot;)
-  .attr(&amp;quot;transform&amp;quot;, &amp;quot;translate(20,20)&amp;quot;);
-
-var colorLegend = legend.color()
-    .labelFormat(d3.format(&amp;quot;.2f&amp;quot;))
-    .useClass(true)
-    .scale(quantize);
-
-svg.select(&amp;quot;.legendQuant&amp;quot;)
-  .call(colorLegend);
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;feedback&#34;&gt;Feedback&lt;/h2&gt;
-
-&lt;p&gt;I would love to hear from you about any additional features that would be useful, please say hi on twitter &lt;a href=&#34;https://www.twitter.com/DataToViz&#34;&gt;@DataToViz&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/about/index_files/d3/README/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/index_files/d3/README/</guid>
-      <description>
-
-&lt;h1 id=&#34;data-driven-documents&#34;&gt;Data-Driven Documents&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://d3js.org&#34;&gt;&lt;img src=&#34;http://d3js.org/logo.svg&#34; align=&#34;left&#34; hspace=&#34;10&#34; vspace=&#34;6&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;D3.js&lt;/strong&gt; is a JavaScript library for manipulating documents based on data. &lt;strong&gt;D3&lt;/strong&gt; helps you bring data to life using HTML, SVG, and CSS. &lt;strong&gt;D3&lt;/strong&gt; emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.&lt;/p&gt;
-
-&lt;p&gt;Want to learn more? &lt;a href=&#34;https://github.com/mbostock/d3/wiki&#34;&gt;See the wiki.&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;For examples, &lt;a href=&#34;https://github.com/mbostock/d3/wiki/Gallery&#34;&gt;see the gallery&lt;/a&gt; and &lt;a href=&#34;http://bl.ocks.org/mbostock&#34;&gt;mbostock’s bl.ocks&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/about/index_files/radarchart/README/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/index_files/radarchart/README/</guid>
-      <description>
-
-&lt;h1 id=&#34;reusable-updating-radarchart&#34;&gt;reusable updating radarChart&lt;/h1&gt;
-
-&lt;p&gt;###Design based on original by &lt;a href=&#34;https://twitter.com/NadiehBremer&#34;&gt;NadiehBremer&lt;/a&gt; at &lt;a href=&#34;http://www.visualcinnamon.com/2015/10/different-look-d3-radar-chart.html&#34;&gt;Visual Cinnamon&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;###Coding philosophy inspired by &lt;a href=&#34;http://www.toptal.com/d3-js/towards-reusable-d3-js-charts&#34;&gt;Rob Moore&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;####&lt;a href=&#34;http://tennisvisuals.com/examples/MatchRadar.html&#34;&gt;See this block in production with Live Data&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;find-the-latest-code-on-github-https-github-com-tennisvisuals-updating-radar-chart&#34;&gt;&lt;a href=&#34;https://github.com/TennisVisuals/updating-radar-chart&#34;&gt;Find the Latest Code on GitHub&lt;/a&gt;&lt;/h4&gt;
-
-&lt;p&gt;#####I figured out enter/exit/update for nested objects by studying &lt;a href=&#34;http://bl.ocks.org/LeeMendelowitz/11383724&#34;&gt;Lee Mendelowitz&amp;rsquo;s block&lt;/a&gt; and reviewing &lt;a href=&#34;https://groups.google.com/forum/#!topic/d3-js/5AxgsKK31EA&#34;&gt;Mike&amp;rsquo;s comments&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;###Features:
-- Separate layer for hover objects which need to remain on top of chart
-- Separate layer for tooltip which needs to be uppermost layer
-- Events are configurable as options such that external functions can be seamlessly integrated
- - e.g. external tooltips can be configured for mouseover events&lt;/p&gt;
-
-&lt;p&gt;###Accessors:
-####&lt;em&gt;by default accessors with no parameters return current values&lt;/em&gt;
-- chart.duration(transition-time) // duration of transitions
-- chart.options(object) // many options don&amp;rsquo;t have accessors
-- chart.width(width)
-- chart.height(height)
-- chart.margins(object)
-- chart.data(data) // set data
-- chart.update() // update chart
-- chart.maxValue(value) // maxValue of axis values
-- chart.levels(value) // number of ring levels
-- chart.opacity(value) // opacity of unselected areas
-- chart.borderWidth(value) // width of border surrounding areas
-- chart.rounded(true/false) // select rounded areas
-- chart.events(object) &amp;ndash; chart.events({&amp;lsquo;legend&amp;rsquo;: {&amp;lsquo;mouseover&amp;rsquo;: null}})
-- chart.color(d3.scale)
-- chart.colors(object) &amp;ndash; chart.colors({&amp;lsquo;axis1&amp;rsquo;: &amp;lsquo;color1&amp;rsquo;, &amp;lsquo;axis2&amp;rsquo;: &amp;lsquo;color2&amp;rsquo;})&lt;/p&gt;
-
-&lt;p&gt;#####operations on data held in chart instance
-- chart.pop()
-- chart.push(row) -or- chart.push([row, row])
-- chart.shift()
-- chart.unshift(row) -or- chart.unshift([row, row])
-- chart.slice(begin, end)&lt;/p&gt;
-
-&lt;p&gt;#####operations performed on data prior to display
-- chart.invert(axis) -or- chart.invert([axis, axis]) // index or &amp;ldquo;axis label&amp;rdquo;
-- chart.ranges({&amp;lsquo;axis&amp;rsquo;: [min, max]})
-- chart.filterAxes(&amp;lsquo;axis&amp;rsquo;) -or- chart.filterAxes([&amp;lsquo;axis&amp;rsquo;, &amp;lsquo;axis&amp;rsquo;])
-- chart.filterAreas(&amp;lsquo;key&amp;rsquo;) -or- chart.filterAreas([&amp;lsquo;key1&amp;rsquo;, &amp;lsquo;key2&amp;rsquo;])&lt;/p&gt;
-
-&lt;p&gt;#####convenience
-- chart.keys() // return a list of data keys
-- chart.axes() // return labels of all axes
-- chart.nodes() // return svg object&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>About Me</title>
       <link>/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -624,8 +1416,8 @@ svg.select(&amp;quot;.legendQuant&amp;quot;)
 &lt;h3&gt;What’s the plan?&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#34;images/RoadToDataScientist.png&#34; width=&#34;775&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Where am I?&lt;/p&gt;
-&lt;div id=&#34;htmlwidget-762ed99e517f4b552176&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;d3radar html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-762ed99e517f4b552176&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:[{&#34;key&#34;:&#34;Now&#34;,&#34;values&#34;:[{&#34;axis&#34;:&#34;Fundamentals&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Statistics&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Programming&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Machine Learning&#34;,&#34;value&#34;:0.8},{&#34;axis&#34;:&#34;Text Mining/NLP&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Visualization&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Big Data&#34;,&#34;value&#34;:0.6},{&#34;axis&#34;:&#34;Data Ingestion&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Munging&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Toolbox&#34;,&#34;value&#34;:0.7}]},{&#34;key&#34;:&#34;6-Month Goal&#34;,&#34;values&#34;:[{&#34;axis&#34;:&#34;Fundamentals&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Statistics&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Programming&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Machine Learning&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Text Mining/NLP&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Visualization&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Big Data&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Ingestion&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Munging&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Toolbox&#34;,&#34;value&#34;:0.8}]}]},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;div id=&#34;htmlwidget-31f15e3593d1d2a0a312&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;d3radar html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-31f15e3593d1d2a0a312&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:[{&#34;key&#34;:&#34;Now&#34;,&#34;values&#34;:[{&#34;axis&#34;:&#34;Fundamentals&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Statistics&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Programming&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Machine Learning&#34;,&#34;value&#34;:0.8},{&#34;axis&#34;:&#34;Text Mining/NLP&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Visualization&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Big Data&#34;,&#34;value&#34;:0.6},{&#34;axis&#34;:&#34;Data Ingestion&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Munging&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Toolbox&#34;,&#34;value&#34;:0.7}]},{&#34;key&#34;:&#34;6-Month Goal&#34;,&#34;values&#34;:[{&#34;axis&#34;:&#34;Fundamentals&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Statistics&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Programming&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Machine Learning&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Text Mining/NLP&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Visualization&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Big Data&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Ingestion&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Munging&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Toolbox&#34;,&#34;value&#34;:0.8}]}]},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;p&gt;Just keep learning and practicing.&lt;/p&gt;
 &lt;p&gt;By the way, this blog is created with the new &lt;code&gt;blogdown&lt;/code&gt; package and thanks to this great &lt;a href=&#34;https://proquestionasker.github.io/blog/Making_Site/&#34;&gt;tutorial&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
