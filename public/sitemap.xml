@@ -7,6 +7,11 @@
   </url>
   
   <url>
+    <loc>/projects/PMC-project/</loc>
+    <lastmod>2017-01-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/projects/GHTravis_md/</loc>
     <lastmod>2017-01-02T00:00:00+00:00</lastmod>
   </url>
@@ -14,18 +19,6 @@
   <url>
     <loc>/blog/ChinaAirQualityAnalysis/</loc>
     <lastmod>2016-01-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/about/index_files/d3-legend/README/</loc>
-  </url>
-  
-  <url>
-    <loc>/about/index_files/d3/README/</loc>
-  </url>
-  
-  <url>
-    <loc>/about/index_files/radarchart/README/</loc>
   </url>
   
   <url>
@@ -62,7 +55,7 @@
   
   <url>
     <loc>/tags/eda/</loc>
-    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+    <lastmod>2017-01-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -77,8 +70,20 @@
   </url>
   
   <url>
+    <loc>/tags/nba/</loc>
+    <lastmod>2017-01-13T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/projects/</loc>
     <lastmod>2017-01-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/python/</loc>
+    <lastmod>2017-01-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
