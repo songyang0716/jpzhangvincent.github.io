@@ -186,6 +186,7 @@ knitr::include_graphics("MiningStackOverflow_files/word_embedding.jpg")
 
 ### Recurrent Neural Network LSTM
 Long short-term memory(LSTM) is a recurrent neural network architecture that prevents the vanishing gradient problem in Backpropagation through time. There are usually "input gate", "forget gate" and "output gate" to control the flow of information in training. Thus, it's good at remembering values for either long or short durations time. There are a lot of resources online regarding this topic. LSTM model is known for success in NLP, speech recognition and time series forcasting. It would be interesting to see how this cutting-edge deep learning model applies in this specific scientific corpus data. The structure of our Deep Learning model is showed below.
+
 ```{r  echo = FALSE, out.width = "80%"}
 knitr::include_graphics("MiningStackOverflow_files/lstm.jpg")
 ```
