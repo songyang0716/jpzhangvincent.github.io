@@ -15,7 +15,23 @@
       <pubDate>Sun, 10 Jan 2016 00:00:00 +0000</pubDate>
       
       <guid>/blog/ChinaAirQualityAnalysis/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+      <description>---
+date: &#34;2016-01-10&#34;
+title: &#34;Air Quality in China&#34;
+showonlyimage: false
+draft: false
+image: &#34;blog/img/AirQuality.JPG&#34;
+weight: 0
+type: &#34;post&#34;
+author: &#34;Vincent Zhang&#34;
+description: &#34;PART I - Exploratory Data Analysis of Air quality in Chinese cities.&#34;
+tags: [
+&#34;EDA&#34;,
+&#34;R&#34;, &#34;TimeSeries&#34;, &#34;Air Quality&#34;]
+---
+
+
+&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 

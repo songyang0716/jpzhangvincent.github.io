@@ -111,13 +111,25 @@ ga('send', 'pageview');
             <li><a href="../../tags/github"><i class="fa fa-tags"></i> github</a>
             </li>
             
+            <li><a href="../../tags/learning"><i class="fa fa-tags"></i> learning</a>
+            </li>
+            
+            <li><a href="../../tags/ml"><i class="fa fa-tags"></i> ml</a>
+            </li>
+            
             <li><a href="../../tags/nba"><i class="fa fa-tags"></i> nba</a>
+            </li>
+            
+            <li><a href="../../tags/nlp"><i class="fa fa-tags"></i> nlp</a>
             </li>
             
             <li><a href="../../tags/python"><i class="fa fa-tags"></i> python</a>
             </li>
             
             <li><a href="../../tags/r"><i class="fa fa-tags"></i> r</a>
+            </li>
+            
+            <li><a href="../../tags/rnn"><i class="fa fa-tags"></i> rnn</a>
             </li>
             
             <li><a href="../../tags/sql"><i class="fa fa-tags"></i> sql</a>
@@ -217,12 +229,13 @@ ga('send', 'pageview');
 <li><a href="#iidata-2017-predictive-modeling-competition">IIDATA 2017 Predictive Modeling Competition</a></li>
 <li><a href="#exploratory-data-analysis">Exploratory Data Analysis</a></li>
 <li><a href="#first-shot">Fisrt Shot</a></li>
+<li><a href="#can-we-get-the-labels?">Can we get the labels?</a></li>
 <li><a href="#to-be-continued">To be continued</a></li>
 </ul>
 
 <h2>IIDATA 2017 Predictive Modeling Competition</h2>
 <p>
-<strong>IIDATA</strong> is a one-day data science convention hosted by UC Davis undergraduate students. This year will be on Feb.4, 20117. There will be hands-on workshops, tech talks and modeling competitions in this event. I think it would be a good learning opportunity for people interesed in data science to attend. For more information, please visit the <a href="http://www.iidata.net/">website</a>. Lately, the organization team released their dataset for the Predictive Modeling Competition(PMC). This year the challenge is quite interesting. </p>
+<strong>IIDATA</strong> is a one-day data science convention hosted by UC Davis undergraduate students. This year will be on Feb.4, 2017. There will be hands-on workshops, tech talks and modeling competitions in this event. I think it would be a good learning opportunity for people interesed in data science to attend. For more information, please visit the <a href="http://www.iidata.net/">website</a>. Lately, the organization team released their dataset for the Predictive Modeling Competition(PMC). This year the challenge is quite interesting. </p>
 
 <p><i>Given Stephen Curry’s distance to ball, hoops and the opposing team’s defenders, can 
 you determine when he is releasing the ball?</i></p>
@@ -233,7 +246,7 @@ They also have a leaderboard with more detailed information about the competitio
 
 <h2> Data </h2>
 
-<p>This dataset contains temporal snapshots taken every 0.04 seconds during the November 12th, 2015 Golden State Warriors vs. Minnesota Timberwolves game (upon which Curry is on the court). It was told that Curry took **24** shots. For each shot, you are expected to find when he is releasing the ball from his hands with as much accuracy as possible. The data source is from [SportVU](https://www.stats.com/sportvu-basketball/). These are the variables:
+<p>This dataset contains temporal snapshots taken every 0.04 seconds during the November 12th, 2015 Golden State Warriors vs. Minnesota Timberwolves game (upon which Curry is on the court). It was told that Curry took **24** shots. For each shot, you are expected to find when he is releasing the ball from his hands with as much accuracy as possible. The data source is <a href="https://www.stats.com/sportvu-basketball/">SportVU</a>. These are the variables:
 <ul type="disc">
 <li>“Time” - time left in the game (In fractional minutes)</li>
 <li>“currylhoop” - distance from Curry to the left hoop</li>
@@ -392,23 +405,25 @@ plt.rcdefaults()
 <pre><code>(55615, 18)
 </code></pre>
 
+<p>It&rsquo;s tricky to note that the dataset include all the movement data of Curry on the field and he may play offense or defense.  And he played nearly equal time in the first half and second half. So we could expect the probability that Curry was in the side closer to either left or right hoop should be somewhat equal with possibly some skewness since we know he&rsquo;s a PG and more likely in attack mode. We can do a sanity check first to verify that. It does turn out to be true.</p>
+
 <pre><code class="language-python">sum(map(lambda i,j: i&lt;j, curry_df['currylhoop'],curry_df['curryrhoop']))
 </code></pre>
 
-<pre><code>50636
+<pre><code>28784
 </code></pre>
 
-<pre><code class="language-python">50636/55615.0 #maybe a data problem
+<pre><code class="language-python">28784/55615.0 
 </code></pre>
 
-<pre><code>0.9104737930414456
+<pre><code>0.5175582127123978
 </code></pre>
 
 <h2 id="exploratory-data-analysis">Exploratory Data Analysis</h2>
 
 <p>As we know, Stephen Curry is a special shooter in the NBA history, especially in 2015-2016 Season. Using the movement data is a way to understand his shooting pattern, which would be helpful for us to infer his shot times.</p>
 
-<p>First, since Stephen Curry is known for his 3-point and long-distance shots, the changes of distances between Curry and the hoop can tell something about how Stephen Curry released the ball, 3-point or layup. It&rsquo;s tricky to notice that the dataset include all the movement data of Curry on the field, which means he may play offense or defense. Through some research about the specific game online, we know for the first half, the left hoop is the goal of Golden Warriors, and vice versa. It could be useful to come up with some clever ways later to identify whether Curry is in attacking mode.</p>
+<p>First, since Stephen Curry is known for his 3-point and long-distance shots, we would be interested in how the distance between Curry and the hoop varies around the 3-point line. Through some research about the specific game online, we know for the first half, the left hoop is the goal of Golden Warriors, and vice versa. However, as we can see, there are a lot of fluatuations because Curry were playing defense or offense. So we somehow need to come up with some clever ways to identify whether Curry is in attacking mode or not.</p>
 
 <pre><code class="language-python">def getQuarter(x):
     if x &gt;=36: 
@@ -449,8 +464,9 @@ plt.ylabel('Distance', fontsize=30)
 <pre><code class="language-python">curry_df = curry_df.merge(curry_df.apply(lambda row: getMinSecInQuarter(row['time'],row['quarter']), axis = 1), left_index=True, right_index=True)
 </code></pre>
 
-<p><h2>First Shot</h2>
-<p> Let&rsquo;s try to use our reasoning first. As we know when a ball is shot, the distance between the player and the ball will increase while the distance between the ball and the hoop will decrease. So we define <em>ballhoopmin</em> as the actual distance between the ball and the hoop. Thus, we can infer that if the ratio between <em>curryball</em> and <em>ballhoopmin</em> is large, it&rsquo;s likely that the ball is in the fly.</p></p>
+<h2>First Shot</h2>
+
+<p> Let's try to use our reasoning first. As we know when a ball is shot, the distance between the player and the ball will increase while the distance between the ball and the hoop will decrease. So we define _ballhoopmin_ as the actual distance between the ball and the hoop. Thus, we can infer that if the ratio between _curryball_ and _ballhoopmin_ is large, it's likely that the ball is in the fly.</p>
 
 <pre><code class="language-python">curry_df['ballhoop_min'] = map(lambda i, j: min(i,j), curry_df['balllhoop'], curry_df['ballrhoop'])
 </code></pre>
@@ -791,9 +807,11 @@ curry_df.nlargest(24, 'dist_ratio')[[&quot;time&quot;, &quot;dist_ratio&quot;, &
 
 <p>However, it turns out that the corresponding top 24 &ldquo;time points&rdquo; include the noise that many duplicated pointed are counted in a short time period. As we researched online, it just doesn&rsquo;t make sense to have most shots happened in the third quarter.</p>
 
-<h2 id="to-be-continued">To be continued</h2>
+<h2>Can we get the labels?</h2>
 
-<p>We found we can scrape the actual shot times by Curry on the official NBA statistics website <a href="http://stats.nba.com/game/#!/0021500125/playbyplay/">here</a>. Although we are not supposed to use it as the submission, we can use it as a way to evaluate and tune our pattern regconition algorithm.</p>
+<p>It&rsquo;s obvious that the raw data doesn&rsquo;t directly tell us when Curry made the shots. However, given the background information about the game, it&rsquo;s possible to find out those actual shooting times, for example, by watching this specific past (game)[<a href="https://www.youtube.com/watch?v=5PozYV_qHD8">https://www.youtube.com/watch?v=5PozYV_qHD8</a>]. Although we are not supposed to use it as the submission, ideally, we can use the information to denote the corresponding Curry&rsquo;s shooting times as a way to tune our pattern regconition algorithm.</p>
+
+<p>Acutally, there is a more clever way to get the labels. We found we can scrape the actual shot times by Curry on the official NBA statistics website <a href="http://stats.nba.com/game/#!/0021500125/playbyplay/">here</a>. It&rsquo;s a little tricky that the website is dynamically generated. To do the web scraping, first we can try to find the API access point by locating Develop Tools -&gt; Network -&gt; XHR in Chrome. Luckily, we found it exists. Then we can go ahead to scrape the information we want.</p>
 
 <pre><code class="language-python">import requests
 
@@ -803,15 +821,11 @@ shots_url = 'http://stats.nba.com/stats/playbyplayv2?EndPeriod=10&amp;EndRange=5
 response = requests.get(shots_url)
 response.raise_for_status() # raise exception if invalid response
 shot_logs = response.json()['resultSets'][0]['rowSet']
-</code></pre>
-
-<pre><code class="language-python">headers = response.json()['resultSets'][0]['headers']
+headers = response.json()['resultSets'][0]['headers']
 </code></pre>
 
 <pre><code class="language-python">shots_df = pd.DataFrame(shot_logs, columns = headers)
-</code></pre>
-
-<pre><code class="language-python">shots_df.head()
+shots_df.head()
 </code></pre>
 
 <div style="height:100%;overflow:auto;">
@@ -968,14 +982,10 @@ shot_logs = response.json()['resultSets'][0]['rowSet']
 <p>5 rows × 33 columns</p>
 </div>
 
-<p>Thus, we can identify the times of Curry&rsquo;s shots based on the descriptions in the column <strong><code>VISITORDESCRIPTION</code></strong>.</p>
+<p>Thus, we can use regular expression to identify the times of Curry&rsquo;s shots based on the descriptions in the column <strong><code>VISITORDESCRIPTION</code></strong>.</p>
 
 <pre><code class="language-python">pattern = r'Curry.*(Layup|Shot)'
 shots_df[shots_df['VISITORDESCRIPTION'].str.contains(pattern, na=False)][['PERIOD', 'PCTIMESTRING','VISITORDESCRIPTION']]
-</code></pre>
-
-<pre><code>C:\Users\jpzha\Anaconda2\lib\site-packages\ipykernel\__main__.py:2: UserWarning: This pattern has match groups. To actually get the groups, use str.extract.
-  from ipykernel import kernelapp as app
 </code></pre>
 
 <div>
@@ -1143,7 +1153,23 @@ shots_df[shots_df['VISITORDESCRIPTION'].str.contains(pattern, na=False)][['PERIO
 </table>
 </div>
 
-<p>To be continued. Stay tuned.:)</p>
+<h2 id="to-be-continued">To be continued</h2>
+
+<p>Plans for the next step</p>
+
+<ul>
+<li>Doing more exploratory data analysis for the snippet time frames that Curry made the shots.</li>
+<li>Learn and experiment with the Recurrent Neural Network model</li>
+</ul>
+
+<p>Through my research, there are some good reasons why we should try Recurrent Neural Network, a Deep learning model known for processing language and sequence data.</p>
+
+<ul>
+<li>All the covariates are actually time series data. Like speech regonition or signal processing, the specific hidden shooting pattern is what we are looking for in the time series.</li>
+<li>Data is noisy. However, deep learning model is good at extracting latent representation/information. Thus, we can be less bothered by feature engineering.</li>
+</ul>
+
+<p>To be continued. Stay tuned. :)</p>
 
 <script type="text/javascript"
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">

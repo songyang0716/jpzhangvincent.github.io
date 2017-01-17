@@ -1,0 +1,126 @@
+---
+date: "2017-01-14"
+title: "Mining the Cross Validated Dataset"
+showonlyimage: true
+draft: false
+image: "blog/img/StackOverflow.jpg"
+weight: 1
+type: "post"
+author: "Vincent Zhang"
+tags: ["ML","Python", "NLP", "RNN"]
+description: "This is a review and discussion on my Machine Learning class project - Mining the Stack Overflow Dataset."
+---
+
+```{r, include = FALSE}
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+-   [Introduction](#introduction)
+    -   [Data Preparation](#data-preparation)
+    -   [Tools we used](#tools-we-used)
+-   [Exploratory Data Analysis](#exploratory-data-analysis)
+-   [Topic Modeling](#topic-modeling) 
+    -   [K-Means](#k-means)
+    -   [Latent Dirichlet Allocation](#latent-dirichlet-allocation)
+-   [Question Quality Prediction](#question-quality-prediction)
+    -   [Feature Engineering](#feature-engineering)
+-   [Answer Quality Prediction](#answer-quality-prediction)
+-   [Lessons](#lessons)
+
+## Introduction
+
+In my [STA 208 Statistical Machine Learning class](https://jsharpna.github.io/208/index.html) in Spring 2015, I worked on the final project "Mining the Cross Validated Dataset",with my another two teammates(Weitong Lin and Boya Liu). [Cross Validated](http://stats.stackexchange.com/) is a question and answer site for people interested in statistics, machine learning, data analysis, data mining, and data visualization. It is a part of the ecosystem of Stack Exchange, in which Stack Overflow is the similar one being geared towards programming. Thousands of people use Cross Validated to get good answers for their questions in machine learning, statistical programming, data mining and statistics. 
+
+The quality of the content and the civility of the community are the paramount concerns to the moderators on Stack Overflow. There is a wide range of applications of Natural language processing and Machine Learning on this kind of Q&A website. In this project, we aimed to delve into problems of topic modeling and post quality prediction, because they are very related to understand the conent quality of posts on the Cross Validated. It is worth noting that in this project we also went through the cycle of data science, namely, data cleaning/munging with NLP techniques, exploratory data anlysis,feature engineering and machine learning, data visualization and presentation.
+
+### Data Preparation
+
+Data is collected from Stack Exchange Data Dump. We will only study the data from [stats section](http://stats.stackexchange.com). This section includes questions and answers from Jan, 2010 to Mar, 2016 for people interested in statistics, machine learning and data analysis. It includes information about comments, badges, post history, postlinks, post, tags, users and votes in separate xml files. An SQL database was created to linked those files together and accelerate data processing. The structure of the database is showed below.
+
+```{r  echo = FALSE, out.width = "80%"}
+knitr::include_graphics("MiningStackOverflow_files/cv_database.jpg")
+```
+
+The questions and answers from this data set is really messy. It contains xml tag, code, email, formula and url. In order to improve the accuracy of prediction and clustering, we cleaned the data as the first step. Code, url link, email, formula, numbers, stopwords and punctuation needed to be carefully treated in different cases. Besides, stemming and lemmatization were used to reduce different forms of a word to a common base form.
+
+
+### Tools we used
+
+This project is very practical and rewarding for us to learn and explore different tools. The following table shows the tools we used.
+
+| Python packages       	| Usage                               	|
+|-----------------------	|-------------------------------------	|
+| Beautifulsoup         	| Clean and extract element from HTML 	|
+| SQLite, pandas, numpy 	| Data  Munging                       	|
+| NLTK, TextBlob        	| Text prepocessing                   	|
+| Sckitlearn, xGBoost   	| Machine learning                    	|
+| Gensim                	| Word embedding(doc2vec)             	|
+| Theano, keras         	| deep learning                       	|
+
+
+## Exploratory Data Analysis
+
+Before we jumped into the wild world of machine learning, we explore the data fist to understand the complexity and some fun facts. The detailed code and analysis can be found on our project [folder](https://github.com/jpzhangvincent/StackOverflow-MLproject/tree/master/EDA). 
+
+The follow is the list of top 20 popular questions on Cross Validated ranked by _Score_(Upvotes - Downvotes), _ViewCount_, _AnswerCount_, _FavoriteCount_, _CommentCount_. Those are indeed very interesting questions and worth the time for reading. 
+
+```{r, echo = FALSE, out.width = "70%"}
+knitr::include_graphics("MiningStackOverflow_files/top_questions.png")
+```
+
+On the other hand, we also got the top 20 popluar answers in a similar way. Due to the content length, I won't show the long content list here. An example is showed below. We found some common characteristics about high-rated answer posts, which are
+
+1. thorough and knowledgable answers
+2. with formula and image
+3. with reference link
+4. various sentence structures
+
+```{r, echo = FALSE, out.width = "70%"}
+knitr::include_graphics("MiningStackOverflow_files/ans_example.png")
+```
+
+## Topic Modeling
+
+Discoverying the topics is useful for Stack Overflow users to have a sense about the topics of each post, but also for the site moderators to generate the tags in each questions automatically. It give us the hint about what people are interested in and chasing for in this envolving realm of statistics, machine learning and artificial intelligence. Topic Modeling is a unsupervised learning application in natural language processing to identify the topics in each post. K-means and latent dirichlet allocation (LDA) were used to separate the questions into different clusters. The cleaned data was used to make a better separation and the TF-IDF is the transformed data matrix representation instead of the bad-of-word representation.
+
+### K Means
+
+K-means is a popular clustering algorithm that tries to distribute a predefined number of points (K) in a way that they end up in the center of our clusters, close to the mean. We're going to create 8 clusters using MiniBatchKMeans from scikit-learn. The potential topics in each cluster is showed below. The clustering plot is showed in Figure 3. From the result, we can see that cluster 0 is about hypothesis testing, cluster 1 seems to be related regression model, cluster 2 is about data visualization, cluster 3 is about time series forecasting, cluster 5 is about linear mixed effect model, cluster 6 is about probability theory.
+
+```{r, echo = FALSE, out.width = "40%"}
+knitr::include_graphics("MiningStackOverflow_files/kmeans_clusters.jpg")
+```
+
+Here is the interactive K-Means Topics clustering visualization(in 2 dimensions).  
+```{r , echo=FALSE}
+htmltools::includeHTML("MiningStackOverflow_files/kmeans8.html")
+```
+
+### Latent Dirichlet Allocation
+
+LDA method is a well-known topic modeling algorithm, which could uncover the latent topics in each post, and then we are going to use the topic distributions for each post to group similar posts together. The number of clusters we chose is 8. The potential topics in each cluster is showed below. The topic 0 seems to be related to machine learning, Topic 1 seems to be about probability theory. Topic 2 is about feature engineering and training, topic 3 is about hypothesis testing, topic 4 is related to regression analysis, topic 5 is related to time series analysis, topic 6 seems to be related to clustering and unsupervised learning and topic 7 is related to hypothesis testing. There are some overlaps of topics from LDA and K-means, such as hypothesis testing, regression model and time series analysis. 
+
+```{r echo = FALSE, out.width = "70%"}
+knitr::include_graphics("MiningStackOverflow_files/lda_clusters.jpg")
+```
+
+Here is the interactive LDA Topics clustering visualization.  
+
+```{r, echo=FALSE}
+htmltools::includeHTML("MiningStackOverflow_files/lda8.html")
+```
+
+Based on the plot, it feels like the clustering by LDA is better represented than that by K-means, which indicates that LDA is a more appropriate method in this case. 
+
+## Question Quality Prediction
+
+### Feature Engineering
+
+
+## Answer Quality Prediction
+
+
+## Lessons
+
+
+
