@@ -8,9 +8,7 @@ weight: 0
 type: "post"
 author: "Vincent Zhang"
 description: "PART I - Exploratory Data Analysis of Air quality in Chinese cities."
-tags: [
-"EDA",
-"R", "TimeSeries", "Air Quality"]
+tags: ["EDA", "R", "TimeSeries", "Air Quality"]
 ---
 
 ```{r setup, include=FALSE}
