@@ -25,6 +25,19 @@ weight: 0
 type: &#34;post&#34;
 author: &#34;Vincent Zhang&#34;
 description: &#34;PART I - Exploratory Data Analysis of Air quality in Chinese cities.&#34;
+tags: [&#34;EDA&#34;, &#34;R&#34;, &#34;TimeSeries&#34;, &#34;Air Quality&#34;]
+---
+
+---
+date: &#34;2016-01-10&#34;
+title: &#34;Air Quality in China&#34;
+showonlyimage: false
+draft: false
+image: &#34;blog/img/AirQuality.JPG&#34;
+weight: 0
+type: &#34;post&#34;
+author: &#34;Vincent Zhang&#34;
+description: &#34;PART I - Exploratory Data Analysis of Air quality in Chinese cities.&#34;
 tags: [
 &#34;EDA&#34;,
 &#34;R&#34;, &#34;TimeSeries&#34;, &#34;Air Quality&#34;]

@@ -72,7 +72,7 @@ library(xts)
 
 With the `ropenaq` pacakge, there are 5 cities in China available for us to get the air quality data. 
 ```{r}
-cities_tableChina <- aq_cities(country="CN")
+cities_tableChina <- aq_cities(country = "CN")
 cities_tableChina
 ```
 
