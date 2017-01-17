@@ -22,12 +22,13 @@
 &lt;li&gt;&lt;a href=&#34;#iidata-2017-predictive-modeling-competition&#34;&gt;IIDATA 2017 Predictive Modeling Competition&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#exploratory-data-analysis&#34;&gt;Exploratory Data Analysis&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#first-shot&#34;&gt;Fisrt Shot&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#can-we-get-the-labels?&#34;&gt;Can we get the labels?&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#to-be-continued&#34;&gt;To be continued&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2&gt;IIDATA 2017 Predictive Modeling Competition&lt;/h2&gt;
 &lt;p&gt;
-&lt;strong&gt;IIDATA&lt;/strong&gt; is a one-day data science convention hosted by UC Davis undergraduate students. This year will be on Feb.4, 20117. There will be hands-on workshops, tech talks and modeling competitions in this event. I think it would be a good learning opportunity for people interesed in data science to attend. For more information, please visit the &lt;a href=&#34;http://www.iidata.net/&#34;&gt;website&lt;/a&gt;. Lately, the organization team released their dataset for the Predictive Modeling Competition(PMC). This year the challenge is quite interesting. &lt;/p&gt;
+&lt;strong&gt;IIDATA&lt;/strong&gt; is a one-day data science convention hosted by UC Davis undergraduate students. This year will be on Feb.4, 2017. There will be hands-on workshops, tech talks and modeling competitions in this event. I think it would be a good learning opportunity for people interesed in data science to attend. For more information, please visit the &lt;a href=&#34;http://www.iidata.net/&#34;&gt;website&lt;/a&gt;. Lately, the organization team released their dataset for the Predictive Modeling Competition(PMC). This year the challenge is quite interesting. &lt;/p&gt;
 
 &lt;p&gt;&lt;i&gt;Given Stephen Curry’s distance to ball, hoops and the opposing team’s defenders, can 
 you determine when he is releasing the ball?&lt;/i&gt;&lt;/p&gt;
@@ -38,7 +39,7 @@ They also have a leaderboard with more detailed information about the competitio
 
 &lt;h2&gt; Data &lt;/h2&gt;
 
-&lt;p&gt;This dataset contains temporal snapshots taken every 0.04 seconds during the November 12th, 2015 Golden State Warriors vs. Minnesota Timberwolves game (upon which Curry is on the court). It was told that Curry took **24** shots. For each shot, you are expected to find when he is releasing the ball from his hands with as much accuracy as possible. The data source is from [SportVU](https://www.stats.com/sportvu-basketball/). These are the variables:
+&lt;p&gt;This dataset contains temporal snapshots taken every 0.04 seconds during the November 12th, 2015 Golden State Warriors vs. Minnesota Timberwolves game (upon which Curry is on the court). It was told that Curry took **24** shots. For each shot, you are expected to find when he is releasing the ball from his hands with as much accuracy as possible. The data source is &lt;a href=&#34;https://www.stats.com/sportvu-basketball/&#34;&gt;SportVU&lt;/a&gt;. These are the variables:
 &lt;ul type=&#34;disc&#34;&gt;
 &lt;li&gt;“Time” - time left in the game (In fractional minutes)&lt;/li&gt;
 &lt;li&gt;“currylhoop” - distance from Curry to the left hoop&lt;/li&gt;
@@ -197,23 +198,25 @@ plt.rcdefaults()
 &lt;pre&gt;&lt;code&gt;(55615, 18)
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;It&amp;rsquo;s tricky to note that the dataset include all the movement data of Curry on the field and he may play offense or defense.  And he played nearly equal time in the first half and second half. So we could expect the probability that Curry was in the side closer to either left or right hoop should be somewhat equal with possibly some skewness since we know he&amp;rsquo;s a PG and more likely in attack mode. We can do a sanity check first to verify that. It does turn out to be true.&lt;/p&gt;
+
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sum(map(lambda i,j: i&amp;lt;j, curry_df[&#39;currylhoop&#39;],curry_df[&#39;curryrhoop&#39;]))
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code&gt;50636
+&lt;pre&gt;&lt;code&gt;28784
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;50636/55615.0 #maybe a data problem
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;28784/55615.0 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code&gt;0.9104737930414456
+&lt;pre&gt;&lt;code&gt;0.5175582127123978
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;exploratory-data-analysis&#34;&gt;Exploratory Data Analysis&lt;/h2&gt;
 
 &lt;p&gt;As we know, Stephen Curry is a special shooter in the NBA history, especially in 2015-2016 Season. Using the movement data is a way to understand his shooting pattern, which would be helpful for us to infer his shot times.&lt;/p&gt;
 
-&lt;p&gt;First, since Stephen Curry is known for his 3-point and long-distance shots, the changes of distances between Curry and the hoop can tell something about how Stephen Curry released the ball, 3-point or layup. It&amp;rsquo;s tricky to notice that the dataset include all the movement data of Curry on the field, which means he may play offense or defense. Through some research about the specific game online, we know for the first half, the left hoop is the goal of Golden Warriors, and vice versa. It could be useful to come up with some clever ways later to identify whether Curry is in attacking mode.&lt;/p&gt;
+&lt;p&gt;First, since Stephen Curry is known for his 3-point and long-distance shots, we would be interested in how the distance between Curry and the hoop varies around the 3-point line. Through some research about the specific game online, we know for the first half, the left hoop is the goal of Golden Warriors, and vice versa. However, as we can see, there are a lot of fluatuations because Curry were playing defense or offense. So we somehow need to come up with some clever ways to identify whether Curry is in attacking mode or not.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def getQuarter(x):
     if x &amp;gt;=36: 
@@ -254,8 +257,9 @@ plt.ylabel(&#39;Distance&#39;, fontsize=30)
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df = curry_df.merge(curry_df.apply(lambda row: getMinSecInQuarter(row[&#39;time&#39;],row[&#39;quarter&#39;]), axis = 1), left_index=True, right_index=True)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;h2&gt;First Shot&lt;/h2&gt;
-&lt;p&gt; Let&amp;rsquo;s try to use our reasoning first. As we know when a ball is shot, the distance between the player and the ball will increase while the distance between the ball and the hoop will decrease. So we define &lt;em&gt;ballhoopmin&lt;/em&gt; as the actual distance between the ball and the hoop. Thus, we can infer that if the ratio between &lt;em&gt;curryball&lt;/em&gt; and &lt;em&gt;ballhoopmin&lt;/em&gt; is large, it&amp;rsquo;s likely that the ball is in the fly.&lt;/p&gt;&lt;/p&gt;
+&lt;h2&gt;First Shot&lt;/h2&gt;
+
+&lt;p&gt; Let&#39;s try to use our reasoning first. As we know when a ball is shot, the distance between the player and the ball will increase while the distance between the ball and the hoop will decrease. So we define _ballhoopmin_ as the actual distance between the ball and the hoop. Thus, we can infer that if the ratio between _curryball_ and _ballhoopmin_ is large, it&#39;s likely that the ball is in the fly.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df[&#39;ballhoop_min&#39;] = map(lambda i, j: min(i,j), curry_df[&#39;balllhoop&#39;], curry_df[&#39;ballrhoop&#39;])
 &lt;/code&gt;&lt;/pre&gt;
@@ -596,9 +600,11 @@ curry_df.nlargest(24, &#39;dist_ratio&#39;)[[&amp;quot;time&amp;quot;, &amp;quot
 
 &lt;p&gt;However, it turns out that the corresponding top 24 &amp;ldquo;time points&amp;rdquo; include the noise that many duplicated pointed are counted in a short time period. As we researched online, it just doesn&amp;rsquo;t make sense to have most shots happened in the third quarter.&lt;/p&gt;
 
-&lt;h2 id=&#34;to-be-continued&#34;&gt;To be continued&lt;/h2&gt;
+&lt;h2&gt;Can we get the labels?&lt;/h2&gt;
 
-&lt;p&gt;We found we can scrape the actual shot times by Curry on the official NBA statistics website &lt;a href=&#34;http://stats.nba.com/game/#!/0021500125/playbyplay/&#34;&gt;here&lt;/a&gt;. Although we are not supposed to use it as the submission, we can use it as a way to evaluate and tune our pattern regconition algorithm.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s obvious that the raw data doesn&amp;rsquo;t directly tell us when Curry made the shots. However, given the background information about the game, it&amp;rsquo;s possible to find out those actual shooting times, for example, by watching this specific past (game)[&lt;a href=&#34;https://www.youtube.com/watch?v=5PozYV_qHD8&#34;&gt;https://www.youtube.com/watch?v=5PozYV_qHD8&lt;/a&gt;]. Although we are not supposed to use it as the submission, ideally, we can use the information to denote the corresponding Curry&amp;rsquo;s shooting times as a way to tune our pattern regconition algorithm.&lt;/p&gt;
+
+&lt;p&gt;Acutally, there is a more clever way to get the labels. We found we can scrape the actual shot times by Curry on the official NBA statistics website &lt;a href=&#34;http://stats.nba.com/game/#!/0021500125/playbyplay/&#34;&gt;here&lt;/a&gt;. It&amp;rsquo;s a little tricky that the website is dynamically generated. To do the web scraping, first we can try to find the API access point by locating Develop Tools -&amp;gt; Network -&amp;gt; XHR in Chrome. Luckily, we found it exists. Then we can go ahead to scrape the information we want.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import requests
 
@@ -608,15 +614,11 @@ shots_url = &#39;http://stats.nba.com/stats/playbyplayv2?EndPeriod=10&amp;amp;En
 response = requests.get(shots_url)
 response.raise_for_status() # raise exception if invalid response
 shot_logs = response.json()[&#39;resultSets&#39;][0][&#39;rowSet&#39;]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;headers = response.json()[&#39;resultSets&#39;][0][&#39;headers&#39;]
+headers = response.json()[&#39;resultSets&#39;][0][&#39;headers&#39;]
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;shots_df = pd.DataFrame(shot_logs, columns = headers)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;shots_df.head()
+shots_df.head()
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
@@ -773,14 +775,10 @@ shot_logs = response.json()[&#39;resultSets&#39;][0][&#39;rowSet&#39;]
 &lt;p&gt;5 rows × 33 columns&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Thus, we can identify the times of Curry&amp;rsquo;s shots based on the descriptions in the column &lt;strong&gt;&lt;code&gt;VISITORDESCRIPTION&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Thus, we can use regular expression to identify the times of Curry&amp;rsquo;s shots based on the descriptions in the column &lt;strong&gt;&lt;code&gt;VISITORDESCRIPTION&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;pattern = r&#39;Curry.*(Layup|Shot)&#39;
 shots_df[shots_df[&#39;VISITORDESCRIPTION&#39;].str.contains(pattern, na=False)][[&#39;PERIOD&#39;, &#39;PCTIMESTRING&#39;,&#39;VISITORDESCRIPTION&#39;]]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;C:\Users\jpzha\Anaconda2\lib\site-packages\ipykernel\__main__.py:2: UserWarning: This pattern has match groups. To actually get the groups, use str.extract.
-  from ipykernel import kernelapp as app
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;div&gt;
@@ -948,7 +946,23 @@ shots_df[shots_df[&#39;VISITORDESCRIPTION&#39;].str.contains(pattern, na=False)]
 &lt;/table&gt;
 &lt;/div&gt;
 
-&lt;p&gt;To be continued. Stay tuned.:)&lt;/p&gt;
+&lt;h2 id=&#34;to-be-continued&#34;&gt;To be continued&lt;/h2&gt;
+
+&lt;p&gt;Plans for the next step&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Doing more exploratory data analysis for the snippet time frames that Curry made the shots.&lt;/li&gt;
+&lt;li&gt;Learn and experiment with the Recurrent Neural Network model&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Through my research, there are some good reasons why we should try Recurrent Neural Network, a Deep learning model known for processing language and sequence data.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;All the covariates are actually time series data. Like speech regonition or signal processing, the specific hidden shooting pattern is what we are looking for in the time series.&lt;/li&gt;
+&lt;li&gt;Data is noisy. However, deep learning model is good at extracting latent representation/information. Thus, we can be less bothered by feature engineering.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To be continued. Stay tuned. :)&lt;/p&gt;
 
 &lt;script type=&#34;text/javascript&#34;
   src=&#34;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#34;&gt;
@@ -961,7 +975,23 @@ shots_df[shots_df[&#39;VISITORDESCRIPTION&#39;].str.contains(pattern, na=False)]
       <pubDate>Sun, 10 Jan 2016 00:00:00 +0000</pubDate>
       
       <guid>/blog/ChinaAirQualityAnalysis/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+      <description>---
+date: &#34;2016-01-10&#34;
+title: &#34;Air Quality in China&#34;
+showonlyimage: false
+draft: false
+image: &#34;blog/img/AirQuality.JPG&#34;
+weight: 0
+type: &#34;post&#34;
+author: &#34;Vincent Zhang&#34;
+description: &#34;PART I - Exploratory Data Analysis of Air quality in Chinese cities.&#34;
+tags: [
+&#34;EDA&#34;,
+&#34;R&#34;, &#34;TimeSeries&#34;, &#34;Air Quality&#34;]
+---
+
+
+&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 

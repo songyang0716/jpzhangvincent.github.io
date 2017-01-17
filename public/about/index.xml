@@ -10,6 +10,160 @@
     <atom:link href="/about/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title></title>
+      <link>/about/index_files/d3-legend/README/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/index_files/d3-legend/README/</guid>
+      <description>
+
+&lt;h1 id=&#34;d3-legend&#34;&gt;d3-legend&lt;/h1&gt;
+
+&lt;p&gt;Full documentation: &lt;a href=&#34;http://d3-legend.susielu.com&#34;&gt;http://d3-legend.susielu.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;
+
+&lt;h3 id=&#34;using-just-the-minified-file&#34;&gt;Using just the minified file&lt;/h3&gt;
+
+&lt;p&gt;You must inclue the &lt;a href=&#34;http://d3js.org/&#34;&gt;d3 library&lt;/a&gt; before including the legend file. Then you can simply add the compiled js file to your website:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;d3-legend.min.js&lt;/li&gt;
+&lt;li&gt;d3-legend.js (Human readable version)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;using-cdn&#34;&gt;Using CDN&lt;/h3&gt;
+
+&lt;p&gt;You can also add latest version of &lt;a href=&#34;https://cdnjs.com/libraries/d3-legend&#34;&gt;d3-legend hosted on cdnjs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;using-npm&#34;&gt;Using npm&lt;/h3&gt;
+
+&lt;p&gt;Already using d3? Great! You can add the d3 legend as a node module by running:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;npm i d3-svg-legend -S&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If not, install both this way:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;npm i d3@^3.0.0 d3-svg-legend -S&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Please note, d3 is now a peer dependency, you will have to have the npm d3 module separately. This component works with any 3.x version of d3.&lt;/p&gt;
+
+&lt;p&gt;If you &lt;code&gt;require(&#39;d3-svg-legend&#39;)&lt;/code&gt; we attach to d3 as &lt;code&gt;d3.legend&lt;/code&gt;. If you&amp;rsquo;d like to use d3-legend without extending d3, &lt;code&gt;require(&#39;d3-svg-legend/no-extend&#39;)&lt;/code&gt;. For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var d3 = require(&#39;d3&#39;)
+var legend = require(&#39;d3-svg-legend/no-extend&#39;)
+
+var svg = d3.select(&amp;quot;#svg-color-quant&amp;quot;);
+
+var quantize = d3.scale.quantize()
+    .domain([ 0, 0.15 ])
+    .range(d3.range(9).map(function(i) { return &amp;quot;q&amp;quot; + i + &amp;quot;-9&amp;quot;; }));
+
+svg.append(&amp;quot;g&amp;quot;)
+  .attr(&amp;quot;class&amp;quot;, &amp;quot;legendQuant&amp;quot;)
+  .attr(&amp;quot;transform&amp;quot;, &amp;quot;translate(20,20)&amp;quot;);
+
+var colorLegend = legend.color()
+    .labelFormat(d3.format(&amp;quot;.2f&amp;quot;))
+    .useClass(true)
+    .scale(quantize);
+
+svg.select(&amp;quot;.legendQuant&amp;quot;)
+  .call(colorLegend);
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;feedback&#34;&gt;Feedback&lt;/h2&gt;
+
+&lt;p&gt;I would love to hear from you about any additional features that would be useful, please say hi on twitter &lt;a href=&#34;https://www.twitter.com/DataToViz&#34;&gt;@DataToViz&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/about/index_files/d3/README/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/index_files/d3/README/</guid>
+      <description>
+
+&lt;h1 id=&#34;data-driven-documents&#34;&gt;Data-Driven Documents&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://d3js.org&#34;&gt;&lt;img src=&#34;http://d3js.org/logo.svg&#34; align=&#34;left&#34; hspace=&#34;10&#34; vspace=&#34;6&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;D3.js&lt;/strong&gt; is a JavaScript library for manipulating documents based on data. &lt;strong&gt;D3&lt;/strong&gt; helps you bring data to life using HTML, SVG, and CSS. &lt;strong&gt;D3&lt;/strong&gt; emphasizes web standards and combines powerful visualization components with a data-driven approach to DOM manipulation, giving you the full capabilities of modern browsers without tying yourself to a proprietary framework.&lt;/p&gt;
+
+&lt;p&gt;Want to learn more? &lt;a href=&#34;https://github.com/mbostock/d3/wiki&#34;&gt;See the wiki.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;For examples, &lt;a href=&#34;https://github.com/mbostock/d3/wiki/Gallery&#34;&gt;see the gallery&lt;/a&gt; and &lt;a href=&#34;http://bl.ocks.org/mbostock&#34;&gt;mbostock’s bl.ocks&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/about/index_files/radarchart/README/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/index_files/radarchart/README/</guid>
+      <description>
+
+&lt;h1 id=&#34;reusable-updating-radarchart&#34;&gt;reusable updating radarChart&lt;/h1&gt;
+
+&lt;p&gt;###Design based on original by &lt;a href=&#34;https://twitter.com/NadiehBremer&#34;&gt;NadiehBremer&lt;/a&gt; at &lt;a href=&#34;http://www.visualcinnamon.com/2015/10/different-look-d3-radar-chart.html&#34;&gt;Visual Cinnamon&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;###Coding philosophy inspired by &lt;a href=&#34;http://www.toptal.com/d3-js/towards-reusable-d3-js-charts&#34;&gt;Rob Moore&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;####&lt;a href=&#34;http://tennisvisuals.com/examples/MatchRadar.html&#34;&gt;See this block in production with Live Data&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;find-the-latest-code-on-github-https-github-com-tennisvisuals-updating-radar-chart&#34;&gt;&lt;a href=&#34;https://github.com/TennisVisuals/updating-radar-chart&#34;&gt;Find the Latest Code on GitHub&lt;/a&gt;&lt;/h4&gt;
+
+&lt;p&gt;#####I figured out enter/exit/update for nested objects by studying &lt;a href=&#34;http://bl.ocks.org/LeeMendelowitz/11383724&#34;&gt;Lee Mendelowitz&amp;rsquo;s block&lt;/a&gt; and reviewing &lt;a href=&#34;https://groups.google.com/forum/#!topic/d3-js/5AxgsKK31EA&#34;&gt;Mike&amp;rsquo;s comments&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;###Features:
+- Separate layer for hover objects which need to remain on top of chart
+- Separate layer for tooltip which needs to be uppermost layer
+- Events are configurable as options such that external functions can be seamlessly integrated
+ - e.g. external tooltips can be configured for mouseover events&lt;/p&gt;
+
+&lt;p&gt;###Accessors:
+####&lt;em&gt;by default accessors with no parameters return current values&lt;/em&gt;
+- chart.duration(transition-time) // duration of transitions
+- chart.options(object) // many options don&amp;rsquo;t have accessors
+- chart.width(width)
+- chart.height(height)
+- chart.margins(object)
+- chart.data(data) // set data
+- chart.update() // update chart
+- chart.maxValue(value) // maxValue of axis values
+- chart.levels(value) // number of ring levels
+- chart.opacity(value) // opacity of unselected areas
+- chart.borderWidth(value) // width of border surrounding areas
+- chart.rounded(true/false) // select rounded areas
+- chart.events(object) &amp;ndash; chart.events({&amp;lsquo;legend&amp;rsquo;: {&amp;lsquo;mouseover&amp;rsquo;: null}})
+- chart.color(d3.scale)
+- chart.colors(object) &amp;ndash; chart.colors({&amp;lsquo;axis1&amp;rsquo;: &amp;lsquo;color1&amp;rsquo;, &amp;lsquo;axis2&amp;rsquo;: &amp;lsquo;color2&amp;rsquo;})&lt;/p&gt;
+
+&lt;p&gt;#####operations on data held in chart instance
+- chart.pop()
+- chart.push(row) -or- chart.push([row, row])
+- chart.shift()
+- chart.unshift(row) -or- chart.unshift([row, row])
+- chart.slice(begin, end)&lt;/p&gt;
+
+&lt;p&gt;#####operations performed on data prior to display
+- chart.invert(axis) -or- chart.invert([axis, axis]) // index or &amp;ldquo;axis label&amp;rdquo;
+- chart.ranges({&amp;lsquo;axis&amp;rsquo;: [min, max]})
+- chart.filterAxes(&amp;lsquo;axis&amp;rsquo;) -or- chart.filterAxes([&amp;lsquo;axis&amp;rsquo;, &amp;lsquo;axis&amp;rsquo;])
+- chart.filterAreas(&amp;lsquo;key&amp;rsquo;) -or- chart.filterAreas([&amp;lsquo;key1&amp;rsquo;, &amp;lsquo;key2&amp;rsquo;])&lt;/p&gt;
+
+&lt;p&gt;#####convenience
+- chart.keys() // return a list of data keys
+- chart.axes() // return labels of all axes
+- chart.nodes() // return svg object&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>About Me</title>
       <link>/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -25,7 +179,7 @@
 &lt;/div&gt;
 &lt;div id=&#34;why-data-science&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Why Data Science?&lt;/h3&gt;
-&lt;p&gt;I think using algorithmic thinking and programming to do the right statistics in practice is the most cool thing!&lt;/p&gt;
+&lt;p&gt;I think using algorithmic thinking and programming to do the right statistics in practice is the most cool thing! I guess the following quote reflects on what happened in 2016 U.S Election.:)&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;“There are three kinds of lies: lies, damned lies, and statistics.” By Mark Twain&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -35,10 +189,10 @@
 &lt;h3&gt;What’s the plan?&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#34;images/RoadToDataScientist.png&#34; width=&#34;775&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Where am I?&lt;/p&gt;
-&lt;div id=&#34;htmlwidget-31f15e3593d1d2a0a312&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;d3radar html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-31f15e3593d1d2a0a312&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:[{&#34;key&#34;:&#34;Now&#34;,&#34;values&#34;:[{&#34;axis&#34;:&#34;Fundamentals&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Statistics&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Programming&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Machine Learning&#34;,&#34;value&#34;:0.8},{&#34;axis&#34;:&#34;Text Mining/NLP&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Visualization&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Big Data&#34;,&#34;value&#34;:0.6},{&#34;axis&#34;:&#34;Data Ingestion&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Munging&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Toolbox&#34;,&#34;value&#34;:0.7}]},{&#34;key&#34;:&#34;6-Month Goal&#34;,&#34;values&#34;:[{&#34;axis&#34;:&#34;Fundamentals&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Statistics&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Programming&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Machine Learning&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Text Mining/NLP&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Visualization&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Big Data&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Ingestion&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Munging&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Toolbox&#34;,&#34;value&#34;:0.8}]}]},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;div id=&#34;htmlwidget-5985509309b974728a09&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;d3radar html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-5985509309b974728a09&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:[{&#34;key&#34;:&#34;Jan, 2017&#34;,&#34;values&#34;:[{&#34;axis&#34;:&#34;Fundamentals&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Statistics&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Programming&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Machine Learning&#34;,&#34;value&#34;:0.8},{&#34;axis&#34;:&#34;Text Mining/NLP&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Visualization&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Big Data&#34;,&#34;value&#34;:0.6},{&#34;axis&#34;:&#34;Data Ingestion&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Munging&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Toolbox&#34;,&#34;value&#34;:0.7}]},{&#34;key&#34;:&#34;6-Month Goal&#34;,&#34;values&#34;:[{&#34;axis&#34;:&#34;Fundamentals&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Statistics&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Programming&#34;,&#34;value&#34;:0.85},{&#34;axis&#34;:&#34;Machine Learning&#34;,&#34;value&#34;:0.9},{&#34;axis&#34;:&#34;Text Mining/NLP&#34;,&#34;value&#34;:0.75},{&#34;axis&#34;:&#34;Visualization&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Big Data&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Ingestion&#34;,&#34;value&#34;:0.7},{&#34;axis&#34;:&#34;Data Munging&#34;,&#34;value&#34;:0.95},{&#34;axis&#34;:&#34;Toolbox&#34;,&#34;value&#34;:0.75}]}]},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;p&gt;Just keep learning and practicing.&lt;/p&gt;
-&lt;p&gt;By the way, this blog is created with the new &lt;code&gt;blogdown&lt;/code&gt; package and thanks to this great &lt;a href=&#34;https://proquestionasker.github.io/blog/Making_Site/&#34;&gt;tutorial&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;By the way, this blog is created with the new &lt;code&gt;blogdown&lt;/code&gt; package and thanks to this great &lt;a href=&#34;https://proquestionasker.github.io/blog/Making_Site/&#34;&gt;tutorial&lt;/a&gt;. The blog posts are mostly writtern in R Markdown or Python Jupyter notebook format, which is a practice I think it’s important for reproducible data analysis.&lt;/p&gt;
 &lt;/div&gt;
 
 

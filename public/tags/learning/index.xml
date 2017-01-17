@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Learning on Vincent Zhang</title>
+    <link>/tags/learning/index.xml</link>
+    <description>Recent content in Learning on Vincent Zhang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy;2016 Vincent Zhang</copyright>
+    <atom:link href="/tags/learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>My Curated List of Learning Data Science</title>
+      <link>/blog/ds_courses/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/ds_courses/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#blogs&#34;&gt;Blogs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#podcasts&#34;&gt;Podcasts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#bookonline-courses-by-topics&#34;&gt;Books and Online Tutorials/Courses by Topics&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#getting-started-in-data-science&#34;&gt;General Guidance&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#probability-and-statistics&#34;&gt;Probability and Statistics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#time-series&#34;&gt;Time Series&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#bayesian-inference&#34;&gt;Bayesian Inference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#machine-learning&#34;&gt;Machine Learning&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#r-programming&#34;&gt;R Programming&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python-programming&#34;&gt;Python Programming&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#sql-database&#34;&gt;SQL Databases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#data-structure-and-algorithms&#34;&gt;Data Structure and Algorithms&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#deep-learning&#34;&gt;Deep Learning&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#big-data-tools&#34;&gt;Big Data Tools&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#others&#34;&gt;Others&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I will keep updating!&lt;/p&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+&lt;link href=&#34;#####../content/blog/ds_courses_files/font-awesome/css/font-awesome.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

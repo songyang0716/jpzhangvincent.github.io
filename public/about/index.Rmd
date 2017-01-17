@@ -4,11 +4,11 @@ type: "about"
 ---
 
 ### Who am I? 
-I'm a Masters graduate student studying Computer Science and Statistics at UC Davis. I'm very enthusiatic about data science. I have been inspired by the active community of data science and benefited a lot from reading others' blogs and tutorials, for example, a list on this [page](https://github.com/rushter/data-science-blogs). So I decided to create my data science portfolio to keep track on my learning process to being a well-rounded data scientist. At the same time, it's a great opportunity to share my knowledge and give back to the community. Also, I'm also looking for data scientist jobs and I'd love to hear from you if any questions or feedbacks. 
+I'm a Masters graduate student studying Computer Science and Statistics at UC Davis. I'm very enthusiatic about data science. I have been inspired by the active community of data science and benefited a lot from reading others' blogs and tutorials, for example, a list on this [page](https://github.com/rushter/data-science-blogs). So I decided to create my data science portfolio to keep track on my learning process to being a well-rounded data scientist.  At the same time, it's a great opportunity to share my knowledge and give back to the community. Also, I'm also looking for data scientist jobs and I'd love to hear from you if any questions or feedbacks. 
 
 
 ### Why Data Science?
-I think using algorithmic thinking and programming to do the right statistics in practice is the most cool thing! 
+I think using algorithmic thinking and programming to do the right statistics in practice is the most cool thing! I guess the following quote reflects on what happened in 2016 U.S Election.:)
 
 >"There are three kinds of lies: lies, damned lies, and statistics."
 >By  Mark Twain                             
@@ -30,14 +30,14 @@ Where am I?
 library(d3radarR)
 ds_skills <- list(
   list(
-    key = "Now",
+    key = "Jan, 2017",
     values = list(
       list(axis = "Fundamentals", value = 85/100),
       list(axis = "Statistics", value = 85/100),
       list(axis = "Programming", value = 75/100),
       list(axis = "Machine Learning", value = 80/100),
       list(axis = "Text Mining/NLP", value = 75/100),
-      list(axis = "Visualization", value = 90/100),
+      list(axis = "Visualization", value = 85/100),
       list(axis = "Big Data", value = 60/100),
       list(axis = "Data Ingestion", value = 70/100),
       list(axis = "Data Munging", value = 90/100),
@@ -56,7 +56,7 @@ ds_skills <- list(
       list(axis = "Big Data", value = 70/100),
       list(axis = "Data Ingestion", value = 70/100),
       list(axis = "Data Munging", value = 95/100),
-      list(axis = "Toolbox", value = 80/100)
+      list(axis = "Toolbox", value = 75/100)
     )
   )  
 )
@@ -66,5 +66,5 @@ d3radar( ds_skills )
 
 Just keep learning and practicing. 
 
-By the way, this blog is created with the new `blogdown` package and thanks to this great [tutorial](https://proquestionasker.github.io/blog/Making_Site/).
+By the way, this blog is created with the new `blogdown` package and thanks to this great [tutorial](https://proquestionasker.github.io/blog/Making_Site/). The blog posts are mostly writtern in R Markdown or Python Jupyter notebook format, which is a practice I think it's important for reproducible data analysis.
 
