@@ -8,19 +8,17 @@ I'm a Masters graduate student studying Computer Science and Statistics at UC Da
 
 
 ### Why Data Science?
-I think using algorithmic thinking and programming to do the right statistics in practice is the most cool thing! I guess the following quote reflects on what happened in 2016 U.S Election.:)
+I think using algorithmic thinking and programming to do the right statistics in practice is the most cool thing! I guess the following quote reflects on what happened in 2016 U.S Election.
 
->"There are three kinds of lies: lies, damned lies, and statistics."
->By  Mark Twain                             
+>"There are three kinds of lies: lies, damned lies, and statistics."By  Mark Twain                      
 
-
-```{r, echo = FALSE}
+```{r, echo = FALSE, out.width = "70%" }
 library(knitr)
 knitr::include_graphics("images/joke.png")
 ```
 
 ### What's the plan?
-```{r, echo = FALSE}
+```{r, echo = FALSE, out.width = "85%" }
 library(knitr)
 knitr::include_graphics("images/RoadToDataScientist.png")
 ```
@@ -65,7 +63,7 @@ ds_skills <- list(
 d3radar( ds_skills )
 ```
 
-Just keep learning and practicing. 
+Just keep learning and practicing.
 
 By the way, this blog is created with the new `blogdown` package and thanks to this great [tutorial](https://proquestionasker.github.io/blog/Making_Site/). The blog posts are mostly writtern in R Markdown or Python Jupyter notebook format, which is a practice I think it's important for reproducible data analysis.
 
