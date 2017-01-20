@@ -34,8 +34,6 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
     -   [Others](#others)
 
 
-
-
 I will keep updating! 
 
 

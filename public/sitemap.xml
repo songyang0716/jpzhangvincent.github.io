@@ -35,16 +35,7 @@
   </url>
   
   <url>
-    <loc>/about/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/about/</loc>
-  </url>
-  
-  <url>
-    <loc>/tags/air-quality/</loc>
+    <loc>/tags/airquality/</loc>
     <lastmod>2016-01-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -57,12 +48,6 @@
   
   <url>
     <loc>/contact/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/data-viz/</loc>
-    <lastmod>2017-01-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -139,6 +124,15 @@
   <url>
     <loc>/tags/</loc>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
   </url>
   
   <url>

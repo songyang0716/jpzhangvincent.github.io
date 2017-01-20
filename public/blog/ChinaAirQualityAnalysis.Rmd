@@ -8,7 +8,7 @@ weight: 0
 type: "post"
 author: "Vincent Zhang"
 description: "PART I - Exploratory Data Analysis of Air quality in Chinese cities."
-tags: ["EDA", "R", "TimeSeries", "Air Quality"]
+tags: ["EDA", "R", "TimeSeries", "AirQuality"]
 ---
 
 ```{r setup, include=FALSE}
@@ -247,6 +247,7 @@ dygraph(aq_xts, main = "PM2.5 Trends in Chinese cities") %>% dyRangeSelector()
 ## Stacked Bar Chart
 
 What if we compare the pollution levels for different cities in 2016? We can see Chengdu city has the worst air quality condition, while Guangzhou seems to have beter air quality condition in the comparison.  
+
 ```{r}
 p<- aq_df %>% select(city, Day, value) %>% 
   filter(between(Day, as.Date('2016-01-01'), as.Date('2016-12-31'))) %>% 
