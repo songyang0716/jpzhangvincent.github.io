@@ -61,6 +61,8 @@ ga('send', 'pageview');
       
         <li><a href="../../blog/">Blog</a></li>
       
+        <li><a href="../../tags/">Tags</a></li>
+      
         <li><a href="../../contact/">Get in touch</a></li>
       
 
@@ -89,68 +91,9 @@ ga('send', 'pageview');
 
       
 
-
-
-
-
  
 
       
-
-
-<div class="panel sidebar-menu">
-    <div class="panel-heading">
-        <h3 class="panel-title">Tags</h3>
-    </div>
-
-    <div class="panel-body">
-        <ul class="tag-cloud">
-            
-            <li><a href="../../tags/air-quality"><i class="fa fa-tags"></i> air-quality</a>
-            </li>
-            
-            <li><a href="../../tags/data-viz"><i class="fa fa-tags"></i> data-viz</a>
-            </li>
-            
-            <li><a href="../../tags/eda"><i class="fa fa-tags"></i> eda</a>
-            </li>
-            
-            <li><a href="../../tags/github"><i class="fa fa-tags"></i> github</a>
-            </li>
-            
-            <li><a href="../../tags/learning"><i class="fa fa-tags"></i> learning</a>
-            </li>
-            
-            <li><a href="../../tags/ml"><i class="fa fa-tags"></i> ml</a>
-            </li>
-            
-            <li><a href="../../tags/nba"><i class="fa fa-tags"></i> nba</a>
-            </li>
-            
-            <li><a href="../../tags/nlp"><i class="fa fa-tags"></i> nlp</a>
-            </li>
-            
-            <li><a href="../../tags/python"><i class="fa fa-tags"></i> python</a>
-            </li>
-            
-            <li><a href="../../tags/r"><i class="fa fa-tags"></i> r</a>
-            </li>
-            
-            <li><a href="../../tags/rnn"><i class="fa fa-tags"></i> rnn</a>
-            </li>
-            
-            <li><a href="../../tags/sql"><i class="fa fa-tags"></i> sql</a>
-            </li>
-            
-            <li><a href="../../tags/timeseries"><i class="fa fa-tags"></i> timeseries</a>
-            </li>
-            
-        </ul>
-    </div>
-</div>
-
-
-
  
 
     </ul>
@@ -219,6 +162,20 @@ ga('send', 'pageview');
                           <p class="date-comments">
                           <i class="fa fa-calendar-o"></i> January 14, 2017
                           </p>
+
+                          <ul class="tags-cloud">
+                          
+                             <li><a href="../../tags/ML"><i class="fa fa-tags"></i> ML</a></li>
+                          
+                             <li><a href="../../tags/Python"><i class="fa fa-tags"></i> Python</a></li>
+                          
+                             <li><a href="../../tags/NLP"><i class="fa fa-tags"></i> NLP</a></li>
+                          
+                             <li><a href="../../tags/RNN"><i class="fa fa-tags"></i> RNN</a></li>
+                          
+                          </ul>
+                   
+                            
 
                           
                   
@@ -329,7 +286,7 @@ ga('send', 'pageview');
 <h3>K Means</h3>
 <p>K-means is a popular clustering algorithm that tries to distribute a predefined number of points (K) in a way that they end up in the center of our clusters, close to the mean. We’re going to create 8 clusters using MiniBatchKMeans from scikit-learn. The potential topics in each cluster is showed below. The clustering plot is showed in Figure 3. From the result, we can see that cluster 0 is about hypothesis testing, cluster 1 seems to be related regression model, cluster 2 is about data visualization, cluster 3 is about time series forecasting, cluster 5 is about linear mixed effect model, cluster 6 is about probability theory.</p>
 <p><img src="../../rmarkdown-libs/kmeans_clusters.jpg" width="40%" /></p>
-<p>Here is the interactive K-Means Topics clustering visualization(in 2 dimensions).<br />
+<p>Here is the interactive K-Means Topics clustering visualization(in 2 dimensions) using the t-SNE algorithm and the <code>bokeh</code> package. t-SNE, t-Distributed Stochastic Neighbor Embedding, is a dimensionality reduction method that is particularly well suited for the visualization of high-dimensional datasets. It computes the probability distribution of pairs of high dimensional objects in such a way that similar objects have high probability of being clustered together and disimilar objects have low probability of being clustered together.</p>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -357,13 +314,13 @@ ga('send', 'pageview');
         });
         </script>
     </body>
-</html></p>
+</html>
 </div>
 <div id="latent-dirichlet-allocation" class="section level3">
 <h3>Latent Dirichlet Allocation</h3>
 <p>LDA method is a well-known topic modeling algorithm, which could uncover the latent topics in each post, and then we are going to use the topic distributions for each post to group similar posts together. The number of clusters we chose is 8. The potential topics in each cluster is showed below. The topic 0 seems to be related to machine learning, Topic 1 seems to be about probability theory. Topic 2 is about feature engineering and training, topic 3 is about hypothesis testing, topic 4 is related to regression analysis, topic 5 is related to time series analysis, topic 6 seems to be related to clustering and unsupervised learning and topic 7 is related to hypothesis testing. There are some overlaps of topics from LDA and K-means, such as hypothesis testing, regression model and time series analysis.</p>
 <p><img src="../../rmarkdown-libs/lda_clusters.jpg" width="70%" /></p>
-<p>Here is the interactive LDA Topics clustering visualization.</p>
+<p>Similarily, here is the interactive LDA Topics clustering visualization.</p>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -429,7 +386,7 @@ ga('send', 'pageview');
 <p>In this case, for learning and practical purpose, we experimented the Deep neural networks model which is different to the approach of feature engineering and machine learning. Deep learning has been proven successful in NLP and Computer Vision problems. It has advantages of learning latent and complex features with less prepossessing and benefited by large dataset. However, it’s hard and time-consuming to train.</p>
 <div id="word-embedding-and-applications" class="section level3">
 <h3>Word Embedding and Applications</h3>
-<p>The main idea of word embedding is to represent words into vectors in higher dimensional such that words with similar semantic meanings are closed with each other and differing words far apart from each other. It is a neural network language model that is both supervised and unsupervised , which can be trained by algorithms “Continuous Bag of Words (CBOW)”&quot; or “Skip-Gram”. The word embedding, also called “word2vec”, usually brings the significant improvements to learning algorithm that is distance-based or with complex features. The “doc2vec” model is extended from “word2vec” model that is trained within the contexts of paragraph or document. We decided to further train our “doc2vec” with the pre-train model in the <code>gensim</code> package. With the better representation of words by taking the semantic contextual meaning into account, it has useful applications in text retrieval and topic clustering. For example, it can be used to suggest similar answers for Stack Overflow. <img src="../../rmarkdown-libs/word_embedding.jpg" width="80%" /></p>
+<p>The main idea of word embedding is to represent words into vectors in higher dimensional such that words with similar semantic meanings are closed with each other and differing words far apart from each other. It is a neural network language model that is both supervised and unsupervised , which can be trained by algorithms “Continuous Bag of Words (CBOW)”&quot; or “Skip-Gram”. The word embedding, also called “word2vec”, usually brings the significant improvements to learning algorithm that is distance-based or with complex features. The “doc2vec” model is extended from “word2vec” model that is trained within the contexts of paragraph or document. We decided to further train our “doc2vec” with the pre-train model in the <code>gensim</code> package. Since each word is represented in a multidimensional space, we can compute the similarity between words. With the better representation of words by taking the semantic contextual meaning into account, it has useful applications in text retrieval and topic clustering. For example, it can be used to suggest similar answers for Stack Overflow. <img src="../../rmarkdown-libs/word_embedding.jpg" width="80%" /></p>
 </div>
 <div id="recurrent-neural-network-lstm" class="section level3">
 <h3>Recurrent Neural Network LSTM</h3>
@@ -441,7 +398,7 @@ ga('send', 'pageview');
 </div>
 <div id="lessons" class="section level2">
 <h2>Lessons</h2>
-<p>In this interesting project, we implemented various NLP techniques and investigated unsupervised and supervised machine learning algorithms, such as LDA, random forests, xGBoost, word embedding and deep learning. We learned that understanding the context of the data and problem is essential for feature engineering and machine learning. NLP is really challenging! I hope to delve deeper in this problem in my free time. There are some possible directions I think would be valuable:</p>
+<p>In this interesting project, we implemented various NLP techniques and investigated unsupervised and supervised machine learning algorithms, such as LDA, t-SNE, random forests, xGBoost, word embedding and deep learning. We learned that understanding the context of the data and problem is essential for feature engineering and machine learning. NLP is really challenging! I hope to delve deeper in this problem in my free time. There are some possible directions I think would be valuable:</p>
 <ol style="list-style-type: decimal">
 <li>Use feature selection to reduce the noise</li>
 <li>Treat it as a multiclass problem instead of binary classification or use a better quality scoring method to categorize posts</li>
