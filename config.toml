@@ -49,6 +49,10 @@ googleAnalytics = "UA-89721810-1"
   [[params.navlinks]]
   name = "Blog"
   url = "blog/"
+  
+  [[params.navlinks]]
+  name = "Tags"
+  url = "tags/"
 
   [[params.navlinks]]
   name = "Get in touch"
@@ -62,6 +66,6 @@ googleAnalytics = "UA-89721810-1"
   
   #Adding widgets to the sidebar
   [params.widgets]
-    categories = true
-    tags = true
+    categories = false
+    tags = false
     search = true

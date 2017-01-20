@@ -20,8 +20,16 @@
                           <i class="fa fa-calendar-o"></i> {{ .Date.Format "January 2, 2006" }}
                           </p>
 
+                          <ul class="tags-cloud">
+                          {{ range $name, $items := .Params.tags }}
+                             <li><a href="{{ $.Site.BaseURL }}tags/{{ $items }}"><i class="fa fa-tags"></i> {{ $items }}</a></li>
+                          {{ end }}
+                          </ul>
+                   
+                            
+
                           {{if eq .Section "portfolio"}}
-                          <p class="author-category"><b>{{ .Summary }}</b></p>
+                          <p class="author-category"><b>{{ .description }}</b></p>
                           {{end}}
                   
                       </div>

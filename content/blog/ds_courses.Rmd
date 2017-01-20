@@ -7,6 +7,7 @@ image: "blog/img/DataSci_Resources.jpg"
 weight: 1
 type: "post"
 author: "Vincent Zhang"
+tags: ["Learning"]
 description: "This is a growing list of data science resources I've learned from or planned to learn. "
 ---
 
@@ -33,7 +34,7 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
     -   [Others](#others)
 
 
-Will update soon!  
+I will keep updating! 
 
 
 

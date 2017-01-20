@@ -1,0 +1,214 @@
+---
+date: "2017-01-14"
+title: "Mining the Cross Validated Dataset"
+showonlyimage: true
+draft: false
+image: "blog/img/StackOverflow.jpg"
+weight: 1
+type: "post"
+author: "Vincent Zhang"
+tags: ["ML","Python", "NLP", "RNN"]
+description: "This is a review and discussion on my Machine Learning class project - Mining the Stack Overflow Dataset."
+---
+
+```{r, include = FALSE}
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+-   [Introduction](#introduction)
+    -   [Data Preparation](#data-preparation)
+    -   [Tools we used](#tools-we-used)
+-   [Exploratory Data Analysis](#exploratory-data-analysis)
+-   [Topic Modeling](#topic-modeling) 
+    -   [K-Means](#k-means)
+    -   [Latent Dirichlet Allocation](#latent-dirichlet-allocation)
+-   [Question Quality Prediction](#question-quality-prediction)
+    -   [Feature Engineering](#feature-engineering)
+    -   [Random Forest](#random-forest)
+    -   [Extreme Gradient Boosting Tree](#extreme-gradient-boosting-tree)
+    -   [Model Ensemble](#model-ensemble)
+-   [Answer Quality Prediction](#answer-quality-prediction)
+    -   [Word Embedding and Applications](#word-embedding-and-applications)
+    -   [Recurrent Neural Network LSTM](#recurrent-neural-network-lstm)
+-   [Lessons](#lessons)
+
+## Introduction
+
+In my [STA 208 Statistical Machine Learning class](https://jsharpna.github.io/208/index.html) in Spring 2015, I worked on the final project "Mining the Cross Validated Dataset",with my another two teammates(Weitong Lin and Boya Liu). [Cross Validated](http://stats.stackexchange.com/) is a question and answer site for people interested in statistics, machine learning, data analysis, data mining, and data visualization. It is a part of the ecosystem of Stack Exchange, in which Stack Overflow is the similar one being geared towards programming. Thousands of people use Cross Validated to get good answers for their questions in machine learning, statistical programming, data mining and statistics. 
+
+The quality of the content and the civility of the community are the paramount concerns to the moderators on Stack Overflow. There is a wide range of applications of Natural language processing and Machine Learning on this kind of Q&A website. In this project, we aimed to delve into problems of topic modeling and post quality prediction, because they are very related to understand the conent quality of posts on the Cross Validated. It is worth noting that in this project we also went through the cycle of data science, namely, data cleaning/munging with NLP techniques, exploratory data anlysis,feature engineering and machine learning, data visualization and presentation.
+
+### Data Preparation
+
+Data is collected from Stack Exchange Data Dump. We will only study the data from [stats section](https://archive.org/details/stackexchange). This section includes questions and answers from Jan, 2010 to Mar, 2016 for people interested in statistics, machine learning and data analysis. It includes information about comments, badges, post history, postlinks, post, tags, users and votes in separate xml files. An SQL database was created to linked those files together and accelerate data processing. The structure of the database is showed below.
+
+```{r  echo = FALSE, out.width = "80%"}
+knitr::include_graphics("MiningStackOverflow_files/cv_database.jpg")
+```
+
+The questions and answers from this data set is really messy. It contains xml tag, code, email, formula and url. In order to improve the accuracy of prediction and clustering, we cleaned the data as the first step. Code, url link, email, formula, numbers, stopwords and punctuation needed to be carefully treated in different cases. Besides, stemming and lemmatization were used to reduce different forms of a word to a common base form. An example of data cleaning is illustrated as following.
+
+```{r  echo = FALSE, out.width = "80%"}
+knitr::include_graphics("MiningStackOverflow_files/data_Cleaning.jpg")
+```
+
+
+### Tools we used
+
+This project is very practical and rewarding for us to learn and explore different tools. The following table shows the tools we used.
+
+| Python packages       	| Usage                               	|
+|-----------------------	|-------------------------------------	|
+| Beautifulsoup         	| Clean and extract element from HTML 	|
+| SQLite, pandas, numpy 	| Data  Munging                       	|
+| NLTK, TextBlob        	| Text prepocessing                   	|
+| Sckitlearn, xGBoost   	| Machine learning                    	|
+| Gensim                	| Word embedding(doc2vec)             	|
+| Theano, keras         	| deep learning                       	|
+
+
+## Exploratory Data Analysis
+
+Before we jumped into the wild world of machine learning, we explore the data fist to understand the complexity and some fun facts. The detailed code and analysis can be found on our project [folder](https://github.com/jpzhangvincent/StackOverflow-MLproject/tree/master/EDA). 
+
+The follow is the list of top 20 popular questions on Cross Validated ranked by _Score_(Upvotes - Downvotes), _ViewCount_, _AnswerCount_, _FavoriteCount_, _CommentCount_. Those are indeed very interesting questions and worth the time for reading. 
+
+```{r, echo = FALSE, out.width = "70%"}
+knitr::include_graphics("MiningStackOverflow_files/top_questions.png")
+```
+
+On the other hand, we also got the top 20 popluar answers in a similar way. Due to the content length, I won't show the long content list here. An example is showed below. We found some common characteristics about high-rated answer posts, which are
+
+1. thorough and knowledgable answers
+2. with formula and image
+3. with reference link
+4. various sentence structures
+
+```{r, echo = FALSE, out.width = "70%"}
+knitr::include_graphics("MiningStackOverflow_files/ans_example.png")
+```
+
+## Topic Modeling
+
+Discoverying the topics is useful for Stack Overflow users to have a sense about the topics of each post, but also for the site moderators to generate the tags in each questions automatically. It give us the hint about what people are interested in and chasing for in this envolving realm of statistics, machine learning and artificial intelligence. Topic Modeling is a unsupervised learning application in natural language processing to identify the topics in each post. K-means and latent dirichlet allocation (LDA) were used to separate the questions into different clusters. The cleaned data was used to make a better separation and the TF-IDF is the transformed data matrix representation instead of the bad-of-word representation.
+
+### K Means
+
+K-means is a popular clustering algorithm that tries to distribute a predefined number of points (K) in a way that they end up in the center of our clusters, close to the mean. We're going to create 8 clusters using MiniBatchKMeans from scikit-learn. The potential topics in each cluster is showed below. The clustering plot is showed in Figure 3. From the result, we can see that cluster 0 is about hypothesis testing, cluster 1 seems to be related regression model, cluster 2 is about data visualization, cluster 3 is about time series forecasting, cluster 5 is about linear mixed effect model, cluster 6 is about probability theory.
+
+```{r, echo = FALSE, out.width = "40%"}
+knitr::include_graphics("MiningStackOverflow_files/kmeans_clusters.jpg")
+```
+
+Here is the interactive K-Means Topics clustering visualization(in 2 dimensions) using the t-SNE algorithm and the `bokeh` package. t-SNE, t-Distributed Stochastic Neighbor Embedding, is a dimensionality reduction method that is particularly well suited for the visualization of high-dimensional datasets. It computes the probability distribution of pairs of high dimensional objects in such a way that similar objects have high probability of being clustered together and disimilar objects have low probability of being clustered together.
+
+```{r , echo=FALSE}
+htmltools::includeHTML("MiningStackOverflow_files/kmeans8.html")
+```
+
+### Latent Dirichlet Allocation
+
+LDA method is a well-known topic modeling algorithm, which could uncover the latent topics in each post, and then we are going to use the topic distributions for each post to group similar posts together. The number of clusters we chose is 8. The potential topics in each cluster is showed below. The topic 0 seems to be related to machine learning, Topic 1 seems to be about probability theory. Topic 2 is about feature engineering and training, topic 3 is about hypothesis testing, topic 4 is related to regression analysis, topic 5 is related to time series analysis, topic 6 seems to be related to clustering and unsupervised learning and topic 7 is related to hypothesis testing. There are some overlaps of topics from LDA and K-means, such as hypothesis testing, regression model and time series analysis. 
+
+```{r echo = FALSE, out.width = "70%"}
+knitr::include_graphics("MiningStackOverflow_files/lda_clusters.jpg")
+```
+
+Similarily, here is the interactive LDA Topics clustering visualization.
+
+```{r, echo=FALSE}
+htmltools::includeHTML("MiningStackOverflow_files/lda8.html")
+```
+
+From the interactive plots, it feels like the topic clustering by LDA is better represented than that by K-means, which indicates that LDA is a more appropriate method in this case. 
+
+## Question Quality Prediction
+
+We know that asking good question is very important. When users searched their questions related to a certain topic on StackOverflow website, thousands of related questions will be showed. Predicting the quality of the questions helps rank some high quality related questions to improve their user experience. Also we want to see the potential features that will have effect on the question quality.
+
+In our project, whether a question is good or bad will be predicted. We defined the question whose score (upvote-downvote) is larger than 0 and was not been closed as good question. The question whose score is <= 0 and was not been closed, also those were closed as bad questions. Note that this scoring method might not be ideal in practice.
+
+
+### Feature Engineering
+
+We will use Feature Engineering and supervised learning approach in this case. How to define and extract features from text is a challenging task. Bashed on the ideas from this [reseach paper](http://conferences.computer.org/icsme/2014/papers/6146a541.pdf), we derived three types of features in our case: Stack Overflow metrics, Readability metrics, Popularity metrics.
+
+Stack Overflow Metrics provided a set of descriptions of simple textual metrics. Most of the features are based on characters, such as Body Length, Title Length, Uppercase percentage, etc. 
+```{r  echo = FALSE, out.width = "80%"}
+knitr::include_graphics("MiningStackOverflow_files/so_features.jpg")
+```
+
+Readability Metrics included structure metrics and other metrics regarding readability. 
+```{r  echo = FALSE, out.width = "80%"}
+knitr::include_graphics("MiningStackOverflow_files/readability_features.jpg")
+```
+
+Popularity Metrics offered information about the reputation of the author of a question. Votes and total number of badges received were considered. 
+```{r  echo = FALSE, out.width = "80%"}
+knitr::include_graphics("MiningStackOverflow_files/popularity_features.jpg")
+```
+
+In data cleaning and exploratory data anlysis, we found code, reference links and formula are important features to characterize a Stack Exchange question. Thus, we also added other features, such as code number, number of math expression, if there is an images and sensitivity scores. Besides, sentimental analysis was also performed, since the attitude of a user who asked the questions may have an influence on whether people will answer the questions. 
+```{r  echo = FALSE, out.width = "60%"}
+knitr::include_graphics("MiningStackOverflow_files/new_features.jpg")
+```
+
+### Random Forest
+Overall, 28 features are used. There are 75067 rows of our data. Our data contains both continious and categorical variables. Also, there is multicolinearity existing between our features. What's more, we also want to see the features importance. Because of all the above reasons, tree-based models are more appropriate here. Random forest and extreme gradient boosting tree will be performed.
+We took 70% data as the training data and 30% as the test data. Since there is an imbalanced class problem, we used stratified cross validation for training and hyper parameter tuning. As a result, "n estimators=1000" gave us the best validation accuracy, which is 0.6616. The test accuracy based the training model is 0.6604. The AUC for test data is 0.5384, which shows a overfitting problem.
+
+### Extreme Gradient Boosting Tree
+Extreme Gradient Boosting Tree, also called xgboost, is an efficient and scalable implementation of gradient boosting framework. Its advantages are fast, high accuracy and scalable. 5-fold stratified cross validation was also used when we tuned 8 parameters. The optimized hyper parameters are showed below. 
+```{r  echo = FALSE, out.width = "80%"}
+knitr::include_graphics("MiningStackOverflow_files/parameter_tuning.jpg")
+```
+
+As a result, the best validation accuracy after tuning parameters is 0.6911. The test accuracy based the training model is 0.6662, The AUC for test data is 0.646. We also looked at the feature importance and found the readability of questions, the reputation of askers and the title length and body length affect the quality of questions the most. 
+
+```{r  echo = FALSE, out.width = "85%"}
+knitr::include_graphics("MiningStackOverflow_files/feature_importance.jpg")
+```
+
+### Model Ensemble
+To improve our prediction accuracy, we tried model ensemble with both random forest and xgboost. We simply assigned diferent weights on the different predictions these two different methods. As a result, the test accuracy based the model ensemble is 0.6664, but the AUC for test data is 0.54. Althoug model ensemble improves a bit in test accuracy, it is still problematic because of low AUC. We thought we could have spent more time investing this issue. It was suggested that we should test the correlatin and combine the predictions with low correlations for model ensembling. Overall, we would prefer xgboost model as our final model for this problem.
+
+The detailed implementation and testing can be referred [here](https://github.com/jpzhangvincent/StackOverflow-MLproject/tree/master/PostQualityPrediction).
+
+## Answer Quality Prediction
+On the question and answer website, it is crucial to suggest the best answer to any question efficiently when the post was posted. In order to show readers the best possible answer, it comes to solving the problem of predicting the quality of answer posts. However, it's worth mentioning that how to understand and quantify the quality of an answer post is also tricky. Another Q&A website Quora mentions in their [blog](https://engineering.quora.com/A-Machine-Learning-Approach-to-Ranking-Answers-on-Quora) that answer quality prediction is more challenging due to the complexity of the ranking metric. For simplicity, we treat it as a binary classification problem although this is not ideal in practice. Answer posts with the scores greater than 1 denoted as good quality, and otherwise bad quality.
+
+In this case, for learning and practical purpose, we experimented the Deep neural networks model which is different to the approach of feature engineering and machine learning. Deep learning has been proven successful in NLP and Computer Vision problems. It has advantages of learning latent and complex features with less prepossessing and benefited by large dataset. However, it's hard and time-consuming to train.
+
+### Word Embedding and Applications
+The main idea of word embedding is to represent words into vectors in higher dimensional such that words with similar semantic meanings are closed with each other and differing words far apart from each other. It is a neural network language model that is both supervised and unsupervised , which can be trained by algorithms "Continuous Bag of Words (CBOW)"" or "Skip-Gram". The word embedding, also called "word2vec", usually brings the significant improvements to learning algorithm that is distance-based or with complex features. The "doc2vec" model is extended from "word2vec" model that is trained within the contexts of paragraph or document. We decided to further train our "doc2vec" with the pre-train model in the `gensim` package. Since each word is represented in a multidimensional space, we can compute the similarity between words. With the better representation of words by taking the semantic contextual meaning into account, it has useful applications in text retrieval and topic clustering. For example, it can be used to suggest similar answers for Stack Overflow.
+```{r  echo = FALSE, out.width = "80%"}
+knitr::include_graphics("MiningStackOverflow_files/word_embedding.jpg")
+```
+
+### Recurrent Neural Network LSTM
+Long short-term memory(LSTM) is a recurrent neural network architecture that prevents the vanishing gradient problem in Backpropagation through time. There are usually "input gate", "forget gate" and "output gate" to control the flow of information in training. Thus, it's good at remembering values for either long or short durations time. There are a lot of resources online regarding this topic. LSTM model is known for success in NLP, speech recognition and time series forcasting. It would be interesting to see how this cutting-edge deep learning model applies in this specific scientific corpus data. The structure of our Deep Learning model is showed below.
+
+```{r  echo = FALSE, out.width = "80%"}
+knitr::include_graphics("MiningStackOverflow_files/lstm.jpg")
+```
+
+Also note that we can build neaural network upon the word embedding, which also works for machine learning models.  So we had our baseline models trained with classical machine learning algorithms based on the tfidf or doc2vec representations. Models Performance Comparision is showed below. 
+```{r  echo = FALSE, out.width = "80%"}
+knitr::include_graphics("MiningStackOverflow_files/nn_performance.jpg")
+```
+
+We can see a significant improvement of using a simple Logistics Regression based on our pretrained doc2vec representation. However, it is surprising to see that the Deep Learning doesn't perform quite well. We have to admit that because of the limit of time and computation, we think we might haven't delved enough to squeeze the power of deep neural network. On the other hand, we think deep neural network model doesn't work well probably because there is still a lot of noise in our dataset and understanding human language is hard. Furthermore, maybe deep neural work can't work well for this type of scientific context which is quite differfent to movie reviews, since movie reviews feature with more word and sentiment dependency which suits for deep learning while the quality of scientific text relies heavily on the relevance of semantic meaning with the topic or questions in our context, which we didn't take that into account. There are researches showing that another specifc type of deep learning structure, called "sequence2sequence" model, is more suitable for this Question and Answering context, which considers the semantic relevance between questions and answers and takes questions and
+answers as inputs at the same time. So "sequence2sequence" model might be more suitable to our goal of predicting the quality of answer posts. 
+
+
+## Lessons
+In this interesting project, we implemented various NLP techniques and investigated unsupervised and supervised machine learning algorithms, such as LDA, t-SNE, random forests, xGBoost, word embedding and deep learning. We learned that understanding the context of the data and problem is essential for feature engineering and machine learning. NLP is really challenging! I hope to delve deeper in this problem in my free time. There are some possible directions I think would be valuable:
+
+1. Use feature selection to reduce the noise
+2. Treat it as a multiclass problem instead of binary classification or use a better quality scoring method to categorize posts
+3. Investigate more on model emsemble techniques, stacking and blending
+4. Investigate sequence 2 sequence deep learning model to predict good quality answer posts in the context of question and answering
+
+
+
+

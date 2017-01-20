@@ -8,7 +8,7 @@ weight = 0
 type = "post"
 tags = [
 "Github","SQL",
-"data viz"]
+"EDA"]
 author = "Vincent Zhang"
 +++
 
