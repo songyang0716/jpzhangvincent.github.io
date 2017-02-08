@@ -22,7 +22,7 @@
 
                           <ul class="tags-cloud">
                           {{ range $name, $items := .Params.tags }}
-                             <li><a href="{{ $.Site.BaseURL }}tags/{{ $items }}"><i class="fa fa-tags"></i> {{ $items }}</a></li>
+                             <li><a href="{{ $.Site.BaseURL }}tags/{{ $items | lower}}"><i class="fa fa-tags"></i> {{ $items }}</a></li>
                           {{ end }}
                           </ul>
                    
