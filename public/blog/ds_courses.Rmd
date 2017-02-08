@@ -33,6 +33,31 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
     -   [Big Data Tools](#big-data-tools)
     -   [Others](#others)
 
+# Introduction
+
+As we know, data science is an interdisplinary field. 
+
+
+
+# Blogs
+
+
+# Podcasts
+- [Data Skeptic](http://dataskeptic.com/podcast)
+- [Linear Digression](http://lineardigressions.com/)
+- [This Week in Machine Learning and AI](https://twimlai.com/)
+
+# Books and Online Tutorials/Courses by Topics
+
+## Deep Learning
+- [Awesome Deep Learning](https://github.com/ChristosChristofidis/awesome-deep-learning)
+- [The Deep Learning Textbook (Bengio Book - PDF)](https://raw.githubusercontent.com/HFTrader/DeepLearningBook/master/DeepLearningBook.pdf)
+- [Design a RNN LSTM in Tensorflow](http://monik.in/a-noobs-guide-to-implementing-rnn-lstm-using-tensorflow/)
+- [Structuring your tensorflow models](http://danijar.com/structuring-your-tensorflow-models/)
+
+
+## Others
+- [Datasets for Machine Learning](https://docs.google.com/spreadsheets/d/1AQvZ7-Kg0lSZtG1wlgbIsrm90HaTZrJGQMz-uKRRlFw/edit#gid=0)
 
 I will keep updating! 
 

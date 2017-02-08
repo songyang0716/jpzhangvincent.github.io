@@ -39,7 +39,40 @@
 &lt;li&gt;&lt;a href=&#34;#others&#34;&gt;Others&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;As we know, data science is an interdisplinary field.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;blogs&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Blogs&lt;/h1&gt;
+&lt;/div&gt;
+&lt;div id=&#34;podcasts&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Podcasts&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://dataskeptic.com/podcast&#34;&gt;Data Skeptic&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://lineardigressions.com/&#34;&gt;Linear Digression&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://twimlai.com/&#34;&gt;This Week in Machine Learning and AI&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;books-and-online-tutorialscourses-by-topics&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Books and Online Tutorials/Courses by Topics&lt;/h1&gt;
+&lt;div id=&#34;deep-learning&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Deep Learning&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/ChristosChristofidis/awesome-deep-learning&#34;&gt;Awesome Deep Learning&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://raw.githubusercontent.com/HFTrader/DeepLearningBook/master/DeepLearningBook.pdf&#34;&gt;The Deep Learning Textbook (Bengio Book - PDF)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://monik.in/a-noobs-guide-to-implementing-rnn-lstm-using-tensorflow/&#34;&gt;Design a RNN LSTM in Tensorflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://danijar.com/structuring-your-tensorflow-models/&#34;&gt;Structuring your tensorflow models&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;others&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Others&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.google.com/spreadsheets/d/1AQvZ7-Kg0lSZtG1wlgbIsrm90HaTZrJGQMz-uKRRlFw/edit#gid=0&#34;&gt;Datasets for Machine Learning&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;I will keep updating!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 
 
 
