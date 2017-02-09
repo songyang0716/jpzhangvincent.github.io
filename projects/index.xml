@@ -67,7 +67,7 @@ pie(
     <item>
       <title>Predict when Stephen Curry shoots the ball</title>
       <link>/projects/PMC-project/</link>
-      <pubDate>Fri, 13 Jan 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>
       
       <guid>/projects/PMC-project/</guid>
       <description>&lt;p&gt;IIDATA 2017 Predictive Modeling Competition is hosted by UC Davis. This year the challenge is to predict when Stephen Curry shoots the ball, given the movement tracking data from sportVU.
@@ -78,23 +78,24 @@ pie(
 &lt;li&gt;&lt;a href=&#34;#exploratory-data-analysis&#34;&gt;Exploratory Data Analysis&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#first-shot&#34;&gt;Fisrt Shot&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#can-we-get-the-labels?&#34;&gt;Can we get the labels?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#to-be-continued&#34;&gt;To be continued&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#can-we-use-the-labels?&#34;&gt;Can we use the labels?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#itentify-the-offense-movement-patterns&#34;&gt;Identify the offense movement patterns&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#change-point-detection&#34;&gt;Change Point Detection&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#afterthoughts&#34;&gt;Afterthoughts&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2&gt;IIDATA 2017 Predictive Modeling Competition&lt;/h2&gt;
 &lt;p&gt;
-&lt;strong&gt;IIDATA&lt;/strong&gt; is a one-day data science convention hosted by UC Davis undergraduate students. This year will be on Feb.4, 2017. There will be hands-on workshops, tech talks and modeling competitions in this event. I think it would be a good learning opportunity for people interesed in data science to attend. For more information, please visit the &lt;a href=&#34;http://www.iidata.net/&#34;&gt;website&lt;/a&gt;. Lately, the organization team released their dataset for the Predictive Modeling Competition(PMC). This year the challenge is quite interesting. &lt;/p&gt;
+&lt;strong&gt;IIDATA&lt;/strong&gt; is a one-day data science convention hosted by UC Davis undergraduate students. This year will be on Feb.4, 2017. There will be hands-on workshops, tech talks and modeling competitions in this event. I think it would be a great learning opportunity for students interesed in data science to attend. For more information, please visit the &lt;a href=&#34;http://www.iidata.net/&#34;&gt;website&lt;/a&gt;. Lately, the organization team released their dataset for the Predictive Modeling Competition(PMC). This year the challenge is quite interesting. &lt;/p&gt;
 
-&lt;p&gt;&lt;i&gt;Given Stephen Curry’s distance to ball, hoops and the opposing team’s defenders, can 
-you determine when he is releasing the ball?&lt;/i&gt;&lt;/p&gt;
+&gt; &#34;Given Steph Curry’s distance to ball, hoops and the opposing team’s defenders, can you determine when he is releasing the ball?&#34; 
 
-&lt;p&gt;
 They also have a leaderboard with more detailed information about the competition &lt;a href=&#34;https://pmc-leaderboard.com/&#34;&gt;here&lt;/a&gt;, especially the submission format.
 &lt;/p&gt;
 
 &lt;h2&gt; Data &lt;/h2&gt;
 
-&lt;p&gt;This dataset contains temporal snapshots taken every 0.04 seconds during the November 12th, 2015 Golden State Warriors vs. Minnesota Timberwolves game (upon which Curry is on the court). It was told that Curry took **24** shots. For each shot, you are expected to find when he is releasing the ball from his hands with as much accuracy as possible. The data source is &lt;a href=&#34;https://www.stats.com/sportvu-basketball/&#34;&gt;SportVU&lt;/a&gt;. These are the variables:
+&lt;p&gt;This dataset contains temporal snapshots taken every 0.04 seconds during the November 12th, 2015 Golden State Warriors vs. Minnesota Timberwolves game (upon which Curry is on the court). It was told that Curry took **24** shots. For each shot, you are expected to find when he is releasing the ball from his hands with as much accuracy as possible. The data source is from [SportVU](https://www.stats.com/sportvu-basketball/). These are the variables:
 &lt;ul type=&#34;disc&#34;&gt;
 &lt;li&gt;“Time” - time left in the game (In fractional minutes)&lt;/li&gt;
 &lt;li&gt;“currylhoop” - distance from Curry to the left hoop&lt;/li&gt;
@@ -114,10 +115,10 @@ They also have a leaderboard with more detailed information about the competitio
 &lt;li&gt;They don&#39;t provide the actual times that Curry shot the balls. This makes it difficult to apply a supervised learning algorithm. Maybe it leaves for competitors to get the information so that it&#39;s possible to use in a supervised training and testing framework, since it allows competitors to ultilize other data/resources. On the other hand, it&#39;s possible to be treated as a unsupervised problem, for example, anomaly detection based on the activity patterns. So I see there are two direction here.&lt;/li&gt;
 &lt;li&gt;Note that they will evaluate the final score of our algorithm/model with another new dataset. So we need to be careful about generalization ability of our model.&lt;/li&gt;
 &lt;li&gt;Interestingly, it asks to predict the interval of times and it would evaluate an overall score based on the following formula. 
-&lt;div&gt;
-$$score = \frac{\sum_{i=1}^{|s|}I_{T_i}\frac{1}{1+s_{i2}-s_{i1}}}{|T|+(|S|-|T|)^2}$$&lt;/div&gt;
-where &lt;div&gt; $$S_i: \{(s_{i1}, s_{i2})\mid s_{i1} \leq s_{i2}\}, \| T\|=24, \|S\|\geq \|T\|, I_{T_i}:\{1 \mid S_i \in T_i\}$$. &lt;/div&gt;
-
+\begin{equation}
+score = \frac{\sum_{i=1}^{|s|}I_{T_i}\frac{1}{1+s_{i2}-s_{i1}}}{|T|+(|S|-|T|)^2}
+\end{equation}
+where $S_i: \{(s_{i1}, s_{i2})\mid s_{i1} \leq s_{i2}\}$, $\| T\|=24$, $\|S\|\geq \|T\|$ and $I_{T_i}:\{1 \mid S_i \in T_i\}$.
 Thus, there is room and trade-off for us to determine the interval of the times to get a higher overall prediction score to win the competition.
 &lt;/li&gt; 
 &lt;/ol&gt;
@@ -128,8 +129,8 @@ Thus, there is room and trade-off for us to determine the interval of the times 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import numpy as np
 import pandas as pd
 import seaborn as sns
+import pickle
 import matplotlib.pyplot as plt
-%matplotlib inline
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import matplotlib.pylab as pylab
@@ -143,18 +144,16 @@ pylab.rcParams.update(params)
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;pd.set_option(&#39;display.max_colwidth&#39;, -1)
 plt.rcdefaults()
+sns.set(style=&amp;quot;whitegrid&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sns.set(style=&amp;quot;whitegrid&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df = pd.read_csv(&amp;quot;curry.csv&amp;quot;)
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df = pd.read_csv(&amp;quot;curry3.csv&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df.head()
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;div&gt;
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
 &lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
   &lt;thead&gt;
     &lt;tr style=&#34;text-align: right;&#34;&gt;
@@ -175,12 +174,12 @@ plt.rcdefaults()
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;47.925333&lt;/td&gt;
+      &lt;td&gt;47.92533&lt;/td&gt;
       &lt;td&gt;0.965270&lt;/td&gt;
-      &lt;td&gt;15.652612&lt;/td&gt;
-      &lt;td&gt;92.829463&lt;/td&gt;
-      &lt;td&gt;16.323108&lt;/td&gt;
-      &lt;td&gt;91.876879&lt;/td&gt;
+      &lt;td&gt;37.686696&lt;/td&gt;
+      &lt;td&gt;51.420125&lt;/td&gt;
+      &lt;td&gt;37.697605&lt;/td&gt;
+      &lt;td&gt;50.813065&lt;/td&gt;
       &lt;td&gt;8.603274&lt;/td&gt;
       &lt;td&gt;16.950232&lt;/td&gt;
       &lt;td&gt;27.471575&lt;/td&gt;
@@ -189,12 +188,12 @@ plt.rcdefaults()
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;47.924500&lt;/td&gt;
+      &lt;td&gt;47.92450&lt;/td&gt;
       &lt;td&gt;0.797786&lt;/td&gt;
-      &lt;td&gt;15.223746&lt;/td&gt;
-      &lt;td&gt;93.094109&lt;/td&gt;
-      &lt;td&gt;15.935113&lt;/td&gt;
-      &lt;td&gt;92.307938&lt;/td&gt;
+      &lt;td&gt;37.290305&lt;/td&gt;
+      &lt;td&gt;51.855878&lt;/td&gt;
+      &lt;td&gt;37.555269&lt;/td&gt;
+      &lt;td&gt;51.177335&lt;/td&gt;
       &lt;td&gt;8.298388&lt;/td&gt;
       &lt;td&gt;16.730251&lt;/td&gt;
       &lt;td&gt;27.240581&lt;/td&gt;
@@ -203,12 +202,12 @@ plt.rcdefaults()
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;47.923833&lt;/td&gt;
+      &lt;td&gt;47.92383&lt;/td&gt;
       &lt;td&gt;1.035342&lt;/td&gt;
-      &lt;td&gt;14.806208&lt;/td&gt;
-      &lt;td&gt;93.324333&lt;/td&gt;
-      &lt;td&gt;15.593023&lt;/td&gt;
-      &lt;td&gt;92.293618&lt;/td&gt;
+      &lt;td&gt;36.870045&lt;/td&gt;
+      &lt;td&gt;52.285237&lt;/td&gt;
+      &lt;td&gt;36.950707&lt;/td&gt;
+      &lt;td&gt;51.578687&lt;/td&gt;
       &lt;td&gt;7.992415&lt;/td&gt;
       &lt;td&gt;16.471735&lt;/td&gt;
       &lt;td&gt;26.975070&lt;/td&gt;
@@ -217,12 +216,12 @@ plt.rcdefaults()
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;47.923167&lt;/td&gt;
+      &lt;td&gt;47.92317&lt;/td&gt;
       &lt;td&gt;2.126335&lt;/td&gt;
-      &lt;td&gt;14.375951&lt;/td&gt;
-      &lt;td&gt;93.577226&lt;/td&gt;
-      &lt;td&gt;15.994375&lt;/td&gt;
-      &lt;td&gt;91.469738&lt;/td&gt;
+      &lt;td&gt;36.451216&lt;/td&gt;
+      &lt;td&gt;52.728202&lt;/td&gt;
+      &lt;td&gt;36.566778&lt;/td&gt;
+      &lt;td&gt;51.347007&lt;/td&gt;
       &lt;td&gt;7.693763&lt;/td&gt;
       &lt;td&gt;16.237772&lt;/td&gt;
       &lt;td&gt;26.712746&lt;/td&gt;
@@ -231,12 +230,12 @@ plt.rcdefaults()
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;47.922500&lt;/td&gt;
+      &lt;td&gt;47.92250&lt;/td&gt;
       &lt;td&gt;2.704138&lt;/td&gt;
-      &lt;td&gt;13.937750&lt;/td&gt;
-      &lt;td&gt;93.836626&lt;/td&gt;
-      &lt;td&gt;15.895369&lt;/td&gt;
-      &lt;td&gt;91.200628&lt;/td&gt;
+      &lt;td&gt;36.022605&lt;/td&gt;
+      &lt;td&gt;53.181823&lt;/td&gt;
+      &lt;td&gt;35.945881&lt;/td&gt;
+      &lt;td&gt;51.625402&lt;/td&gt;
       &lt;td&gt;7.393487&lt;/td&gt;
       &lt;td&gt;15.996931&lt;/td&gt;
       &lt;td&gt;26.437723&lt;/td&gt;
@@ -250,28 +249,54 @@ plt.rcdefaults()
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df.shape
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code&gt;(55615, 18)
+&lt;pre&gt;&lt;code&gt;(55615, 11)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;It&amp;rsquo;s tricky to note that the dataset include all the movement data of Curry on the field and he may play offense or defense.  And he played nearly equal time in the first half and second half. So we could expect the probability that Curry was in the side closer to either left or right hoop should be somewhat equal with possibly some skewness since we know he&amp;rsquo;s a PG and more likely in attack mode. We can do a sanity check first to verify that. It does turn out to be true.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s tricky to note that the dataset include all the movement data of Curry on the field and he may play offense or defense.  And he played nearly equal time in the first half and second half. So we could expect the probability that Curry was in the side closer to either left or right hoop should be somewhat equal with each other. Anyways We can do some sanity checks first to verify that. It is what you expected.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sum(map(lambda i,j: i&amp;lt;j, curry_df[&#39;currylhoop&#39;],curry_df[&#39;curryrhoop&#39;]))
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sum(map(lambda i,j: i&amp;lt;j, curry_df[&#39;currylhoop&#39;],cur ry_df[&#39;curryrhoop&#39;]))
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code&gt;28784
+&lt;pre&gt;&lt;code&gt;27334
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;28784/55615.0 
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;27334/55615.0 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code&gt;0.5175582127123978
+&lt;pre&gt;&lt;code&gt;0.4914861098624472
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sum(map(lambda i,j: i&amp;lt;j, curry_df[&#39;balllhoop&#39;],curry_df[&#39;ballrhoop&#39;]))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;28468
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;28468/55615.0 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;0.5118762923671671
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;exploratory-data-analysis&#34;&gt;Exploratory Data Analysis&lt;/h2&gt;
 
-&lt;p&gt;As we know, Stephen Curry is a special shooter in the NBA history, especially in 2015-2016 Season. Using the movement data is a way to understand his shooting pattern, which would be helpful for us to infer his shot times.&lt;/p&gt;
+&lt;p&gt;As we know, Stephen Curry is a special shooter in the NBA history, especially in 2015-2016 Season. Our goal is to infer his shot times based on his movement patterns.&lt;/p&gt;
 
 &lt;p&gt;First, since Stephen Curry is known for his 3-point and long-distance shots, we would be interested in how the distance between Curry and the hoop varies around the 3-point line. Through some research about the specific game online, we know for the first half, the left hoop is the goal of Golden Warriors, and vice versa. However, as we can see, there are a lot of fluatuations because Curry were playing defense or offense. So we somehow need to come up with some clever ways to identify whether Curry is in attacking mode or not.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df[&#39;curryhoop_min&#39;] = map(lambda i,j: min(i,j), curry_df[&#39;currylhoop&#39;] ,curry_df[&#39;curryrhoop&#39;] )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;plt.figure(figsize=(100,40))
+plt.plot(curry_df.index, curry_df[&#39;curryhoop_min&#39;], &#39;-&#39;)
+plt.title(&amp;quot;Closest Distance between Hoop and Curry over time&amp;quot;, fontsize = 50)
+plt.xlabel(&#39;Index&#39;, fontsize=30)
+plt.ylabel(&#39;Distance&#39;, fontsize=30)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;../PMC-project_files/output_17_1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We have to transform the &lt;strong&gt;&lt;code&gt;time&lt;/code&gt;&lt;/strong&gt; variable to make it more understandable and easy to inteprete.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def getQuarter(x):
     if x &amp;gt;=36: 
@@ -287,21 +312,6 @@ plt.rcdefaults()
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df[&#39;quarter&#39;] = map(lambda x: getQuarter(x), curry_df[&#39;time&#39;])
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df[&#39;curryhoop_min&#39;] = map(lambda i,j: min(i,j), curry_df[&#39;currylhoop&#39;] ,curry_df[&#39;curryrhoop&#39;] )
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df = curry_df.reset_index()
-plt.figure(figsize=(100,40))
-plt.plot(curry_df[&#39;index&#39;], curry_df[&#39;curryhoop_min&#39;], &#39;-&#39;)
-plt.title(&amp;quot;Closest Distance between Hoop and Curry over time&amp;quot;, fontsize = 50)
-plt.xlabel(&#39;Index&#39;, fontsize=30)
-plt.ylabel(&#39;Distance&#39;, fontsize=30)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;../PMC-project_files/output_17_1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;We have to transform the &lt;strong&gt;&lt;code&gt;time&lt;/code&gt;&lt;/strong&gt; variable to make it more understandable and easy to inteprete.&lt;/p&gt;
-
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def getMinSecInQuarter(time, quarter):
     mins = int(time - 12 * (4-quarter))
     secs = int(((time - 12 * (4-quarter))-mins)*60)
@@ -313,20 +323,25 @@ plt.ylabel(&#39;Distance&#39;, fontsize=30)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;First Shot&lt;/h2&gt;
-
 &lt;p&gt; Let&#39;s try to use our reasoning first. As we know when a ball is shot, the distance between the player and the ball will increase while the distance between the ball and the hoop will decrease. So we define _ballhoopmin_ as the actual distance between the ball and the hoop. Thus, we can infer that if the ratio between _curryball_ and _ballhoopmin_ is large, it&#39;s likely that the ball is in the fly.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df[&#39;ballhoop_min&#39;] = map(lambda i, j: min(i,j), curry_df[&#39;balllhoop&#39;], curry_df[&#39;ballrhoop&#39;])
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df.head()
-&lt;/code&gt;&lt;/pre&gt;
+```python
+curry_df[&#39;ballhoop_min&#39;] = map(lambda i, j: min(i,j), curry_df[&#39;balllhoop&#39;], curry_df[&#39;ballrhoop&#39;])
+```
+
+
+```python
+curry_df.head()
+```
+
 
 &lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
 &lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
   &lt;thead&gt;
     &lt;tr style=&#34;text-align: right;&#34;&gt;
       &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;index&lt;/th&gt;
       &lt;th&gt;time&lt;/th&gt;
       &lt;th&gt;curryball&lt;/th&gt;
       &lt;th&gt;currylhoop&lt;/th&gt;
@@ -338,138 +353,166 @@ plt.ylabel(&#39;Distance&#39;, fontsize=30)
       &lt;th&gt;def3dist&lt;/th&gt;
       &lt;th&gt;def4dist&lt;/th&gt;
       &lt;th&gt;def5dist&lt;/th&gt;
+      &lt;th&gt;curryhoop_min&lt;/th&gt;
       &lt;th&gt;quarter&lt;/th&gt;
       &lt;th&gt;milisecs&lt;/th&gt;
       &lt;th&gt;minute&lt;/th&gt;
       &lt;th&gt;second&lt;/th&gt;
-      &lt;th&gt;curryhoop_min&lt;/th&gt;
       &lt;th&gt;ballhoop_min&lt;/th&gt;
+      &lt;th&gt;dist_ratio&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;47.925333&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;47.92533&lt;/td&gt;
       &lt;td&gt;0.965270&lt;/td&gt;
-      &lt;td&gt;15.652612&lt;/td&gt;
-      &lt;td&gt;92.829463&lt;/td&gt;
-      &lt;td&gt;16.323108&lt;/td&gt;
-      &lt;td&gt;91.876879&lt;/td&gt;
+      &lt;td&gt;37.686696&lt;/td&gt;
+      &lt;td&gt;51.420125&lt;/td&gt;
+      &lt;td&gt;37.697605&lt;/td&gt;
+      &lt;td&gt;50.813065&lt;/td&gt;
       &lt;td&gt;8.603274&lt;/td&gt;
       &lt;td&gt;16.950232&lt;/td&gt;
       &lt;td&gt;27.471575&lt;/td&gt;
       &lt;td&gt;30.409634&lt;/td&gt;
       &lt;td&gt;35.474795&lt;/td&gt;
+      &lt;td&gt;37.686696&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0.52&lt;/td&gt;
       &lt;td&gt;11.0&lt;/td&gt;
       &lt;td&gt;55.0&lt;/td&gt;
-      &lt;td&gt;15.652612&lt;/td&gt;
-      &lt;td&gt;16.323108&lt;/td&gt;
+      &lt;td&gt;37.697605&lt;/td&gt;
+      &lt;td&gt;0.025606&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;47.924500&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;47.92450&lt;/td&gt;
       &lt;td&gt;0.797786&lt;/td&gt;
-      &lt;td&gt;15.223746&lt;/td&gt;
-      &lt;td&gt;93.094109&lt;/td&gt;
-      &lt;td&gt;15.935113&lt;/td&gt;
-      &lt;td&gt;92.307938&lt;/td&gt;
+      &lt;td&gt;37.290305&lt;/td&gt;
+      &lt;td&gt;51.855878&lt;/td&gt;
+      &lt;td&gt;37.555269&lt;/td&gt;
+      &lt;td&gt;51.177335&lt;/td&gt;
       &lt;td&gt;8.298388&lt;/td&gt;
       &lt;td&gt;16.730251&lt;/td&gt;
       &lt;td&gt;27.240581&lt;/td&gt;
       &lt;td&gt;30.249721&lt;/td&gt;
       &lt;td&gt;35.246274&lt;/td&gt;
+      &lt;td&gt;37.290305&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0.47&lt;/td&gt;
       &lt;td&gt;11.0&lt;/td&gt;
       &lt;td&gt;55.0&lt;/td&gt;
-      &lt;td&gt;15.223746&lt;/td&gt;
-      &lt;td&gt;15.935113&lt;/td&gt;
+      &lt;td&gt;37.555269&lt;/td&gt;
+      &lt;td&gt;0.021243&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;47.923833&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;47.92383&lt;/td&gt;
       &lt;td&gt;1.035342&lt;/td&gt;
-      &lt;td&gt;14.806208&lt;/td&gt;
-      &lt;td&gt;93.324333&lt;/td&gt;
-      &lt;td&gt;15.593023&lt;/td&gt;
-      &lt;td&gt;92.293618&lt;/td&gt;
+      &lt;td&gt;36.870045&lt;/td&gt;
+      &lt;td&gt;52.285237&lt;/td&gt;
+      &lt;td&gt;36.950707&lt;/td&gt;
+      &lt;td&gt;51.578687&lt;/td&gt;
       &lt;td&gt;7.992415&lt;/td&gt;
       &lt;td&gt;16.471735&lt;/td&gt;
       &lt;td&gt;26.975070&lt;/td&gt;
       &lt;td&gt;30.059684&lt;/td&gt;
       &lt;td&gt;34.973485&lt;/td&gt;
+      &lt;td&gt;36.870045&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0.43&lt;/td&gt;
       &lt;td&gt;11.0&lt;/td&gt;
       &lt;td&gt;55.0&lt;/td&gt;
-      &lt;td&gt;14.806208&lt;/td&gt;
-      &lt;td&gt;15.593023&lt;/td&gt;
+      &lt;td&gt;36.950707&lt;/td&gt;
+      &lt;td&gt;0.028020&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;47.923167&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;47.92317&lt;/td&gt;
       &lt;td&gt;2.126335&lt;/td&gt;
-      &lt;td&gt;14.375951&lt;/td&gt;
-      &lt;td&gt;93.577226&lt;/td&gt;
-      &lt;td&gt;15.994375&lt;/td&gt;
-      &lt;td&gt;91.469738&lt;/td&gt;
+      &lt;td&gt;36.451216&lt;/td&gt;
+      &lt;td&gt;52.728202&lt;/td&gt;
+      &lt;td&gt;36.566778&lt;/td&gt;
+      &lt;td&gt;51.347007&lt;/td&gt;
       &lt;td&gt;7.693763&lt;/td&gt;
       &lt;td&gt;16.237772&lt;/td&gt;
       &lt;td&gt;26.712746&lt;/td&gt;
       &lt;td&gt;29.885916&lt;/td&gt;
       &lt;td&gt;34.705748&lt;/td&gt;
+      &lt;td&gt;36.451216&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0.39&lt;/td&gt;
       &lt;td&gt;11.0&lt;/td&gt;
       &lt;td&gt;55.0&lt;/td&gt;
-      &lt;td&gt;14.375951&lt;/td&gt;
-      &lt;td&gt;15.994375&lt;/td&gt;
+      &lt;td&gt;36.566778&lt;/td&gt;
+      &lt;td&gt;0.058149&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;47.922500&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;47.92250&lt;/td&gt;
       &lt;td&gt;2.704138&lt;/td&gt;
-      &lt;td&gt;13.937750&lt;/td&gt;
-      &lt;td&gt;93.836626&lt;/td&gt;
-      &lt;td&gt;15.895369&lt;/td&gt;
-      &lt;td&gt;91.200628&lt;/td&gt;
+      &lt;td&gt;36.022605&lt;/td&gt;
+      &lt;td&gt;53.181823&lt;/td&gt;
+      &lt;td&gt;35.945881&lt;/td&gt;
+      &lt;td&gt;51.625402&lt;/td&gt;
       &lt;td&gt;7.393487&lt;/td&gt;
       &lt;td&gt;15.996931&lt;/td&gt;
       &lt;td&gt;26.437723&lt;/td&gt;
       &lt;td&gt;29.697227&lt;/td&gt;
       &lt;td&gt;34.429396&lt;/td&gt;
+      &lt;td&gt;36.022605&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;0.35&lt;/td&gt;
       &lt;td&gt;11.0&lt;/td&gt;
       &lt;td&gt;55.0&lt;/td&gt;
-      &lt;td&gt;13.937750&lt;/td&gt;
-      &lt;td&gt;15.895369&lt;/td&gt;
+      &lt;td&gt;35.945881&lt;/td&gt;
+      &lt;td&gt;0.075228&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df[&#39;dist_ratio&#39;] = curry_df[&#39;curryball&#39;] / curry_df[&#39;ballhoop_min&#39;]
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Let&amp;rsquo;s see whether we can observe any pattern of this distance ratio. We can see that there are some obvious spikes, which are probably what we are looking for. Next, we can extract those corresponding times.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;plt.figure(figsize=(100,40))
+
+```python
+curry_df[&#39;dist_ratio&#39;] = curry_df[&#39;curryball&#39;] / curry_df[&#39;ballhoop_min&#39;]
+```
+
+Let&#39;s see whether we can observe any pattern of this distance ratio. We can see that there are some obvious spikes, which are probably what we are looking for. Next, we can extract those corresponding times.
+
+
+```python
+curry_df.reset_index(inplace=True)
+```
+
+
+```python
+%matplotlib inline
+plt.figure(figsize=(100,40))
 plt.plot(curry_df[&#39;index&#39;], curry_df[&#39;dist_ratio&#39;], &#39;-&#39;)
-plt.title(&amp;quot;Distance Ratio over time&amp;quot;, fontsize = 50)
+plt.title(&#34;Distance Ratio over time&#34;, fontsize = 50)
 plt.xlabel(&#39;Index&#39;, fontsize=30)
 plt.ylabel(&#39;Distance Ratio&#39;, fontsize=30)
-&lt;/code&gt;&lt;/pre&gt;
+plt.show()
+```
+&lt;img src=&#34;../PMC-project_files/output_29_0.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;
 
-&lt;p&gt;&lt;img src=&#34;../PMC-project_files/output_26_1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Find the times with the top 24 highest spikes
-curry_df.nlargest(24, &#39;dist_ratio&#39;)[[&amp;quot;time&amp;quot;, &amp;quot;dist_ratio&amp;quot;, &amp;quot;curryhoop_min&amp;quot;,&amp;quot;quarter&amp;quot;]]
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+
+
+```python
+# Find the times with the top 24 highest spikes
+curry_df.nlargest(24, &#39;dist_ratio&#39;)[[&#34;time&#34;, &#34;dist_ratio&#34;, &#34;curryhoop_min&#34;,&#34;quarter&#34;]]
+```
+
+&lt;div&gt;
 &lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
   &lt;thead&gt;
     &lt;tr style=&#34;text-align: right;&#34;&gt;
@@ -482,192 +525,450 @@ curry_df.nlargest(24, &#39;dist_ratio&#39;)[[&amp;quot;time&amp;quot;, &amp;quot
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;th&gt;42425&lt;/th&gt;
-      &lt;td&gt;14.455500&lt;/td&gt;
-      &lt;td&gt;363.651664&lt;/td&gt;
-      &lt;td&gt;18.843438&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42433&lt;/th&gt;
-      &lt;td&gt;14.450167&lt;/td&gt;
-      &lt;td&gt;363.327192&lt;/td&gt;
-      &lt;td&gt;19.129749&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42434&lt;/th&gt;
-      &lt;td&gt;14.449500&lt;/td&gt;
-      &lt;td&gt;241.701580&lt;/td&gt;
-      &lt;td&gt;19.158059&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;17819&lt;/th&gt;
-      &lt;td&gt;31.062000&lt;/td&gt;
-      &lt;td&gt;240.649549&lt;/td&gt;
-      &lt;td&gt;34.829993&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42435&lt;/th&gt;
-      &lt;td&gt;14.448833&lt;/td&gt;
-      &lt;td&gt;176.939222&lt;/td&gt;
-      &lt;td&gt;19.185484&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42431&lt;/th&gt;
-      &lt;td&gt;14.451500&lt;/td&gt;
-      &lt;td&gt;115.415805&lt;/td&gt;
-      &lt;td&gt;19.068632&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42424&lt;/th&gt;
-      &lt;td&gt;14.456167&lt;/td&gt;
-      &lt;td&gt;113.908181&lt;/td&gt;
-      &lt;td&gt;18.783849&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;824&lt;/th&gt;
-      &lt;td&gt;47.375833&lt;/td&gt;
-      &lt;td&gt;111.561951&lt;/td&gt;
-      &lt;td&gt;36.922632&lt;/td&gt;
+      &lt;th&gt;7600&lt;/th&gt;
+      &lt;td&gt;42.86000&lt;/td&gt;
+      &lt;td&gt;941.658649&lt;/td&gt;
+      &lt;td&gt;26.536377&lt;/td&gt;
       &lt;td&gt;1&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;th&gt;42437&lt;/th&gt;
-      &lt;td&gt;14.447500&lt;/td&gt;
-      &lt;td&gt;106.837579&lt;/td&gt;
-      &lt;td&gt;19.243607&lt;/td&gt;
+      &lt;th&gt;984&lt;/th&gt;
+      &lt;td&gt;47.26917&lt;/td&gt;
+      &lt;td&gt;673.596547&lt;/td&gt;
+      &lt;td&gt;24.232998&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;52328&lt;/th&gt;
+      &lt;td&gt;2.19100&lt;/td&gt;
+      &lt;td&gt;580.250936&lt;/td&gt;
+      &lt;td&gt;18.255410&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;43072&lt;/th&gt;
+      &lt;td&gt;14.02417&lt;/td&gt;
+      &lt;td&gt;531.475767&lt;/td&gt;
+      &lt;td&gt;28.710639&lt;/td&gt;
       &lt;td&gt;3&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;th&gt;42426&lt;/th&gt;
-      &lt;td&gt;14.454833&lt;/td&gt;
-      &lt;td&gt;92.652413&lt;/td&gt;
-      &lt;td&gt;18.893214&lt;/td&gt;
+      &lt;th&gt;47706&lt;/th&gt;
+      &lt;td&gt;5.41300&lt;/td&gt;
+      &lt;td&gt;434.798704&lt;/td&gt;
+      &lt;td&gt;23.713664&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;41432&lt;/th&gt;
+      &lt;td&gt;15.11750&lt;/td&gt;
+      &lt;td&gt;433.106794&lt;/td&gt;
+      &lt;td&gt;30.614339&lt;/td&gt;
       &lt;td&gt;3&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;th&gt;42436&lt;/th&gt;
-      &lt;td&gt;14.448167&lt;/td&gt;
-      &lt;td&gt;87.928430&lt;/td&gt;
-      &lt;td&gt;19.214337&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
+      &lt;th&gt;52329&lt;/th&gt;
+      &lt;td&gt;2.19033&lt;/td&gt;
+      &lt;td&gt;369.158118&lt;/td&gt;
+      &lt;td&gt;18.407326&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;th&gt;42430&lt;/th&gt;
-      &lt;td&gt;14.452167&lt;/td&gt;
-      &lt;td&gt;82.046262&lt;/td&gt;
-      &lt;td&gt;19.041845&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42432&lt;/th&gt;
-      &lt;td&gt;14.450833&lt;/td&gt;
-      &lt;td&gt;77.040831&lt;/td&gt;
-      &lt;td&gt;19.100626&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42439&lt;/th&gt;
-      &lt;td&gt;14.446167&lt;/td&gt;
-      &lt;td&gt;74.102692&lt;/td&gt;
-      &lt;td&gt;19.302154&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42450&lt;/th&gt;
-      &lt;td&gt;14.438833&lt;/td&gt;
-      &lt;td&gt;67.965220&lt;/td&gt;
-      &lt;td&gt;19.557624&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42438&lt;/th&gt;
-      &lt;td&gt;14.446833&lt;/td&gt;
-      &lt;td&gt;65.596627&lt;/td&gt;
-      &lt;td&gt;19.276922&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42451&lt;/th&gt;
-      &lt;td&gt;14.438167&lt;/td&gt;
-      &lt;td&gt;63.899451&lt;/td&gt;
-      &lt;td&gt;19.572023&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42428&lt;/th&gt;
-      &lt;td&gt;14.453500&lt;/td&gt;
-      &lt;td&gt;60.944564&lt;/td&gt;
-      &lt;td&gt;18.977573&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;42427&lt;/th&gt;
-      &lt;td&gt;14.454167&lt;/td&gt;
-      &lt;td&gt;60.595256&lt;/td&gt;
-      &lt;td&gt;18.935209&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;17820&lt;/th&gt;
-      &lt;td&gt;31.061333&lt;/td&gt;
-      &lt;td&gt;57.896951&lt;/td&gt;
-      &lt;td&gt;34.785746&lt;/td&gt;
+      &lt;th&gt;19805&lt;/th&gt;
+      &lt;td&gt;29.68417&lt;/td&gt;
+      &lt;td&gt;281.887963&lt;/td&gt;
+      &lt;td&gt;22.637169&lt;/td&gt;
       &lt;td&gt;2&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;th&gt;17818&lt;/th&gt;
-      &lt;td&gt;31.062667&lt;/td&gt;
-      &lt;td&gt;56.580318&lt;/td&gt;
-      &lt;td&gt;34.883618&lt;/td&gt;
+      &lt;th&gt;982&lt;/th&gt;
+      &lt;td&gt;47.27050&lt;/td&gt;
+      &lt;td&gt;274.460240&lt;/td&gt;
+      &lt;td&gt;24.283017&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;47707&lt;/th&gt;
+      &lt;td&gt;5.41233&lt;/td&gt;
+      &lt;td&gt;266.074215&lt;/td&gt;
+      &lt;td&gt;24.107225&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;981&lt;/th&gt;
+      &lt;td&gt;47.27117&lt;/td&gt;
+      &lt;td&gt;264.607287&lt;/td&gt;
+      &lt;td&gt;24.304749&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;19276&lt;/th&gt;
+      &lt;td&gt;30.09017&lt;/td&gt;
+      &lt;td&gt;235.350832&lt;/td&gt;
+      &lt;td&gt;36.780734&lt;/td&gt;
       &lt;td&gt;2&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;th&gt;42440&lt;/th&gt;
-      &lt;td&gt;14.445500&lt;/td&gt;
-      &lt;td&gt;54.899058&lt;/td&gt;
-      &lt;td&gt;19.330957&lt;/td&gt;
+      &lt;th&gt;9096&lt;/th&gt;
+      &lt;td&gt;41.81467&lt;/td&gt;
+      &lt;td&gt;234.948026&lt;/td&gt;
+      &lt;td&gt;7.722907&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;14598&lt;/th&gt;
+      &lt;td&gt;38.08533&lt;/td&gt;
+      &lt;td&gt;223.859015&lt;/td&gt;
+      &lt;td&gt;9.388604&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;6861&lt;/th&gt;
+      &lt;td&gt;43.35267&lt;/td&gt;
+      &lt;td&gt;215.994452&lt;/td&gt;
+      &lt;td&gt;30.577963&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;42100&lt;/th&gt;
+      &lt;td&gt;14.67217&lt;/td&gt;
+      &lt;td&gt;211.754106&lt;/td&gt;
+      &lt;td&gt;31.718987&lt;/td&gt;
       &lt;td&gt;3&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;th&gt;42423&lt;/th&gt;
-      &lt;td&gt;14.456833&lt;/td&gt;
-      &lt;td&gt;53.134837&lt;/td&gt;
-      &lt;td&gt;18.717561&lt;/td&gt;
+      &lt;th&gt;6860&lt;/th&gt;
+      &lt;td&gt;43.35333&lt;/td&gt;
+      &lt;td&gt;209.289207&lt;/td&gt;
+      &lt;td&gt;30.424288&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;43073&lt;/th&gt;
+      &lt;td&gt;14.02350&lt;/td&gt;
+      &lt;td&gt;207.605952&lt;/td&gt;
+      &lt;td&gt;28.960756&lt;/td&gt;
       &lt;td&gt;3&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;th&gt;42429&lt;/th&gt;
-      &lt;td&gt;14.452833&lt;/td&gt;
-      &lt;td&gt;50.605485&lt;/td&gt;
-      &lt;td&gt;19.012620&lt;/td&gt;
+      &lt;th&gt;16937&lt;/th&gt;
+      &lt;td&gt;36.52900&lt;/td&gt;
+      &lt;td&gt;204.341708&lt;/td&gt;
+      &lt;td&gt;33.667907&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;18823&lt;/th&gt;
+      &lt;td&gt;30.39250&lt;/td&gt;
+      &lt;td&gt;201.161102&lt;/td&gt;
+      &lt;td&gt;25.614859&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;52327&lt;/th&gt;
+      &lt;td&gt;2.19167&lt;/td&gt;
+      &lt;td&gt;199.797752&lt;/td&gt;
+      &lt;td&gt;18.103289&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10283&lt;/th&gt;
+      &lt;td&gt;41.02433&lt;/td&gt;
+      &lt;td&gt;198.874455&lt;/td&gt;
+      &lt;td&gt;34.357564&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;52330&lt;/th&gt;
+      &lt;td&gt;2.18967&lt;/td&gt;
+      &lt;td&gt;190.416307&lt;/td&gt;
+      &lt;td&gt;18.566167&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;33665&lt;/th&gt;
+      &lt;td&gt;20.34900&lt;/td&gt;
+      &lt;td&gt;185.174150&lt;/td&gt;
+      &lt;td&gt;14.383419&lt;/td&gt;
       &lt;td&gt;3&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 
-&lt;p&gt;However, it turns out that the corresponding top 24 &amp;ldquo;time points&amp;rdquo; include the noise that many duplicated pointed are counted in a short time period. As we researched online, it just doesn&amp;rsquo;t make sense to have most shots happened in the third quarter.&lt;/p&gt;
 
-&lt;h2&gt;Can we get the labels?&lt;/h2&gt;
 
-&lt;p&gt;It&amp;rsquo;s obvious that the raw data doesn&amp;rsquo;t directly tell us when Curry made the shots. However, given the background information about the game, it&amp;rsquo;s possible to find out those actual shooting times, for example, by watching this specific past (game)[&lt;a href=&#34;https://www.youtube.com/watch?v=5PozYV_qHD8&#34;&gt;https://www.youtube.com/watch?v=5PozYV_qHD8&lt;/a&gt;]. Although we are not supposed to use it as the submission, ideally, we can use the information to denote the corresponding Curry&amp;rsquo;s shooting times as a way to tune our pattern regconition algorithm.&lt;/p&gt;
+It seems reasonable. We then prepare our submission to test our rough model. We simply contructed the intervals by adding 0.05 in minutes. It turned out we only got the prediction accuracy about 0.198. So we had to look for other methods.
+
+
+```python
+curry_df.columns
+```
+
+
+
+
+    Index([u&#39;time&#39;, u&#39;curryball&#39;, u&#39;currylhoop&#39;, u&#39;curryrhoop&#39;, u&#39;balllhoop&#39;,
+           u&#39;ballrhoop&#39;, u&#39;def1dist&#39;, u&#39;def2dist&#39;, u&#39;def3dist&#39;, u&#39;def4dist&#39;,
+           u&#39;def5dist&#39;, u&#39;curryhoop_min&#39;, u&#39;quarter&#39;, u&#39;milisecs&#39;, u&#39;minute&#39;,
+           u&#39;second&#39;, u&#39;ballhoop_min&#39;, u&#39;dist_ratio&#39;, u&#39;curryball_pctChg&#39;],
+          dtype=&#39;object&#39;)
+
+
+
+
+```python
+curry_times = curry_df.nlargest(24, &#39;dist_ratio&#39;).time.values
+# prepare submission file
+curry_submit = pd.DataFrame({&#39;upper&#39;: curry_times + 0.05,&#39;lower&#39;: curry_times}, )[[&#39;upper&#39;, &#39;lower&#39;]]
+curry_submit.to_csv(&#39;curry_pred1.csv&#39;, index = False)
+```
+
+
+```python
+# Another heauristic approach
+curry_df[&#39;curryball_pctChg&#39;] = curry_df[&#39;curryball&#39;].pct_change(25*3) # 3 seconds
+curry_df[&#39;ballhoop_min_pcgChg&#39;] = curry_df[&#39;ballhoop_min&#39;].pct_change(25*3) # 3 seconds
+curry_df[&#39;dist_ratio_pctChg&#39;] = curry_df[&#39;dist_ratio&#39;].pct_change(25*3) # 3 seconds
+
+curry_df.nlargest(24, [&#39;dist_ratio_pctChg&#39;, &#39;ballhoop_min_pcgChg&#39;,&#39;curryball_pctChg&#39;])[[&#34;time&#34;, &#34;quarter&#34;, &#34;curryball_pctChg&#34;, &#34;ballhoop_min_pcgChg&#34;,&#34;dist_ratio_pctChg&#34;]]
+```
+
+
+
+
+&lt;div&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;time&lt;/th&gt;
+      &lt;th&gt;quarter&lt;/th&gt;
+      &lt;th&gt;curryball_pctChg&lt;/th&gt;
+      &lt;th&gt;ballhoop_min_pcgChg&lt;/th&gt;
+      &lt;th&gt;dist_ratio_pctChg&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7600&lt;/th&gt;
+      &lt;td&gt;42.86000&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;19.900084&lt;/td&gt;
+      &lt;td&gt;-0.998690&lt;/td&gt;
+      &lt;td&gt;15957.179434&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;41432&lt;/th&gt;
+      &lt;td&gt;15.11750&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;23.893631&lt;/td&gt;
+      &lt;td&gt;-0.998094&lt;/td&gt;
+      &lt;td&gt;13060.238297&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;43072&lt;/th&gt;
+      &lt;td&gt;14.02417&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;17.547261&lt;/td&gt;
+      &lt;td&gt;-0.998397&lt;/td&gt;
+      &lt;td&gt;11570.539712&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2062&lt;/th&gt;
+      &lt;td&gt;46.55050&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;26.098719&lt;/td&gt;
+      &lt;td&gt;-0.995940&lt;/td&gt;
+      &lt;td&gt;6672.902973&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;43073&lt;/th&gt;
+      &lt;td&gt;14.02350&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;18.545367&lt;/td&gt;
+      &lt;td&gt;-0.995844&lt;/td&gt;
+      &lt;td&gt;4701.474897&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;15516&lt;/th&gt;
+      &lt;td&gt;37.47500&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;18.436189&lt;/td&gt;
+      &lt;td&gt;-0.995833&lt;/td&gt;
+      &lt;td&gt;4662.975981&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;48990&lt;/th&gt;
+      &lt;td&gt;4.55700&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;39.575986&lt;/td&gt;
+      &lt;td&gt;-0.990790&lt;/td&gt;
+      &lt;td&gt;4404.777254&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;21572&lt;/th&gt;
+      &lt;td&gt;28.50617&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;54.559725&lt;/td&gt;
+      &lt;td&gt;-0.985603&lt;/td&gt;
+      &lt;td&gt;3858.244006&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;21573&lt;/th&gt;
+      &lt;td&gt;28.50550&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;54.482756&lt;/td&gt;
+      &lt;td&gt;-0.985187&lt;/td&gt;
+      &lt;td&gt;3744.661281&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;47706&lt;/th&gt;
+      &lt;td&gt;5.41300&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;9.309178&lt;/td&gt;
+      &lt;td&gt;-0.997226&lt;/td&gt;
+      &lt;td&gt;3715.907761&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;10283&lt;/th&gt;
+      &lt;td&gt;41.02433&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;26.174887&lt;/td&gt;
+      &lt;td&gt;-0.992601&lt;/td&gt;
+      &lt;td&gt;3671.606449&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;21574&lt;/th&gt;
+      &lt;td&gt;28.50483&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;60.650835&lt;/td&gt;
+      &lt;td&gt;-0.982348&lt;/td&gt;
+      &lt;td&gt;3491.645703&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;41433&lt;/th&gt;
+      &lt;td&gt;15.11683&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;24.428133&lt;/td&gt;
+      &lt;td&gt;-0.992558&lt;/td&gt;
+      &lt;td&gt;3415.769885&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;41431&lt;/th&gt;
+      &lt;td&gt;15.11833&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;27.986632&lt;/td&gt;
+      &lt;td&gt;-0.990870&lt;/td&gt;
+      &lt;td&gt;3174.013392&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;48989&lt;/th&gt;
+      &lt;td&gt;4.55767&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;39.985800&lt;/td&gt;
+      &lt;td&gt;-0.986866&lt;/td&gt;
+      &lt;td&gt;3119.690776&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1510&lt;/th&gt;
+      &lt;td&gt;46.91850&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;16.986352&lt;/td&gt;
+      &lt;td&gt;-0.993484&lt;/td&gt;
+      &lt;td&gt;2759.132521&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;27372&lt;/th&gt;
+      &lt;td&gt;24.56750&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;42.719127&lt;/td&gt;
+      &lt;td&gt;-0.984090&lt;/td&gt;
+      &lt;td&gt;2746.966359&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1513&lt;/th&gt;
+      &lt;td&gt;46.91650&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;19.801880&lt;/td&gt;
+      &lt;td&gt;-0.992428&lt;/td&gt;
+      &lt;td&gt;2746.179540&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;27373&lt;/th&gt;
+      &lt;td&gt;24.56683&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;50.255761&lt;/td&gt;
+      &lt;td&gt;-0.981097&lt;/td&gt;
+      &lt;td&gt;2710.527264&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1512&lt;/th&gt;
+      &lt;td&gt;46.91717&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;20.080091&lt;/td&gt;
+      &lt;td&gt;-0.992072&lt;/td&gt;
+      &lt;td&gt;2657.842502&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;27371&lt;/th&gt;
+      &lt;td&gt;24.56817&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;30.435812&lt;/td&gt;
+      &lt;td&gt;-0.987464&lt;/td&gt;
+      &lt;td&gt;2506.588780&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;15517&lt;/th&gt;
+      &lt;td&gt;37.47433&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;19.043743&lt;/td&gt;
+      &lt;td&gt;-0.992002&lt;/td&gt;
+      &lt;td&gt;2505.107109&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;47707&lt;/th&gt;
+      &lt;td&gt;5.41233&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;10.563076&lt;/td&gt;
+      &lt;td&gt;-0.995336&lt;/td&gt;
+      &lt;td&gt;2478.333671&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;48991&lt;/th&gt;
+      &lt;td&gt;4.55633&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;43.048869&lt;/td&gt;
+      &lt;td&gt;-0.981782&lt;/td&gt;
+      &lt;td&gt;2416.834482&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+
+
+
+```python
+curry_times = curry_df.nlargest(24, [&#39;dist_ratio_pctChg&#39;, &#39;ballhoop_min_pcgChg&#39;,&#39;curryball_pctChg&#39;]).time.values
+# prepare submission file
+curry_submit = pd.DataFrame({&#39;upper&#39;: curry_times + 0.06,&#39;lower&#39;: curry_times+ 0.01}, )[[&#39;upper&#39;, &#39;lower&#39;]]
+curry_submit.to_csv(&#39;curry_pred1.csv&#39;, index = False)
+```
+
+&lt;h2&gt;Can we get the &#34;labels&#34;?&lt;/h2&gt;
+
+&lt;p&gt;It&amp;rsquo;s obvious that the raw data doesn&amp;rsquo;t directly tell us when Curry made the shots. However, given the background information about the game, it&amp;rsquo;s possible to find out those actual shooting times, for example, by watching this specific past &lt;a href=&#34;https://www.youtube.com/watch?v=5PozYV_qHD8&#34;&gt;game&lt;/a&gt;. Although we are not supposed to use it as the submission, ideally, we can use the information to denote the corresponding Curry&amp;rsquo;s shooting times as a way to tune our pattern regconition algorithm.&lt;/p&gt;
 
 &lt;p&gt;Acutally, there is a more clever way to get the labels. We found we can scrape the actual shot times by Curry on the official NBA statistics website &lt;a href=&#34;http://stats.nba.com/game/#!/0021500125/playbyplay/&#34;&gt;here&lt;/a&gt;. It&amp;rsquo;s a little tricky that the website is dynamically generated. To do the web scraping, first we can try to find the API access point by locating Develop Tools -&amp;gt; Network -&amp;gt; XHR in Chrome. Luckily, we found it exists. Then we can go ahead to scrape the information we want.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import requests
-
+#may need to open on the browser first
 shots_url = &#39;http://stats.nba.com/stats/playbyplayv2?EndPeriod=10&amp;amp;EndRange=55800&amp;amp;GameID=0021500125&amp;amp;RangeType=2&amp;amp;Season=2015-16&amp;amp;SeasonType=Regular+Season&amp;amp;StartPeriod=1&amp;amp;StartRange=0&#39;
 
 # request the URL and parse the JSON
 response = requests.get(shots_url)
-response.raise_for_status() # raise exception if invalid response
+#response.raise_for_status() # raise exception if invalid response
 shot_logs = response.json()[&#39;resultSets&#39;][0][&#39;rowSet&#39;]
 headers = response.json()[&#39;resultSets&#39;][0][&#39;headers&#39;]
 &lt;/code&gt;&lt;/pre&gt;
@@ -836,6 +1137,10 @@ shots_df.head()
 shots_df[shots_df[&#39;VISITORDESCRIPTION&#39;].str.contains(pattern, na=False)][[&#39;PERIOD&#39;, &#39;PCTIMESTRING&#39;,&#39;VISITORDESCRIPTION&#39;]]
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;pre&gt;&lt;code&gt;C:\Users\jpzha\Anaconda2\lib\site-packages\ipykernel\__main__.py:2: UserWarning: This pattern has match groups. To actually get the groups, use str.extract.
+  from ipykernel import kernelapp as app
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;div&gt;
 &lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
   &lt;thead&gt;
@@ -1001,27 +1306,1680 @@ shots_df[shots_df[&#39;VISITORDESCRIPTION&#39;].str.contains(pattern, na=False)]
 &lt;/table&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&#34;to-be-continued&#34;&gt;To be continued&lt;/h2&gt;
+&lt;h3 id=&#34;can-we-use-the-labels&#34;&gt;Can we use the &amp;ldquo;labels&amp;rdquo;?&lt;/h3&gt;
 
-&lt;p&gt;Plans for the next step&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;tmp_time_df = shots_df[shots_df[&#39;VISITORDESCRIPTION&#39;].str.contains(pattern, na=False)][[&#39;PERIOD&#39;, &#39;PCTIMESTRING&#39;]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;C:\Users\jpzha\Anaconda2\lib\site-packages\ipykernel\__main__.py:1: UserWarning: This pattern has match groups. To actually get the groups, use str.extract.
+  if __name__ == &#39;__main__&#39;:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def calGameTime(period, pctimestring):
+    mins = int(pctimestring.split(&#39;:&#39;)[0])
+    secs = float(pctimestring.split(&#39;:&#39;)[1])
+    return (4-period)*12 + mins + secs/60.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;tmp_time_df[&#39;shot_time&#39;] = map(lambda x,y: calGameTime(x,y), tmp_time_df.PERIOD, tmp_time_df.PCTIMESTRING)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;tmp_time_df[&#39;upper&#39;] = tmp_time_df[&#39;shot_time&#39;] + 0.08
+tmp_time_df[&#39;lower&#39;] = tmp_time_df[&#39;shot_time&#39;] + 0.02 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;tmp_time_df
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;PERIOD&lt;/th&gt;
+      &lt;th&gt;PCTIMESTRING&lt;/th&gt;
+      &lt;th&gt;shot_time&lt;/th&gt;
+      &lt;th&gt;upper&lt;/th&gt;
+      &lt;th&gt;lower&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;10:54&lt;/td&gt;
+      &lt;td&gt;46.900000&lt;/td&gt;
+      &lt;td&gt;46.980000&lt;/td&gt;
+      &lt;td&gt;46.920000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;16&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;9:48&lt;/td&gt;
+      &lt;td&gt;45.800000&lt;/td&gt;
+      &lt;td&gt;45.880000&lt;/td&gt;
+      &lt;td&gt;45.820000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;30&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;8:07&lt;/td&gt;
+      &lt;td&gt;44.116667&lt;/td&gt;
+      &lt;td&gt;44.196667&lt;/td&gt;
+      &lt;td&gt;44.136667&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;41&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;6:51&lt;/td&gt;
+      &lt;td&gt;42.850000&lt;/td&gt;
+      &lt;td&gt;42.930000&lt;/td&gt;
+      &lt;td&gt;42.870000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;74&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;3:38&lt;/td&gt;
+      &lt;td&gt;39.633333&lt;/td&gt;
+      &lt;td&gt;39.713333&lt;/td&gt;
+      &lt;td&gt;39.653333&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;86&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2:13&lt;/td&gt;
+      &lt;td&gt;38.216667&lt;/td&gt;
+      &lt;td&gt;38.296667&lt;/td&gt;
+      &lt;td&gt;38.236667&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;91&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;1:50&lt;/td&gt;
+      &lt;td&gt;37.833333&lt;/td&gt;
+      &lt;td&gt;37.913333&lt;/td&gt;
+      &lt;td&gt;37.853333&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;95&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0:53&lt;/td&gt;
+      &lt;td&gt;36.883333&lt;/td&gt;
+      &lt;td&gt;36.963333&lt;/td&gt;
+      &lt;td&gt;36.903333&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;101&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0:12&lt;/td&gt;
+      &lt;td&gt;36.200000&lt;/td&gt;
+      &lt;td&gt;36.280000&lt;/td&gt;
+      &lt;td&gt;36.220000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;185&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;4:13&lt;/td&gt;
+      &lt;td&gt;28.216667&lt;/td&gt;
+      &lt;td&gt;28.296667&lt;/td&gt;
+      &lt;td&gt;28.236667&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;191&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;3:25&lt;/td&gt;
+      &lt;td&gt;27.416667&lt;/td&gt;
+      &lt;td&gt;27.496667&lt;/td&gt;
+      &lt;td&gt;27.436667&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;220&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;0:00&lt;/td&gt;
+      &lt;td&gt;24.000000&lt;/td&gt;
+      &lt;td&gt;24.080000&lt;/td&gt;
+      &lt;td&gt;24.020000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;254&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;8:33&lt;/td&gt;
+      &lt;td&gt;20.550000&lt;/td&gt;
+      &lt;td&gt;20.630000&lt;/td&gt;
+      &lt;td&gt;20.570000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;275&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;6:00&lt;/td&gt;
+      &lt;td&gt;18.000000&lt;/td&gt;
+      &lt;td&gt;18.080000&lt;/td&gt;
+      &lt;td&gt;18.020000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;284&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;5:17&lt;/td&gt;
+      &lt;td&gt;17.283333&lt;/td&gt;
+      &lt;td&gt;17.363333&lt;/td&gt;
+      &lt;td&gt;17.303333&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;311&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;3:06&lt;/td&gt;
+      &lt;td&gt;15.100000&lt;/td&gt;
+      &lt;td&gt;15.180000&lt;/td&gt;
+      &lt;td&gt;15.120000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;313&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;2:39&lt;/td&gt;
+      &lt;td&gt;14.650000&lt;/td&gt;
+      &lt;td&gt;14.730000&lt;/td&gt;
+      &lt;td&gt;14.670000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;315&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;2:01&lt;/td&gt;
+      &lt;td&gt;14.016667&lt;/td&gt;
+      &lt;td&gt;14.096667&lt;/td&gt;
+      &lt;td&gt;14.036667&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;329&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;0:25&lt;/td&gt;
+      &lt;td&gt;12.416667&lt;/td&gt;
+      &lt;td&gt;12.496667&lt;/td&gt;
+      &lt;td&gt;12.436667&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;391&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;5:51&lt;/td&gt;
+      &lt;td&gt;5.850000&lt;/td&gt;
+      &lt;td&gt;5.930000&lt;/td&gt;
+      &lt;td&gt;5.870000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;393&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;5:23&lt;/td&gt;
+      &lt;td&gt;5.383333&lt;/td&gt;
+      &lt;td&gt;5.463333&lt;/td&gt;
+      &lt;td&gt;5.403333&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;395&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;4:58&lt;/td&gt;
+      &lt;td&gt;4.966667&lt;/td&gt;
+      &lt;td&gt;5.046667&lt;/td&gt;
+      &lt;td&gt;4.986667&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;419&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;2:54&lt;/td&gt;
+      &lt;td&gt;2.900000&lt;/td&gt;
+      &lt;td&gt;2.980000&lt;/td&gt;
+      &lt;td&gt;2.920000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;432&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;1:55&lt;/td&gt;
+      &lt;td&gt;1.916667&lt;/td&gt;
+      &lt;td&gt;1.996667&lt;/td&gt;
+      &lt;td&gt;1.936667&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;452&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;0:29&lt;/td&gt;
+      &lt;td&gt;0.483333&lt;/td&gt;
+      &lt;td&gt;0.563333&lt;/td&gt;
+      &lt;td&gt;0.503333&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Let&amp;rsquo;s validate our labels by submitting this &amp;ldquo;cheated&amp;rdquo; scraping results. It gives us an accuracy rate about 87% on the leader board(top 1) after some twisting on the bounds. Although it&amp;rsquo;s not perfect, we still prefer to ultilize this information since it&amp;rsquo;s at least &amp;ldquo;NBA official&amp;rdquo; labels.:) Notice that we will focus on modeling after this step.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;tmp_time_df[[&#39;upper&#39;, &#39;lower&#39;]].to_csv(&#39;curry_pred2.csv&#39;, index=False)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;more-eda&#34;&gt;More EDA&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;%matplotlib inline
+#plt.figure(figsize=(100,40))
+plt.plot(curry_df[(curry_df.time&amp;gt;46.8) &amp;amp; (curry_df.time&amp;lt;47)][&#39;time&#39;], curry_df[(curry_df.time&amp;gt;46.8) &amp;amp; (curry_df.time&amp;lt;47)][&#39;curryball_pctChg&#39;], &#39;-&#39;)
+plt.legend([&#39;curryball_pctChg&#39;], bbox_to_anchor=(1.3, 0.5))
+plt.title(&amp;quot;Distances over time&amp;quot;)
+plt.xlabel(&#39;Time&#39;)
+plt.ylabel(&#39;Distance&#39;)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;../PMC-project_files/output_51_0.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For example, at 10:54 in the first quarter of the time, he made a 3 PT shot. We plot the measurement trends in a certain time range.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;%matplotlib inline
+#plt.figure(figsize=(100,40))
+plt.plot(curry_df[(curry_df.time&amp;gt;46.8) &amp;amp; (curry_df.time&amp;lt;47)][&#39;time&#39;], curry_df[(curry_df.time&amp;gt;46.8) &amp;amp; (curry_df.time&amp;lt;47)][&#39;curryball&#39;], &#39;-&#39;)
+plt.plot(curry_df[(curry_df.time&amp;gt;46.8) &amp;amp; (curry_df.time&amp;lt;47)][&#39;time&#39;], curry_df[(curry_df.time&amp;gt;46.8) &amp;amp; (curry_df.time&amp;lt;47)][&#39;currylhoop&#39;], &#39;-&#39;)
+plt.plot(curry_df[(curry_df.time&amp;gt;46.8) &amp;amp; (curry_df.time&amp;lt;47)][&#39;time&#39;], curry_df[(curry_df.time&amp;gt;46.8) &amp;amp; (curry_df.time&amp;lt;47)][&#39;balllhoop&#39;], &#39;-&#39;)
+plt.plot(curry_df[(curry_df.time&amp;gt;46.8) &amp;amp; (curry_df.time&amp;lt;47)][&#39;time&#39;], curry_df[(curry_df.time&amp;gt;46.8) &amp;amp; (curry_df.time&amp;lt;47)][&#39;def1dist&#39;], &#39;-&#39;)
+plt.legend([&#39;curryball&#39;, &#39;currylhoop&#39;, &#39;balllhoop&#39;,&#39;def1dist&#39;], bbox_to_anchor=(1.3, 0.5))
+plt.title(&amp;quot;Distances over time&amp;quot;)
+plt.xlabel(&#39;Time&#39;)
+plt.ylabel(&#39;Distance&#39;)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;../PMC-project_files/output_53_0.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that we have to observe the trend by scanning from the right to the left because the time stamp here is to indicate the remaining time. We can see that Curry was holding the ball initially since currylhoop and balllhoop are close. Then a ball was released around 46.94 as the balllhoop distance decreases(towards to 0) and the curryball distance increases significantly. This is helpful for us to understand the pattern characteristics.&lt;/p&gt;
+
+&lt;p&gt;For example, around 6:00 in the third quarter of the time, he intended to layup. We plot the measurement trends in a certain time range.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;%matplotlib inline
+#plt.figure(figsize=(100,40))
+plt.plot(curry_df[(curry_df.time&amp;gt;17.9) &amp;amp; (curry_df.time&amp;lt;18.1)][&#39;time&#39;], curry_df[(curry_df.time&amp;gt;17.9) &amp;amp; (curry_df.time&amp;lt;18.1)][&#39;curryball&#39;], &#39;-&#39;)
+plt.plot(curry_df[(curry_df.time&amp;gt;17.9) &amp;amp; (curry_df.time&amp;lt;18.1)][&#39;time&#39;], curry_df[(curry_df.time&amp;gt;17.9) &amp;amp; (curry_df.time&amp;lt;18.1)][&#39;curryrhoop&#39;], &#39;-&#39;)
+plt.plot(curry_df[(curry_df.time&amp;gt;17.9) &amp;amp; (curry_df.time&amp;lt;18.1)][&#39;time&#39;], curry_df[(curry_df.time&amp;gt;17.9) &amp;amp; (curry_df.time&amp;lt;18.1)][&#39;ballrhoop&#39;], &#39;-&#39;)
+plt.plot(curry_df[(curry_df.time&amp;gt;17.9) &amp;amp; (curry_df.time&amp;lt;18.1)][&#39;time&#39;], curry_df[(curry_df.time&amp;gt;17.9) &amp;amp; (curry_df.time&amp;lt;18.1)][&#39;def1dist&#39;], &#39;-&#39;)
+plt.legend([&#39;curryball&#39;, &#39;curryrhoop&#39;, &#39;ballrhoop&#39;, &#39;def1dist&#39;], bbox_to_anchor=(1.3, 0.5))
+plt.title(&amp;quot;Distances over time&amp;quot;)
+plt.xlabel(&#39;Time&#39;)
+plt.ylabel(&#39;Distance&#39;)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;../PMC-project_files/output_56_0.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that in the second half, the right-hand side is of our interest when curry was scoring. In this case, we can see that curryball, curryrhoop and ballrhoop are close to each other towards to 0. The take-aways from these visualizations are that we can understand the movement patterns better and we could focus on the short time frames that invovked significant fluntuations.&lt;/p&gt;
+
+&lt;h2 id=&#34;modeling-framework&#34;&gt;Modeling Framework&lt;/h2&gt;
+
+&lt;p&gt;It&amp;rsquo;s known that the shooting time points should be relatively close to the time points when the distance between the ball and hoop is very small. Due to the noise and granuity of this kind of sensor measurement data, it is necessary to perform some data cleaning to extract the relevant movement sequences of our interest. We designed our algorithm as a general modeling framework for this problem:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Steps&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Identify the round turning points by &amp;ldquo;min(balllhoop, ballrhoop) ~= 0&amp;rdquo; to extract the relevant movement sequences.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Build a supervised learning algorithm to identify those sequences for curry playing offense so that we can apply the model to predict on a new dataset&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;With our model trained to predict an &amp;ldquo;offense&amp;rdquo; sequence, we can further investigate the exact shooting points from those &amp;ldquo;offense&amp;rdquo; sequence.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;step-1-data-preparation&#34;&gt;Step 1 Data Preparation&lt;/h3&gt;
+
+&lt;p&gt;Actually, we had to choose the ball-hoop distance threshold smaller than a reasonable value to advoid over-specification errors. Then, we filter out reduncdant sequences if turning points are too close and select the correponding sequences with 6 seconds ahead.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from itertools import groupby
+from operator import itemgetter
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def getRoundTurningPoints(curry_df, threshold):
+    tmp = curry_df[curry_df.ballhoop_min&amp;lt;threshold][[&#39;index&#39;, &#39;time&#39;, &#39;ballhoop_min&#39;]]
+    tmp_ls = tmp[&#39;index&#39;].values
+    consecutive_ls = [map(itemgetter(1), g) for k, g in groupby(enumerate(tmp_ls), lambda (i, x): i-x)]
+    stop_points = [curry_df[curry_df.index.isin(index_ls)][&#39;ballhoop_min&#39;].argmin() for index_ls in consecutive_ls]
+    return stop_points
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A remark here is that we tuned the threshold here so that we can ensure all the &amp;lsquo;offense&amp;rsquo; sequences are included to build supervised learning model for our next steps.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;turniningpoint_ls = getRoundTurningPoints(curry_df, 5)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def getSequenceData(curry_df, turningpoint, seconds_ahead):
+    record_ahead = int(seconds_ahead / 0.04)
+    start_index = turningpoint - record_ahead
+    if start_index&amp;lt;0:
+        start_index = 0
+    return curry_df[curry_df[&#39;index&#39;].between(start_index, turningpoint, inclusive=True)]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;getSequenceData(curry_df, 1510, 6).head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;index&lt;/th&gt;
+      &lt;th&gt;time&lt;/th&gt;
+      &lt;th&gt;curryball&lt;/th&gt;
+      &lt;th&gt;currylhoop&lt;/th&gt;
+      &lt;th&gt;curryrhoop&lt;/th&gt;
+      &lt;th&gt;balllhoop&lt;/th&gt;
+      &lt;th&gt;ballrhoop&lt;/th&gt;
+      &lt;th&gt;def1dist&lt;/th&gt;
+      &lt;th&gt;def2dist&lt;/th&gt;
+      &lt;th&gt;def3dist&lt;/th&gt;
+      &lt;th&gt;def4dist&lt;/th&gt;
+      &lt;th&gt;def5dist&lt;/th&gt;
+      &lt;th&gt;ballhoop_min&lt;/th&gt;
+      &lt;th&gt;dist_ratio&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1360&lt;/th&gt;
+      &lt;td&gt;1360&lt;/td&gt;
+      &lt;td&gt;47.01850&lt;/td&gt;
+      &lt;td&gt;1.126781&lt;/td&gt;
+      &lt;td&gt;81.490019&lt;/td&gt;
+      &lt;td&gt;21.637208&lt;/td&gt;
+      &lt;td&gt;80.638449&lt;/td&gt;
+      &lt;td&gt;20.907522&lt;/td&gt;
+      &lt;td&gt;8.515027&lt;/td&gt;
+      &lt;td&gt;15.470442&lt;/td&gt;
+      &lt;td&gt;33.152840&lt;/td&gt;
+      &lt;td&gt;38.125602&lt;/td&gt;
+      &lt;td&gt;45.525469&lt;/td&gt;
+      &lt;td&gt;20.907522&lt;/td&gt;
+      &lt;td&gt;0.053894&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1361&lt;/th&gt;
+      &lt;td&gt;1361&lt;/td&gt;
+      &lt;td&gt;47.01783&lt;/td&gt;
+      &lt;td&gt;1.189048&lt;/td&gt;
+      &lt;td&gt;81.166932&lt;/td&gt;
+      &lt;td&gt;21.570949&lt;/td&gt;
+      &lt;td&gt;80.457890&lt;/td&gt;
+      &lt;td&gt;20.633572&lt;/td&gt;
+      &lt;td&gt;8.522492&lt;/td&gt;
+      &lt;td&gt;15.740184&lt;/td&gt;
+      &lt;td&gt;33.025416&lt;/td&gt;
+      &lt;td&gt;38.164352&lt;/td&gt;
+      &lt;td&gt;45.470323&lt;/td&gt;
+      &lt;td&gt;20.633572&lt;/td&gt;
+      &lt;td&gt;0.057627&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1362&lt;/th&gt;
+      &lt;td&gt;1362&lt;/td&gt;
+      &lt;td&gt;47.01717&lt;/td&gt;
+      &lt;td&gt;1.302032&lt;/td&gt;
+      &lt;td&gt;80.806313&lt;/td&gt;
+      &lt;td&gt;21.527865&lt;/td&gt;
+      &lt;td&gt;80.238336&lt;/td&gt;
+      &lt;td&gt;20.379774&lt;/td&gt;
+      &lt;td&gt;8.510399&lt;/td&gt;
+      &lt;td&gt;15.951757&lt;/td&gt;
+      &lt;td&gt;32.897002&lt;/td&gt;
+      &lt;td&gt;38.179300&lt;/td&gt;
+      &lt;td&gt;45.415983&lt;/td&gt;
+      &lt;td&gt;20.379774&lt;/td&gt;
+      &lt;td&gt;0.063888&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1363&lt;/th&gt;
+      &lt;td&gt;1363&lt;/td&gt;
+      &lt;td&gt;47.01650&lt;/td&gt;
+      &lt;td&gt;1.284768&lt;/td&gt;
+      &lt;td&gt;80.425426&lt;/td&gt;
+      &lt;td&gt;21.498966&lt;/td&gt;
+      &lt;td&gt;80.140926&lt;/td&gt;
+      &lt;td&gt;20.262702&lt;/td&gt;
+      &lt;td&gt;8.500776&lt;/td&gt;
+      &lt;td&gt;16.129816&lt;/td&gt;
+      &lt;td&gt;32.782485&lt;/td&gt;
+      &lt;td&gt;38.185713&lt;/td&gt;
+      &lt;td&gt;45.343810&lt;/td&gt;
+      &lt;td&gt;20.262702&lt;/td&gt;
+      &lt;td&gt;0.063406&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1364&lt;/th&gt;
+      &lt;td&gt;1364&lt;/td&gt;
+      &lt;td&gt;47.01583&lt;/td&gt;
+      &lt;td&gt;1.410186&lt;/td&gt;
+      &lt;td&gt;80.030255&lt;/td&gt;
+      &lt;td&gt;21.500508&lt;/td&gt;
+      &lt;td&gt;79.830341&lt;/td&gt;
+      &lt;td&gt;20.122170&lt;/td&gt;
+      &lt;td&gt;8.492476&lt;/td&gt;
+      &lt;td&gt;16.317941&lt;/td&gt;
+      &lt;td&gt;32.686315&lt;/td&gt;
+      &lt;td&gt;38.186847&lt;/td&gt;
+      &lt;td&gt;45.273431&lt;/td&gt;
+      &lt;td&gt;20.122170&lt;/td&gt;
+      &lt;td&gt;0.070081&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;len(turniningpoint_ls) # our candidate sequence set
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;232
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;count = 0 
+point_ls = []
+for point in turniningpoint_ls:
+    tmp = getSequenceData(curry_df, point, 4)
+    test_ls = map(lambda x:  tmp[&#39;time&#39;].iloc[0]&amp;gt; x &amp;gt;tmp[&#39;time&#39;].iloc[-1], list(tmp_time_df.lower.values))
+    if sum(test_ls) &amp;gt;= 1:
+        count+=1
+        point_ls.append(list(tmp_time_df.lower.values)[test_ls.index(1)])
+print count 
+print point_ls
+print len(set(point_ls))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;23
+[46.920000000000002, 44.13666666666667, 42.870000000000005, 39.653333333333336, 38.236666666666672, 37.853333333333339, 36.903333333333336, 36.220000000000006, 28.236666666666665, 27.436666666666667, 24.02, 24.02, 20.57, 15.119999999999999, 14.036666666666667, 12.436666666666666, 12.436666666666666, 5.8699999999999992, 5.8699999999999992, 5.4033333333333333, 4.9866666666666664, 2.9199999999999999, 0.5033333333333333]
+20
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It captures 20 unique acutal shot times in the first step of filtering sequences.&lt;/p&gt;
+
+&lt;h3 id=&#34;step-2-classify-offense-plays-of-curry&#34;&gt;Step 2  Classify offense plays of Curry&lt;/h3&gt;
+
+&lt;p&gt;The sequences extracted from last step serve as our candicate set to further identify the sequence that Curry are in attack mode. Based on the time frame of corresponding sequences , we will extract the features to construct our training and test sets.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curry_df[&#39;defdist_mean&#39;] = map(lambda a,b,c,d,e: np.nanmean([a,b,c,d,e]), curry_df[&#39;def1dist&#39;],curry_df[&#39;def2dist&#39;],curry_df[&#39;def3dist&#39;],curry_df[&#39;def4dist&#39;],curry_df[&#39;def5dist&#39;]) 
+curry_df[&#39;defdist_var&#39;] = map(lambda a,b,c,d,e: np.nanvar([a,b,c,d,e]), curry_df[&#39;def1dist&#39;],curry_df[&#39;def2dist&#39;],curry_df[&#39;def3dist&#39;],curry_df[&#39;def4dist&#39;],curry_df[&#39;def5dist&#39;]) 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def extractFeatures(df, shot_time_points_ls = None):
+    curryball_max = np.nanmax(df[&#39;curryball&#39;].values)
+    curryball_min = np.nanmin(df[&#39;curryball&#39;].values)
+    curryball_mean = np.nanmean(df[&#39;curryball&#39;].values)
+    curryball_var = np.nanvar(df[&#39;curryball&#39;].values)
+    
+    curryhoop_max = np.nanmax(df[&#39;curryhoop_min&#39;].values)
+    curryhoop_min = np.nanmin(df[&#39;curryhoop_min&#39;].values)
+    curryhoop_mean = np.nanmean(df[&#39;curryhoop_min&#39;].values)
+    curryhoop_var = np.nanvar(df[&#39;curryhoop_min&#39;].values)
+    
+    ballhoop_max = np.nanmax(df[&#39;ballhoop_min&#39;].values)
+    ballhoop_min =  np.nanmin(df[&#39;ballhoop_min&#39;].values)
+    ballhoop_mean = np.nanmean(df[&#39;ballhoop_min&#39;].values)
+    ballhoop_var = np.nanvar(df[&#39;ballhoop_min&#39;].values)
+    
+    dist_ratio_mean = np.nanmean(df[&#39;dist_ratio&#39;].values)
+    dist_ratio_var = np.nanvar(df[&#39;dist_ratio&#39;].values)
+    
+    def1dist_mean = np.nanmean(df[&#39;def1dist&#39;].values)
+    def1dist_var = np.nanvar(df[&#39;def1dist&#39;].values)
+    def2dist_mean = np.nanmean(df[&#39;def2dist&#39;].values)
+    def2dist_var =np.nanvar(df[&#39;def2dist&#39;].values)
+    def3dist_mean =np.nanmean(df[&#39;def3dist&#39;].values)
+    def3dist_var = np.nanvar(df[&#39;def3dist&#39;].values)
+    def4dist_mean = np.nanmean(df[&#39;def4dist&#39;].values)
+    def4dist_var = np.nanvar(df[&#39;def4dist&#39;].values)
+    def5dist_mean = np.nanmean(df[&#39;def5dist&#39;].values)
+    def5dist_var = np.nanvar(df[&#39;def5dist&#39;].values)
+    
+    defdist_mean_m = np.nanmean(df[&#39;defdist_mean&#39;].values)
+    defdist_mean_v = np.nanvar(df[&#39;defdist_mean&#39;].values)
+    defdist_var_m = np.nanmean(df[&#39;defdist_var&#39;].values)
+    defdist_var_v = np.nanvar(df[&#39;defdist_var&#39;].values)
+    
+    if type(shot_time_points_ls) is list:
+        is_shot_ls = filter(lambda x:  df[&#39;time&#39;].iloc[0]&amp;gt; x &amp;gt;df[&#39;time&#39;].iloc[-1], shot_time_points_ls)
+        if len(is_shot_ls) &amp;gt;= 1:
+            offense = 1
+            shot_time = is_shot_ls
+        else:
+            offense = 0
+            shot_time = np.nan
+    
+        return pd.DataFrame({&#39;curryball_max&#39;:[curryball_max], &#39;curryball_min&#39;:[curryball_min], &#39;curryball_mean&#39;:[curryball_mean],
+                        &#39;curryball_var&#39;:[curryball_var], &#39;curryhoop_max&#39;:[curryhoop_max], &#39;curryhoop_min&#39;:[curryhoop_min],
+                        &#39;curryhoop_mean&#39;:[curryhoop_mean], &#39;curryhoop_var&#39;:[curryhoop_var], &#39;ballhoop_max&#39;:[ballhoop_max],
+                        &#39;ballhoop_min&#39;:[ballhoop_min], &#39;ballhoop_mean&#39;:[ballhoop_mean], &#39;ballhoop_var&#39;:[ballhoop_var],
+                        &#39;dist_ratio_mean&#39;:[dist_ratio_mean], &#39;dist_ratio_var&#39;:[dist_ratio_var], &#39;def1dist_mean&#39;:[def1dist_mean],
+                        &#39;def1dist_var&#39;:[def1dist_var], &#39;def2dist_mean&#39;:[def2dist_mean], &#39;def2dist_var&#39;:[def2dist_var],
+                        &#39;def3dist_mean&#39;:[def3dist_mean],&#39;def3dist_var&#39;:[def3dist_var], &#39;def4dist_mean&#39;:[def4dist_mean], 
+                         &#39;def4dist_var&#39;:[def4dist_mean],&#39;def5dist_mean&#39;:[def5dist_mean], &#39;def5dist_var&#39;:[def5dist_var],
+                        &#39;defdist_mean_m&#39;:[defdist_mean_m], &#39;defdist_mean_v&#39;:[defdist_mean_v], &#39;defdist_var_m&#39;:[defdist_var_m],
+                        &#39;defdist_var_v&#39;:[defdist_var_v], &#39;offense&#39;: [offense], &#39;trace_start&#39;:[df[&#39;time&#39;].iloc[0]],
+                        &#39;trace_end&#39;: [df[&#39;time&#39;].iloc[-1]], &#39;shot_time&#39;:shot_time })
+    else:
+        return pd.DataFrame({&#39;curryball_max&#39;:[curryball_max], &#39;curryball_min&#39;:[curryball_min], &#39;curryball_mean&#39;:[curryball_mean],
+                        &#39;curryball_var&#39;:[curryball_var], &#39;curryhoop_max&#39;:[curryhoop_max], &#39;curryhoop_min&#39;:[curryhoop_min],
+                        &#39;curryhoop_mean&#39;:[curryhoop_mean], &#39;curryhoop_var&#39;:[curryhoop_var], &#39;ballhoop_max&#39;:[ballhoop_max],
+                        &#39;ballhoop_min&#39;:[ballhoop_min], &#39;ballhoop_mean&#39;:[ballhoop_mean], &#39;ballhoop_var&#39;:[ballhoop_var],
+                        &#39;dist_ratio_mean&#39;:[dist_ratio_mean], &#39;dist_ratio_var&#39;:[dist_ratio_var], &#39;def1dist_mean&#39;:[def1dist_mean],
+                        &#39;def1dist_var&#39;:[def1dist_var], &#39;def2dist_mean&#39;:[def2dist_mean], &#39;def2dist_var&#39;:[def2dist_var],
+                        &#39;def3dist_mean&#39;:[def3dist_mean],&#39;def3dist_var&#39;:[def3dist_var], &#39;def4dist_mean&#39;:[def4dist_mean], 
+                         &#39;def4dist_var&#39;:[def4dist_mean],&#39;def5dist_mean&#39;:[def5dist_mean], &#39;def5dist_var&#39;:[def5dist_var],
+                        &#39;defdist_mean_m&#39;:[defdist_mean_m], &#39;defdist_mean_v&#39;:[defdist_mean_v], &#39;defdist_var_m&#39;:[defdist_var_m],
+                        &#39;defdist_var_v&#39;:[defdist_var_v], &#39;trace_start&#39;:[df[&#39;time&#39;].iloc[0]],
+                        &#39;trace_end&#39;: [df[&#39;time&#39;].iloc[-1]]})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;tmp = getSequenceData(curry_df, 1510, 6)
+extractFeatures(tmp, list(tmp_time_df.lower.values))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;ballhoop_max&lt;/th&gt;
+      &lt;th&gt;ballhoop_mean&lt;/th&gt;
+      &lt;th&gt;ballhoop_min&lt;/th&gt;
+      &lt;th&gt;ballhoop_var&lt;/th&gt;
+      &lt;th&gt;curryball_max&lt;/th&gt;
+      &lt;th&gt;curryball_mean&lt;/th&gt;
+      &lt;th&gt;curryball_min&lt;/th&gt;
+      &lt;th&gt;curryball_var&lt;/th&gt;
+      &lt;th&gt;curryhoop_max&lt;/th&gt;
+      &lt;th&gt;curryhoop_mean&lt;/th&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;th&gt;defdist_mean_m&lt;/th&gt;
+      &lt;th&gt;defdist_mean_v&lt;/th&gt;
+      &lt;th&gt;defdist_var_m&lt;/th&gt;
+      &lt;th&gt;defdist_var_v&lt;/th&gt;
+      &lt;th&gt;dist_ratio_mean&lt;/th&gt;
+      &lt;th&gt;dist_ratio_var&lt;/th&gt;
+      &lt;th&gt;offense&lt;/th&gt;
+      &lt;th&gt;shot_time&lt;/th&gt;
+      &lt;th&gt;trace_end&lt;/th&gt;
+      &lt;th&gt;trace_start&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;42.249655&lt;/td&gt;
+      &lt;td&gt;26.443021&lt;/td&gt;
+      &lt;td&gt;0.231528&lt;/td&gt;
+      &lt;td&gt;96.82848&lt;/td&gt;
+      &lt;td&gt;35.99551&lt;/td&gt;
+      &lt;td&gt;5.338232&lt;/td&gt;
+      &lt;td&gt;0.095481&lt;/td&gt;
+      &lt;td&gt;73.990365&lt;/td&gt;
+      &lt;td&gt;42.354334&lt;/td&gt;
+      &lt;td&gt;30.966018&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;19.915984&lt;/td&gt;
+      &lt;td&gt;31.028272&lt;/td&gt;
+      &lt;td&gt;91.749817&lt;/td&gt;
+      &lt;td&gt;2709.719469&lt;/td&gt;
+      &lt;td&gt;1.983769&lt;/td&gt;
+      &lt;td&gt;172.652191&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;46.92&lt;/td&gt;
+      &lt;td&gt;46.9185&lt;/td&gt;
+      &lt;td&gt;47.0185&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;1 rows × 32 columns&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def prepareMLdata(df, turniningpoint_ls, shot_time_points_ls):
+    appended_data = []
+    for point in turniningpoint_ls:
+        tmp = getSequenceData(curry_df, point, 6)
+        tmp = extractFeatures(tmp, shot_time_points_ls)
+        appended_data.append(tmp)
+    appended_data = pd.concat(appended_data, ignore_index= True)
+    return appended_data 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;shot_time_points_ls = list(tmp_time_df.lower.values)
+ML_data = prepareMLdata(curry_df, turniningpoint_ls, shot_time_points_ls)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;ML_data.head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;ballhoop_max&lt;/th&gt;
+      &lt;th&gt;ballhoop_mean&lt;/th&gt;
+      &lt;th&gt;ballhoop_min&lt;/th&gt;
+      &lt;th&gt;ballhoop_var&lt;/th&gt;
+      &lt;th&gt;curryball_max&lt;/th&gt;
+      &lt;th&gt;curryball_mean&lt;/th&gt;
+      &lt;th&gt;curryball_min&lt;/th&gt;
+      &lt;th&gt;curryball_var&lt;/th&gt;
+      &lt;th&gt;curryhoop_max&lt;/th&gt;
+      &lt;th&gt;curryhoop_mean&lt;/th&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;th&gt;defdist_mean_m&lt;/th&gt;
+      &lt;th&gt;defdist_mean_v&lt;/th&gt;
+      &lt;th&gt;defdist_var_m&lt;/th&gt;
+      &lt;th&gt;defdist_var_v&lt;/th&gt;
+      &lt;th&gt;dist_ratio_mean&lt;/th&gt;
+      &lt;th&gt;dist_ratio_var&lt;/th&gt;
+      &lt;th&gt;offense&lt;/th&gt;
+      &lt;th&gt;shot_time&lt;/th&gt;
+      &lt;th&gt;trace_end&lt;/th&gt;
+      &lt;th&gt;trace_start&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;28.885491&lt;/td&gt;
+      &lt;td&gt;13.326784&lt;/td&gt;
+      &lt;td&gt;0.231505&lt;/td&gt;
+      &lt;td&gt;93.175493&lt;/td&gt;
+      &lt;td&gt;20.219201&lt;/td&gt;
+      &lt;td&gt;8.185967&lt;/td&gt;
+      &lt;td&gt;0.444152&lt;/td&gt;
+      &lt;td&gt;43.916751&lt;/td&gt;
+      &lt;td&gt;27.706306&lt;/td&gt;
+      &lt;td&gt;15.357575&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;13.228087&lt;/td&gt;
+      &lt;td&gt;6.290439&lt;/td&gt;
+      &lt;td&gt;52.646155&lt;/td&gt;
+      &lt;td&gt;361.518488&lt;/td&gt;
+      &lt;td&gt;5.723790&lt;/td&gt;
+      &lt;td&gt;101.393295&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;47.78783&lt;/td&gt;
+      &lt;td&gt;47.88783&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;32.916573&lt;/td&gt;
+      &lt;td&gt;25.156415&lt;/td&gt;
+      &lt;td&gt;0.136773&lt;/td&gt;
+      &lt;td&gt;79.154517&lt;/td&gt;
+      &lt;td&gt;12.005317&lt;/td&gt;
+      &lt;td&gt;8.053691&lt;/td&gt;
+      &lt;td&gt;4.092887&lt;/td&gt;
+      &lt;td&gt;3.174108&lt;/td&gt;
+      &lt;td&gt;23.009739&lt;/td&gt;
+      &lt;td&gt;19.967946&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;18.643226&lt;/td&gt;
+      &lt;td&gt;3.331261&lt;/td&gt;
+      &lt;td&gt;43.505947&lt;/td&gt;
+      &lt;td&gt;216.642121&lt;/td&gt;
+      &lt;td&gt;1.186465&lt;/td&gt;
+      &lt;td&gt;52.984364&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;47.54317&lt;/td&gt;
+      &lt;td&gt;47.64317&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;29.044444&lt;/td&gt;
+      &lt;td&gt;14.148250&lt;/td&gt;
+      &lt;td&gt;0.035938&lt;/td&gt;
+      &lt;td&gt;73.572487&lt;/td&gt;
+      &lt;td&gt;39.326996&lt;/td&gt;
+      &lt;td&gt;30.617151&lt;/td&gt;
+      &lt;td&gt;20.185569&lt;/td&gt;
+      &lt;td&gt;27.224889&lt;/td&gt;
+      &lt;td&gt;31.454115&lt;/td&gt;
+      &lt;td&gt;24.031073&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;21.486210&lt;/td&gt;
+      &lt;td&gt;0.246793&lt;/td&gt;
+      &lt;td&gt;91.032794&lt;/td&gt;
+      &lt;td&gt;494.299733&lt;/td&gt;
+      &lt;td&gt;14.798147&lt;/td&gt;
+      &lt;td&gt;4093.662355&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;47.26917&lt;/td&gt;
+      &lt;td&gt;47.36917&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;16.347788&lt;/td&gt;
+      &lt;td&gt;6.813383&lt;/td&gt;
+      &lt;td&gt;0.035938&lt;/td&gt;
+      &lt;td&gt;34.803312&lt;/td&gt;
+      &lt;td&gt;33.381643&lt;/td&gt;
+      &lt;td&gt;27.531473&lt;/td&gt;
+      &lt;td&gt;20.185569&lt;/td&gt;
+      &lt;td&gt;14.003907&lt;/td&gt;
+      &lt;td&gt;31.026790&lt;/td&gt;
+      &lt;td&gt;24.390090&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;21.380101&lt;/td&gt;
+      &lt;td&gt;0.376388&lt;/td&gt;
+      &lt;td&gt;65.100121&lt;/td&gt;
+      &lt;td&gt;904.094115&lt;/td&gt;
+      &lt;td&gt;21.210795&lt;/td&gt;
+      &lt;td&gt;4217.887524&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;47.22650&lt;/td&gt;
+      &lt;td&gt;47.32650&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;42.249655&lt;/td&gt;
+      &lt;td&gt;26.443021&lt;/td&gt;
+      &lt;td&gt;0.231528&lt;/td&gt;
+      &lt;td&gt;96.828480&lt;/td&gt;
+      &lt;td&gt;35.995510&lt;/td&gt;
+      &lt;td&gt;5.338232&lt;/td&gt;
+      &lt;td&gt;0.095481&lt;/td&gt;
+      &lt;td&gt;73.990365&lt;/td&gt;
+      &lt;td&gt;42.354334&lt;/td&gt;
+      &lt;td&gt;30.966018&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;19.915984&lt;/td&gt;
+      &lt;td&gt;31.028272&lt;/td&gt;
+      &lt;td&gt;91.749817&lt;/td&gt;
+      &lt;td&gt;2709.719469&lt;/td&gt;
+      &lt;td&gt;1.983769&lt;/td&gt;
+      &lt;td&gt;172.652191&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;46.92&lt;/td&gt;
+      &lt;td&gt;46.91850&lt;/td&gt;
+      &lt;td&gt;47.01850&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;5 rows × 32 columns&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;ML_data.to_csv(&#39;ML_data.csv&#39;, index = False)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then, with the labels we scraped online, we can build a classifier to classify whether a movement pattern indicates Curry plays offense or not, which helps us to narrow down the scope for searching shooting patterns. We use 1st and 3rd quarters as our training set and train with logistic regression and random forest algorithms. logistic regression model turned out to perform better in this case although there still exists overfitting problem.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#ML_data = pd.read_csv(&amp;quot;ML_data.csv&amp;quot;)
+# split training and test set
+train_set = ML_data[(ML_data.trace_end &amp;gt;= 36.0) | ((24 &amp;gt; ML_data.trace_end) &amp;amp;(ML_data.trace_end &amp;gt;= 12.0)) ] 
+test_set = ML_data[((36 &amp;gt; ML_data.trace_end) &amp;amp; (ML_data.trace_end &amp;gt;= 24)) | (ML_data.trace_end &amp;lt; 12.0)]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;features = [name for name in train_set.columns.tolist() if name not in [&#39;offense&#39;, &#39;shot_time&#39;, &#39;trace_end&#39;, &#39;trace_start&#39;]]
+X_train = train_set[features]
+y_train = train_set[&#39;offense&#39;]
+X_test = test_set[features]
+y_test = test_set[&#39;offense&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;X_train.shape
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;(150, 28)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;lr_model = LogisticRegression() 
+rf_model = RandomForestClassifier(n_estimators= 290, max_features= 15) 
+
+lr_model.fit(X_train, y_train)
+
+rf_model.fit(X_train, y_train)
+
+fit_predicted_lr = lr_model.predict(X_train) # prediction performance in training set
+report_lr = classification_report(y_train, fit_predicted_lr) 
+print(report_lr)
+
+fit_predicted_rf = rf_model.predict(X_train) # prediction performance in training set
+report_rf = classification_report(y_train, fit_predicted_rf) 
+print(report_rf)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;             precision    recall  f1-score   support
+
+          0       0.99      0.99      0.99       135
+          1       0.93      0.93      0.93        15
+
+avg / total       0.99      0.99      0.99       150
+
+             precision    recall  f1-score   support
+
+          0       1.00      1.00      1.00       135
+          1       1.00      1.00      1.00        15
+
+avg / total       1.00      1.00      1.00       150
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We have to deal with missing value cases due to the measurement errors.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;X_test[X_test.isnull().any(axis=1)]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;ballhoop_max&lt;/th&gt;
+      &lt;th&gt;ballhoop_mean&lt;/th&gt;
+      &lt;th&gt;ballhoop_min&lt;/th&gt;
+      &lt;th&gt;ballhoop_var&lt;/th&gt;
+      &lt;th&gt;curryball_max&lt;/th&gt;
+      &lt;th&gt;curryball_mean&lt;/th&gt;
+      &lt;th&gt;curryball_min&lt;/th&gt;
+      &lt;th&gt;curryball_var&lt;/th&gt;
+      &lt;th&gt;curryhoop_max&lt;/th&gt;
+      &lt;th&gt;curryhoop_mean&lt;/th&gt;
+      &lt;th&gt;...&lt;/th&gt;
+      &lt;th&gt;def4dist_mean&lt;/th&gt;
+      &lt;th&gt;def4dist_var&lt;/th&gt;
+      &lt;th&gt;def5dist_mean&lt;/th&gt;
+      &lt;th&gt;def5dist_var&lt;/th&gt;
+      &lt;th&gt;defdist_mean_m&lt;/th&gt;
+      &lt;th&gt;defdist_mean_v&lt;/th&gt;
+      &lt;th&gt;defdist_var_m&lt;/th&gt;
+      &lt;th&gt;defdist_var_v&lt;/th&gt;
+      &lt;th&gt;dist_ratio_mean&lt;/th&gt;
+      &lt;th&gt;dist_ratio_var&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;229&lt;/th&gt;
+      &lt;td&gt;30.100838&lt;/td&gt;
+      &lt;td&gt;16.739614&lt;/td&gt;
+      &lt;td&gt;0.389141&lt;/td&gt;
+      &lt;td&gt;68.798010&lt;/td&gt;
+      &lt;td&gt;38.949504&lt;/td&gt;
+      &lt;td&gt;26.843761&lt;/td&gt;
+      &lt;td&gt;0.448405&lt;/td&gt;
+      &lt;td&gt;126.753295&lt;/td&gt;
+      &lt;td&gt;25.918275&lt;/td&gt;
+      &lt;td&gt;15.388054&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;14.740568&lt;/td&gt;
+      &lt;td&gt;8.362249&lt;/td&gt;
+      &lt;td&gt;70.660123&lt;/td&gt;
+      &lt;td&gt;1202.564293&lt;/td&gt;
+      &lt;td&gt;1.644810&lt;/td&gt;
+      &lt;td&gt;0.282469&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;230&lt;/th&gt;
+      &lt;td&gt;36.568824&lt;/td&gt;
+      &lt;td&gt;27.263279&lt;/td&gt;
+      &lt;td&gt;0.221226&lt;/td&gt;
+      &lt;td&gt;91.600931&lt;/td&gt;
+      &lt;td&gt;33.334161&lt;/td&gt;
+      &lt;td&gt;6.969266&lt;/td&gt;
+      &lt;td&gt;0.333314&lt;/td&gt;
+      &lt;td&gt;63.844736&lt;/td&gt;
+      &lt;td&gt;35.092890&lt;/td&gt;
+      &lt;td&gt;31.432368&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;15.895483&lt;/td&gt;
+      &lt;td&gt;3.236023&lt;/td&gt;
+      &lt;td&gt;110.514178&lt;/td&gt;
+      &lt;td&gt;3801.879614&lt;/td&gt;
+      &lt;td&gt;2.660365&lt;/td&gt;
+      &lt;td&gt;230.627245&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;231&lt;/th&gt;
+      &lt;td&gt;27.563397&lt;/td&gt;
+      &lt;td&gt;16.694428&lt;/td&gt;
+      &lt;td&gt;0.130125&lt;/td&gt;
+      &lt;td&gt;58.094332&lt;/td&gt;
+      &lt;td&gt;22.415984&lt;/td&gt;
+      &lt;td&gt;10.877561&lt;/td&gt;
+      &lt;td&gt;1.328954&lt;/td&gt;
+      &lt;td&gt;20.481343&lt;/td&gt;
+      &lt;td&gt;23.652165&lt;/td&gt;
+      &lt;td&gt;18.631163&lt;/td&gt;
+      &lt;td&gt;...&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;15.368485&lt;/td&gt;
+      &lt;td&gt;5.217303&lt;/td&gt;
+      &lt;td&gt;15.273074&lt;/td&gt;
+      &lt;td&gt;59.153009&lt;/td&gt;
+      &lt;td&gt;2.296235&lt;/td&gt;
+      &lt;td&gt;199.197441&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;3 rows × 28 columns&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Treatment with missing values by replacing with median values
+X_test = X_test.fillna(X_test.median())
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;lr_predicted = lr_model.predict(X_test) # prediction performance in training set
+report_lr = classification_report(y_test, lr_predicted) 
+print(report_lr)
+
+rf_predicted = rf_model.predict(X_test) # prediction performance in training set
+report_rf = classification_report(y_test, rf_predicted) 
+print(report_rf)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;             precision    recall  f1-score   support
+
+          0       0.91      0.89      0.90        71
+          1       0.38      0.45      0.42        11
+
+avg / total       0.84      0.83      0.84        82
+
+             precision    recall  f1-score   support
+
+          0       0.88      0.96      0.92        71
+          1       0.40      0.18      0.25        11
+
+avg / total       0.82      0.85      0.83        82
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# save the model
+with open(&#39;lr_model.pickle&#39;, &#39;w&#39;) as pf:
+    pickle.dump(lr_model, pf)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;step-3-change-point-detection&#34;&gt;Step 3 Change point detection&lt;/h3&gt;
+
+&lt;p&gt;Using our trained model from the last step, we can apply it on a new dataset to identify the &amp;ldquo;offense&amp;rdquo; sequences. In this case, to submit our prediction results, we would generate the predictions for the whole provided dataset.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def getOffenseSeq(model, ndata, features, top = 24):
+    ndata[&#39;preds&#39;] = model.predict_proba(ndata[features])[:,1]
+    #offense_data = ndata[ndata.preds == 1].reset_index()
+    offense_data = ndata.nlargest(24, &#39;preds&#39;)
+    return offense_data
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;nML_data = ML_data.fillna(ML_data[features].median())
+getOffenseSeq(lr_model, nML_data, features)[[&#39;preds&#39;, &#39;offense&#39;, &#39;shot_time&#39;, &#39;trace_end&#39;, &#39;trace_start&#39;]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;preds&lt;/th&gt;
+      &lt;th&gt;offense&lt;/th&gt;
+      &lt;th&gt;shot_time&lt;/th&gt;
+      &lt;th&gt;trace_end&lt;/th&gt;
+      &lt;th&gt;trace_start&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;204&lt;/th&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;5.403333&lt;/td&gt;
+      &lt;td&gt;5.36033&lt;/td&gt;
+      &lt;td&gt;5.46033&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;35&lt;/th&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;42.870000&lt;/td&gt;
+      &lt;td&gt;42.86000&lt;/td&gt;
+      &lt;td&gt;42.96000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;0.999993&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;46.920000&lt;/td&gt;
+      &lt;td&gt;46.84050&lt;/td&gt;
+      &lt;td&gt;46.94050&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;193&lt;/th&gt;
+      &lt;td&gt;0.999788&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;12.436667&lt;/td&gt;
+      &lt;td&gt;12.38417&lt;/td&gt;
+      &lt;td&gt;12.48433&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;102&lt;/th&gt;
+      &lt;td&gt;0.997139&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;27.43833&lt;/td&gt;
+      &lt;td&gt;27.53833&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;224&lt;/th&gt;
+      &lt;td&gt;0.995493&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;2.19100&lt;/td&gt;
+      &lt;td&gt;2.29100&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;103&lt;/th&gt;
+      &lt;td&gt;0.984838&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;27.436667&lt;/td&gt;
+      &lt;td&gt;27.38033&lt;/td&gt;
+      &lt;td&gt;27.48033&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;222&lt;/th&gt;
+      &lt;td&gt;0.979128&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;2.50533&lt;/td&gt;
+      &lt;td&gt;2.66983&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;175&lt;/th&gt;
+      &lt;td&gt;0.966567&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;15.120000&lt;/td&gt;
+      &lt;td&gt;15.11750&lt;/td&gt;
+      &lt;td&gt;15.21767&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;223&lt;/th&gt;
+      &lt;td&gt;0.965653&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;2.50400&lt;/td&gt;
+      &lt;td&gt;2.66850&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;106&lt;/th&gt;
+      &lt;td&gt;0.965209&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;27.07433&lt;/td&gt;
+      &lt;td&gt;27.17433&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;0.937037&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;46.920000&lt;/td&gt;
+      &lt;td&gt;46.91850&lt;/td&gt;
+      &lt;td&gt;47.01850&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;74&lt;/th&gt;
+      &lt;td&gt;0.922539&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;36.903333&lt;/td&gt;
+      &lt;td&gt;36.87167&lt;/td&gt;
+      &lt;td&gt;36.97133&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;180&lt;/th&gt;
+      &lt;td&gt;0.910724&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;14.036667&lt;/td&gt;
+      &lt;td&gt;14.02417&lt;/td&gt;
+      &lt;td&gt;14.12417&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;176&lt;/th&gt;
+      &lt;td&gt;0.776233&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;15.120000&lt;/td&gt;
+      &lt;td&gt;15.03083&lt;/td&gt;
+      &lt;td&gt;15.13083&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;109&lt;/th&gt;
+      &lt;td&gt;0.726532&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;26.41567&lt;/td&gt;
+      &lt;td&gt;26.58767&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;192&lt;/th&gt;
+      &lt;td&gt;0.722562&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;12.436667&lt;/td&gt;
+      &lt;td&gt;12.43350&lt;/td&gt;
+      &lt;td&gt;12.53367&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;230&lt;/th&gt;
+      &lt;td&gt;0.712588&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.503333&lt;/td&gt;
+      &lt;td&gt;0.50083&lt;/td&gt;
+      &lt;td&gt;0.60100&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;54&lt;/th&gt;
+      &lt;td&gt;0.699003&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;39.653333&lt;/td&gt;
+      &lt;td&gt;39.61433&lt;/td&gt;
+      &lt;td&gt;39.71433&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;64&lt;/th&gt;
+      &lt;td&gt;0.685481&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;38.236667&lt;/td&gt;
+      &lt;td&gt;38.22283&lt;/td&gt;
+      &lt;td&gt;38.32300&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;148&lt;/th&gt;
+      &lt;td&gt;0.671682&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;20.570000&lt;/td&gt;
+      &lt;td&gt;20.56550&lt;/td&gt;
+      &lt;td&gt;20.66567&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;28&lt;/th&gt;
+      &lt;td&gt;0.654600&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;44.136667&lt;/td&gt;
+      &lt;td&gt;44.11267&lt;/td&gt;
+      &lt;td&gt;44.21267&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;203&lt;/th&gt;
+      &lt;td&gt;0.630730&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;5.41300&lt;/td&gt;
+      &lt;td&gt;5.51300&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;122&lt;/th&gt;
+      &lt;td&gt;0.602449&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;24.020000&lt;/td&gt;
+      &lt;td&gt;24.01100&lt;/td&gt;
+      &lt;td&gt;24.11200&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then, based on these selected time frames, we can apply other algorithms to detect the &amp;ldquo;change points&amp;rdquo; in the time series. We use the PELT algorithm[1] and the package &lt;code&gt;changepy&lt;/code&gt;. The PERL algorithm requires a cost function. In our case, we chose the &lt;code&gt;exponential&lt;/code&gt; for exponential distributed data with changing mean.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/em&gt;:
+[1] Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of changepoints with a linear computational cost, JASA 107(500), 1590-1598&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def mapSeq(data, trace_start, trace_end):
+    seq_data = data[data[&#39;time&#39;].between(trace_end,trace_start, inclusive = True)]
+    return seq_data[&#39;curryball&#39;].values
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;%matplotlib inline
+curry_df.curryball.plot(kind=&amp;quot;hist&amp;quot;, bins =15) # exponential distribution
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;../PMC-project_files/output_94_1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from changepy import pelt
+from changepy.costs import exponential,normal_meanvar
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curryball_seq = mapSeq(curry_df, 47.01850, 46.91850)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;cost = exponential(curryball_seq)
+pelt(cost, len(curryball_seq))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[0, 118]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;curryball_seq[118]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;4.49890067991059
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def getChangePoint(data, trace_start, trace_end):
+    seq_data = data[data[&#39;time&#39;].between(trace_end,trace_start, inclusive = True)].reset_index()
+    curryball_seq = seq_data[&#39;curryball&#39;].values
+    cost = exponential(curryball_seq)
+    try:
+        chg_point = pelt(cost, len(curryball_seq))[1]
+        pred_shot_time = round(seq_data.ix[chg_point, &#39;time&#39;], 8)      
+    except:
+        pred_shot_time = np.nan
+    return pred_shot_time
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;getChangePoint(curry_df, 47.01850, 46.91850)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;46.93983
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;shot_info = getOffenseSeq(lr_model, nML_data, features)[[&#39;preds&#39;, &#39;offense&#39;, &#39;shot_time&#39;, &#39;trace_end&#39;, &#39;trace_start&#39;]]
+shot_info[&#39;pred_shot_time&#39;] = map(lambda t1, t2: getChangePoint(curry_df, t1, t2), shot_info[&#39;trace_start&#39;], shot_info[&#39;trace_end&#39;])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# apply some heauristic rules: 1. if we fail to detect change point
+shot_info[&#39;pred_shot_time&#39;] = map(lambda t1, t2: t2+0.05  if pd.isnull(t1) else t1,shot_info[&#39;pred_shot_time&#39;], shot_info[&#39;trace_end&#39;])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;shot_info
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;preds&lt;/th&gt;
+      &lt;th&gt;offense&lt;/th&gt;
+      &lt;th&gt;shot_time&lt;/th&gt;
+      &lt;th&gt;trace_end&lt;/th&gt;
+      &lt;th&gt;trace_start&lt;/th&gt;
+      &lt;th&gt;pred_shot_time&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;204&lt;/th&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;5.403333&lt;/td&gt;
+      &lt;td&gt;5.36033&lt;/td&gt;
+      &lt;td&gt;5.46033&lt;/td&gt;
+      &lt;td&gt;5.43033&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;35&lt;/th&gt;
+      &lt;td&gt;1.000000&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;42.870000&lt;/td&gt;
+      &lt;td&gt;42.86000&lt;/td&gt;
+      &lt;td&gt;42.96000&lt;/td&gt;
+      &lt;td&gt;42.92400&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;0.999993&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;46.920000&lt;/td&gt;
+      &lt;td&gt;46.84050&lt;/td&gt;
+      &lt;td&gt;46.94050&lt;/td&gt;
+      &lt;td&gt;46.92717&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;193&lt;/th&gt;
+      &lt;td&gt;0.999788&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;12.436667&lt;/td&gt;
+      &lt;td&gt;12.38417&lt;/td&gt;
+      &lt;td&gt;12.48433&lt;/td&gt;
+      &lt;td&gt;12.44083&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;102&lt;/th&gt;
+      &lt;td&gt;0.997139&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;27.43833&lt;/td&gt;
+      &lt;td&gt;27.53833&lt;/td&gt;
+      &lt;td&gt;27.47367&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;224&lt;/th&gt;
+      &lt;td&gt;0.995493&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;2.19100&lt;/td&gt;
+      &lt;td&gt;2.29100&lt;/td&gt;
+      &lt;td&gt;2.27300&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;103&lt;/th&gt;
+      &lt;td&gt;0.984838&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;27.436667&lt;/td&gt;
+      &lt;td&gt;27.38033&lt;/td&gt;
+      &lt;td&gt;27.48033&lt;/td&gt;
+      &lt;td&gt;27.47367&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;222&lt;/th&gt;
+      &lt;td&gt;0.979128&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;2.50533&lt;/td&gt;
+      &lt;td&gt;2.66983&lt;/td&gt;
+      &lt;td&gt;2.65050&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;175&lt;/th&gt;
+      &lt;td&gt;0.966567&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;15.120000&lt;/td&gt;
+      &lt;td&gt;15.11750&lt;/td&gt;
+      &lt;td&gt;15.21767&lt;/td&gt;
+      &lt;td&gt;15.18017&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;223&lt;/th&gt;
+      &lt;td&gt;0.965653&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;2.50400&lt;/td&gt;
+      &lt;td&gt;2.66850&lt;/td&gt;
+      &lt;td&gt;2.65050&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;106&lt;/th&gt;
+      &lt;td&gt;0.965209&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;27.07433&lt;/td&gt;
+      &lt;td&gt;27.17433&lt;/td&gt;
+      &lt;td&gt;27.09367&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;0.937037&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;46.920000&lt;/td&gt;
+      &lt;td&gt;46.91850&lt;/td&gt;
+      &lt;td&gt;47.01850&lt;/td&gt;
+      &lt;td&gt;46.93983&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;74&lt;/th&gt;
+      &lt;td&gt;0.922539&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;36.903333&lt;/td&gt;
+      &lt;td&gt;36.87167&lt;/td&gt;
+      &lt;td&gt;36.97133&lt;/td&gt;
+      &lt;td&gt;36.91267&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;180&lt;/th&gt;
+      &lt;td&gt;0.910724&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;14.036667&lt;/td&gt;
+      &lt;td&gt;14.02417&lt;/td&gt;
+      &lt;td&gt;14.12417&lt;/td&gt;
+      &lt;td&gt;14.04683&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;176&lt;/th&gt;
+      &lt;td&gt;0.776233&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;15.120000&lt;/td&gt;
+      &lt;td&gt;15.03083&lt;/td&gt;
+      &lt;td&gt;15.13083&lt;/td&gt;
+      &lt;td&gt;15.08083&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;109&lt;/th&gt;
+      &lt;td&gt;0.726532&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;26.41567&lt;/td&gt;
+      &lt;td&gt;26.58767&lt;/td&gt;
+      &lt;td&gt;26.55700&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;192&lt;/th&gt;
+      &lt;td&gt;0.722562&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;12.436667&lt;/td&gt;
+      &lt;td&gt;12.43350&lt;/td&gt;
+      &lt;td&gt;12.53367&lt;/td&gt;
+      &lt;td&gt;12.44017&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;230&lt;/th&gt;
+      &lt;td&gt;0.712588&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;0.503333&lt;/td&gt;
+      &lt;td&gt;0.50083&lt;/td&gt;
+      &lt;td&gt;0.60100&lt;/td&gt;
+      &lt;td&gt;0.56167&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;54&lt;/th&gt;
+      &lt;td&gt;0.699003&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;39.653333&lt;/td&gt;
+      &lt;td&gt;39.61433&lt;/td&gt;
+      &lt;td&gt;39.71433&lt;/td&gt;
+      &lt;td&gt;39.69167&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;64&lt;/th&gt;
+      &lt;td&gt;0.685481&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;38.236667&lt;/td&gt;
+      &lt;td&gt;38.22283&lt;/td&gt;
+      &lt;td&gt;38.32300&lt;/td&gt;
+      &lt;td&gt;38.28367&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;148&lt;/th&gt;
+      &lt;td&gt;0.671682&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;20.570000&lt;/td&gt;
+      &lt;td&gt;20.56550&lt;/td&gt;
+      &lt;td&gt;20.66567&lt;/td&gt;
+      &lt;td&gt;20.65967&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;28&lt;/th&gt;
+      &lt;td&gt;0.654600&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;44.136667&lt;/td&gt;
+      &lt;td&gt;44.11267&lt;/td&gt;
+      &lt;td&gt;44.21267&lt;/td&gt;
+      &lt;td&gt;44.20950&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;203&lt;/th&gt;
+      &lt;td&gt;0.630730&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;5.41300&lt;/td&gt;
+      &lt;td&gt;5.51300&lt;/td&gt;
+      &lt;td&gt;5.42967&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;122&lt;/th&gt;
+      &lt;td&gt;0.602449&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;24.020000&lt;/td&gt;
+      &lt;td&gt;24.01100&lt;/td&gt;
+      &lt;td&gt;24.11200&lt;/td&gt;
+      &lt;td&gt;24.06100&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;shot_info[&#39;upper&#39;] = shot_info[&#39;pred_shot_time&#39;] + 0.02
+shot_info[&#39;lower&#39;] = shot_info[&#39;pred_shot_time&#39;] - 0.06
+modeling_result = shot_info[[&#39;upper&#39;, &#39;lower&#39;]]
+modeling_result.to_csv(&#39;curry_model_pred.csv&#39;, index=False)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;modeling_result
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div style=&#34;height:100%;overflow:auto;&#34;&gt;
+&lt;table border=&#34;1&#34; class=&#34;dataframe&#34;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&#34;text-align: right;&#34;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;upper&lt;/th&gt;
+      &lt;th&gt;lower&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;204&lt;/th&gt;
+      &lt;td&gt;5.45033&lt;/td&gt;
+      &lt;td&gt;5.37033&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;35&lt;/th&gt;
+      &lt;td&gt;42.94400&lt;/td&gt;
+      &lt;td&gt;42.86400&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;td&gt;46.94717&lt;/td&gt;
+      &lt;td&gt;46.86717&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;193&lt;/th&gt;
+      &lt;td&gt;12.46083&lt;/td&gt;
+      &lt;td&gt;12.38083&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;102&lt;/th&gt;
+      &lt;td&gt;27.49367&lt;/td&gt;
+      &lt;td&gt;27.41367&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;224&lt;/th&gt;
+      &lt;td&gt;2.29300&lt;/td&gt;
+      &lt;td&gt;2.21300&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;103&lt;/th&gt;
+      &lt;td&gt;27.49367&lt;/td&gt;
+      &lt;td&gt;27.41367&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;222&lt;/th&gt;
+      &lt;td&gt;2.67050&lt;/td&gt;
+      &lt;td&gt;2.59050&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;175&lt;/th&gt;
+      &lt;td&gt;15.20017&lt;/td&gt;
+      &lt;td&gt;15.12017&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;223&lt;/th&gt;
+      &lt;td&gt;2.67050&lt;/td&gt;
+      &lt;td&gt;2.59050&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;106&lt;/th&gt;
+      &lt;td&gt;27.11367&lt;/td&gt;
+      &lt;td&gt;27.03367&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;46.95983&lt;/td&gt;
+      &lt;td&gt;46.87983&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;74&lt;/th&gt;
+      &lt;td&gt;36.93267&lt;/td&gt;
+      &lt;td&gt;36.85267&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;180&lt;/th&gt;
+      &lt;td&gt;14.06683&lt;/td&gt;
+      &lt;td&gt;13.98683&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;176&lt;/th&gt;
+      &lt;td&gt;15.10083&lt;/td&gt;
+      &lt;td&gt;15.02083&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;109&lt;/th&gt;
+      &lt;td&gt;26.57700&lt;/td&gt;
+      &lt;td&gt;26.49700&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;192&lt;/th&gt;
+      &lt;td&gt;12.46017&lt;/td&gt;
+      &lt;td&gt;12.38017&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;230&lt;/th&gt;
+      &lt;td&gt;0.58167&lt;/td&gt;
+      &lt;td&gt;0.50167&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;54&lt;/th&gt;
+      &lt;td&gt;39.71167&lt;/td&gt;
+      &lt;td&gt;39.63167&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;64&lt;/th&gt;
+      &lt;td&gt;38.30367&lt;/td&gt;
+      &lt;td&gt;38.22367&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;148&lt;/th&gt;
+      &lt;td&gt;20.67967&lt;/td&gt;
+      &lt;td&gt;20.59967&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;28&lt;/th&gt;
+      &lt;td&gt;44.22950&lt;/td&gt;
+      &lt;td&gt;44.14950&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;203&lt;/th&gt;
+      &lt;td&gt;5.44967&lt;/td&gt;
+      &lt;td&gt;5.36967&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;122&lt;/th&gt;
+      &lt;td&gt;24.08100&lt;/td&gt;
+      &lt;td&gt;24.00100&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;After submmiting this result, this ML approach gave us about 50% accuracy. One concern is that the pretrained model may not be good enough to detect the offense sequences correctly in the first step. Also, training on only one dataset is not adequate for buiding a robust machine learning model.&lt;/p&gt;
+
+&lt;p&gt;As I mentioned, the organization committee would test our algorithm on a new test dataset. It turned out our ML approach didn&amp;rsquo;t lead us to the final round for on-site presentation. After I attended the convention on Feb 4, the winning solutions discussed mostly are just related to use some &amp;ldquo;domain knowledge&amp;rdquo; with deeper analysis of shooting pattern matching. For this competition, the ML is probably not the good way to go. It somehow shows Machine Learning is not an elixir.&lt;/p&gt;
+
+&lt;h2 id=&#34;afterthoughts&#34;&gt;Afterthoughts&lt;/h2&gt;
+
+&lt;p&gt;Through my research, there are some good reasons to try Recurrent Neural Network, a Deep learning model known for processing language and sequence data.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Doing more exploratory data analysis for the snippet time frames that Curry made the shots.&lt;/li&gt;
-&lt;li&gt;Learn and experiment with the Recurrent Neural Network model&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Through my research, there are some good reasons why we should try Recurrent Neural Network, a Deep learning model known for processing language and sequence data.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;All the covariates are actually time series data. Like speech regonition or signal processing, the specific hidden shooting pattern is what we are looking for in the time series.&lt;/li&gt;
+&lt;li&gt;All the covariates are actually time series data. Like speech regonition or signal processing, the specific hidden shooting pattern is what we can look for in the time series.&lt;/li&gt;
 &lt;li&gt;Data is noisy. However, deep learning model is good at extracting latent representation/information. Thus, we can be less bothered by feature engineering.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To be continued. Stay tuned. :)&lt;/p&gt;
-
-&lt;script type=&#34;text/javascript&#34;
-  src=&#34;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#34;&gt;
-&lt;/script&gt;</description>
+&lt;/ul&gt;</description>
     </item>
     
   </channel>

@@ -35,8 +35,7 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 
 # Introduction
 
-As we know, data science is an interdisplinary field. 
-
+As we know, data science is an interdisplinary field. My personal definition of data science is the problem-solving process of using data munging, data analytics and data visualization to generate actionable insights for business. There is just so much to learn. This is by no means a comprehensive and most relevant list for learning Data Science. So open for suggestions!  
 
 
 # Blogs
@@ -47,7 +46,7 @@ As we know, data science is an interdisplinary field.
 - [Linear Digression](http://lineardigressions.com/)
 - [This Week in Machine Learning and AI](https://twimlai.com/)
 
-# Books and Online Tutorials/Courses by Topics
+# Books and Online Resources
 
 ## Deep Learning
 - [Awesome Deep Learning](https://github.com/ChristosChristofidis/awesome-deep-learning)
