@@ -7,61 +7,58 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2016 Vincent Zhang</copyright>
-    <lastBuildDate>Mon, 02 Jan 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Feb 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>TravisTorrent Data Challenge</title>
-      <link>/projects/GHTravis_md/</link>
-      <pubDate>Mon, 02 Jan 2017 00:00:00 +0000</pubDate>
+      <link>/projects/GHTravis/</link>
+      <pubDate>Tue, 28 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/projects/GHTravis_md/</guid>
-      <description>&lt;p&gt;TravisTorrent is a freely available data set synthesized from Travis CI and GitHub, which also serves as a current data challenge from The International Conference on Mining Software Repositories(MSR).&lt;/p&gt;
+      <guid>/projects/GHTravis/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
-&lt;p&gt;
-Just testing for now&amp;hellip; Will update later :)&lt;/p&gt;
+/BLOGDOWN-BODY-BEFORE --&gt;
 
-&lt;p&gt;You can embed an R code chunk like this:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#data-gathering&#34;&gt;Data Gathering&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#research-question&#34;&gt;Research Questions&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;An open source software (OSS) project meets a huge number of modifications everyday. Travis CI is a popular tool to test the quality of developers’ contribution in OSS projects. Often times when a broken build happens,it may cause subsequent broken builds. In order to fix broken builds, the process of debugging usually involves code review, community discussion, re-commits and testing through Travis CI, where we define it as a feedback loop since the process can be repeatable. In this paper, based on the data provided by Travis Torrent, we investigate this dynamic feedback loop for fixing broken builds in Travis CI. Considering the hierarchical structure of the data set, we propose multilevel models to understand the influential factors to developer productivity in this evolving software development process. We show that the contextual effects of branches and projects are important to model developer productivity. We found that a development pattern with more caution when commiting code rather than relying on frequent “break-fixing”&amp;quot; should be advocated to improve the developer productivity. We also propose a model to predict the likelihood of fixing broken builds in FBLs.&lt;/p&gt;
+&lt;div id=&#34;data-gathering&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Data Gathering&lt;/h3&gt;
+&lt;p&gt;Our study is based on &lt;a href=&#34;https://travistorrent.testroots.org/page_dataformat/&#34;&gt;TravisTorrent Dataset&lt;/a&gt;, the 11.1.2017 version. There are 1,283 projects with 3,702,595 Travis CI build job entries. We extracted Feedback Loops and relevant features from data based on our definition and research questions. The dataset contains a column called &lt;strong&gt;tr_prev_build&lt;/strong&gt;, recording the previous build (if exist)of that entry, which we used it to extract a sequence of builds in a branch. With the attribute &lt;strong&gt;tr_status&lt;/strong&gt;, we can categorize our feedback loops into two types: “broken-passed” and “broken-broken” loops. Besides,we found a lot of cases with missing values for the tests information, i.e tr_log num tests run. We decided to filter out those cases and focus on the data with records about the testing process for our research purpose.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;research-questions&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Research Questions&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;What are the important factors related to the time span for fixing sequential broken builds in a feedback loop?&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It is known that time costs to fix bugs do vary obviously depending on programmer’s coding, collaboration and testing practices. From the TravisTorrent dataset, there is rich information tracking the programmers’ behaviors during the feedback loops, such as number of failed/errored (re-)commits, testing code change, file churn and pull requests for different branches and projects. Understanding how long it could take to fix sequential broken builds would be valuable for the team to evaluate the process and make more focused efforts with Travis CI.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;What are the important factors related to the probability of sequential broken builds being fixed in a feedback loop? Can we build a model to predict the likelihood of sequential broken builds being fixed?&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In order to avoid ecology fallacy, we are concerned about whether there is significant variance in the branch and the project levels in terms of the successful rate of fixing broken builds. Based on the the changes made in the feedback loop process and the metadata of a project, we ask if we can find factors related to probability of fixing broken builds in a FBL. Moreover, a prediction model could be built to give probability of the next build being bug free. Hence it could help improve the efficiency of sending and managing pull requests for developers and reduce the overload of building jobs on Travis CI.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;summary(cars)
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code&gt;##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;fit &amp;lt;- lm(dist ~ speed, data = cars)
-fit
-&lt;/code&gt;&lt;/pre&gt;
+&lt;!-- BLOGDOWN-HEAD
 
-&lt;pre&gt;&lt;code&gt;## 
-## Call:
-## lm(formula = dist ~ speed, data = cars)
-## 
-## Coefficients:
-## (Intercept)        speed  
-##     -17.579        3.932
-&lt;/code&gt;&lt;/pre&gt;
+&lt;link href=&#34;#####../content/projects/GHTravis_files/font-awesome/css/font-awesome.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
 
-&lt;h1 id=&#34;including-plots&#34;&gt;Including Plots&lt;/h1&gt;
 
-&lt;p&gt;You can also embed plots. See Figure @ref(fig:pie) for example:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c(&#39;Sky&#39;, &#39;Sunny side of pyramid&#39;, &#39;Shady side of pyramid&#39;),
-  col = c(&#39;#0292D8&#39;, &#39;#F7EA39&#39;, &#39;#C4B632&#39;),
-  init.angle = -50, border = NA
-)
-&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;img src=&#34;../GHTravis_md_files/figure-markdown_github/pie-1.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;</description>
+
+/BLOGDOWN-HEAD --&gt;
+</description>
     </item>
     
     <item>
@@ -79,7 +76,7 @@ pie(
 &lt;li&gt;&lt;a href=&#34;#first-shot&#34;&gt;Fisrt Shot&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#can-we-get-the-labels?&#34;&gt;Can we get the labels?&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#can-we-use-the-labels?&#34;&gt;Can we use the labels?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#itentify-the-offense-movement-patterns&#34;&gt;Identify the offense movement patterns&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#identify-the-offense-movement-patterns&#34;&gt;Identify the offense movement patterns&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#change-point-detection&#34;&gt;Change Point Detection&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#afterthoughts&#34;&gt;Afterthoughts&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;

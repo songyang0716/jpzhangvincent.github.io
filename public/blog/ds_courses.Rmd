@@ -19,7 +19,7 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 -   [Introduction](#introduction)
 -   [Blogs](#blogs)
 -   [Podcasts](#podcasts)
--   [Books and Online Tutorials/Courses by Topics](#bookonline-courses-by-topics)
+-   [Books and Online Resources](#bookonline-and-online-resources)
     -   [General Guidance](#getting-started-in-data-science)
     -   [Probability and Statistics](#probability-and-statistics)
     -   [Time Series](#time-series)
@@ -39,6 +39,8 @@ As we know, data science is an interdisplinary field. My personal definition of 
 
 
 # Blogs
+- [R-Bloggers](https://www.r-bloggers.com/)
+- [RWeekly](https://rweekly.org/)
 
 
 # Podcasts
@@ -47,6 +49,13 @@ As we know, data science is an interdisplinary field. My personal definition of 
 - [This Week in Machine Learning and AI](https://twimlai.com/)
 
 # Books and Online Resources
+
+## General Guidance
+- [Building a data science portfolio](https://www.dataquest.io/blog/build-a-data-science-portfolio/)
+
+
+## Time Series
+- [Time Series Analysis in R](http://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html)
 
 ## Deep Learning
 - [Awesome Deep Learning](https://github.com/ChristosChristofidis/awesome-deep-learning)
