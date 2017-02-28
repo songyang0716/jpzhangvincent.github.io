@@ -193,6 +193,13 @@ ga('send', 'pageview');
 <li><a href="#data-gathering">Data Gathering</a></li>
 <li><a href="#research-question">Research Questions</a></li>
 </ul></li>
+<li><a href="#exploratory-data-analysis">Exploratory Data Analysis</a></li>
+<li><a href="#multilevel-modeling">Multilevel Modeling</a>
+<ul>
+<li><a href="#time-span-of-fixing-broken-builds">Time Span of fixing broken builds</a></li>
+<li><a href="#successful-rate-of-fixing-broken-builds">Successful Rate of fixing broken builds</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
 </ul>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
@@ -200,18 +207,37 @@ ga('send', 'pageview');
 <div id="data-gathering" class="section level3">
 <h3>Data Gathering</h3>
 <p>Our study is based on <a href="https://travistorrent.testroots.org/page_dataformat/">TravisTorrent Dataset</a>, the 11.1.2017 version. There are 1,283 projects with 3,702,595 Travis CI build job entries. We extracted Feedback Loops and relevant features from data based on our definition and research questions. The dataset contains a column called <strong>tr_prev_build</strong>, recording the previous build (if exist)of that entry, which we used it to extract a sequence of builds in a branch. With the attribute <strong>tr_status</strong>, we can categorize our feedback loops into two types: “broken-passed” and “broken-broken” loops. Besides,we found a lot of cases with missing values for the tests information, i.e tr_log num tests run. We decided to filter out those cases and focus on the data with records about the testing process for our research purpose.</p>
+<p>In the TravisTorrent Dataset, we introduce <strong>Feedback Loop(FBL)</strong> as our research target. A feedback loop starts from a broken build and ends at the first passed build (a broken to passed FBL) or at the last broken build (a broken to broken FBL). A sequence of builds is obtained by tracking previous builds linearly in a branch. FBLs are independent with each other since they have no overlapping builds.</p>
 </div>
 <div id="research-questions" class="section level3">
 <h3>Research Questions</h3>
 <ul>
 <li><strong>What are the important factors related to the time span for fixing sequential broken builds in a feedback loop?</strong></li>
 </ul>
-<p>It is known that time costs to fix bugs do vary obviously depending on programmer’s coding, collaboration and testing practices. From the TravisTorrent dataset, there is rich information tracking the programmers’ behaviors during the feedback loops, such as number of failed/errored (re-)commits, testing code change, file churn and pull requests for different branches and projects. Understanding how long it could take to fix sequential broken builds would be valuable for the team to evaluate the process and make more focused efforts with Travis CI.</p>
+<p>It is known that time costs to fix bugs do vary obviously depending on programmer’s coding, collaboration and testing practices. From the TravisTorrent dataset, there is rich information tracking the programmers’ behaviors during the <strong>feedback loops</strong>, such as number of failed/errored (re-)commits, testing code change, file churn and pull requests for different branches and projects. Understanding how long it could take to fix sequential broken builds would be valuable for the team to evaluate the process and make more focused efforts with Travis CI.</p>
 <ul>
 <li><strong>What are the important factors related to the probability of sequential broken builds being fixed in a feedback loop? Can we build a model to predict the likelihood of sequential broken builds being fixed?</strong></li>
 </ul>
 <p>In order to avoid ecology fallacy, we are concerned about whether there is significant variance in the branch and the project levels in terms of the successful rate of fixing broken builds. Based on the the changes made in the feedback loop process and the metadata of a project, we ask if we can find factors related to probability of fixing broken builds in a FBL. Moreover, a prediction model could be built to give probability of the next build being bug free. Hence it could help improve the efficiency of sending and managing pull requests for developers and reduce the overload of building jobs on Travis CI.</p>
 </div>
+</div>
+<div id="exploratory-data-analysis" class="section level2">
+<h2>Exploratory Data Analysis</h2>
+<p>Update soon!</p>
+</div>
+<div id="multilevel-modeling" class="section level2">
+<h2>Multilevel Modeling</h2>
+<p>Update soon!</p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>In this project, we studied the factors of fixing a sequence of broken builds on time cost and probability of fixing broken build sequence in a given feedback loop. Through our statistical analysis and modeling, there are three major findings:</p>
+<ol style="list-style-type: decimal">
+<li>More commits during the FBL results in longer time of fixing the bug. The rate of pull requests and passed tests would reduce the time to fix the bug.</li>
+<li>A high frequency of commits has significant negative impact on fixing previous broken builds in a feedback loop.</li>
+<li>There is significant variance on branch and project levels when modeling development productivity.} enumerate.</li>
+</ol>
+<p>Travis CI does provide great convenience for developers to streamline their software development efforts. However, in order to avoid sequential broken builds, developers should spend a bit more time to ponder, review then commit code for pull requests. It’s better to avoid too small and frequent changes to the code. Changes should be grouped and batched into larger units of work so that more thorough testing and code review can occur. In order to improve the predictive power on the probability of fixing broken builds, we suggest to take the random effects and more related features of branches and projects into account.</p>
 </div>
 
 
