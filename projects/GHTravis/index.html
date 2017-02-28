@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>TravisTorrent Data Challenge</title>
+<meta name="description" content="Describe your website">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+<link rel="stylesheet" href="../../css/font-awesome.min.css">
+<link rel="stylesheet" href="../../css/owl.carousel.css">
+<link rel="stylesheet" href="../../css/owl.theme.css">
+<link rel="stylesheet" href="../../css/github-gist.css">
+<script src="../../js/highlight.pack.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+
+
+  <link href="../../css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+
+
+<link href="../../css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="../../img/favicon.png">
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-89721810-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+<link href="../../rmarkdown-libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+
+
+</head>
+<body>
+  <div id="all">
+      <div class="container-fluid">
+          <div class="row row-offcanvas row-offcanvas-left">
+              
+<div id="sidebar" class="col-sb-fixedpos col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+  <div class="sidebar-content">
+    <h1 class="sidebar-heading"><a href="../../">Vincent Zhang</a></h1>
+
+    <ul class="sidebar-menu">
+      
+      
+        <li><a href="../../">Home</a></li>
+      
+        <li><a href="../../about/">About</a></li>
+      
+        <li><a href="../../projects/">Projects</a></li>
+      
+        <li><a href="../../blog/">Blog</a></li>
+      
+        <li><a href="../../tags/">Tags</a></li>
+      
+        <li><a href="../../contact/">Get in touch</a></li>
+      
+
+       
+
+<div class="panel panel-default sidebar-menu">
+
+   
+
+    <div class="panel-body">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" role="search">
+            <div class="input-group">
+                <input type="search" name="q" results="0" class="form-control" placeholder="Search">
+                <input type="hidden" name="q" value="site:/">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+ 
+
+      
+
+ 
+
+      
+ 
+
+    </ul>
+    <p class="social">
+  
+  
+  
+  <a href="https://twitter.com/Mr_AppleV" data-animate-hover="pulse" class="external twitter">
+    <i class="fa fa-twitter"></i>
+  </a>
+  
+  
+  
+  <a href="mailto:jpzhang@ucdavis.edu" data-animate-hover="pulse" class="email">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  <a href="https://www.linkedin.com/in/jpzhangv" data-animate-hover="pulse">
+    <i class="fa fa-linkedin"></i>
+  </a>
+  
+  
+  
+<a href="https://www.github.com/jpzhangvincent">
+  <i class="fa fa-github"></i>
+</a>
+
+</p>
+
+
+    <div class="copyright">
+      <p class="credit">
+        
+          &copy;2016 Vincent Zhang
+        
+        | Template by <a href="https://bootstrapious.com/free-templates" class="external">Bootstrapious.com</a>
+
+&amp; ported to Hugo by <a href="https://github.com/kishaningithub">Kishan B</a>
+
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background col-main-fixedpos">
+  <div class="small-navbar visible-xs">
+  <button type="button" data-toggle="offcanvas" class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
+  <h1 class="small-navbar-heading"><a href="../../">Vincent Zhang</a></h1>
+</div>
+
+
+            <div class="row">
+                  <div class="col-sm-4">
+                    <div class="image">
+                      <img src="../../projects/img/travis.png" class="img-responsive" alt="">
+                    </div>
+                  </div>
+
+                  <div class="col-md-8">
+                      <h2>TravisTorrent Data Challenge</h2>
+                          <p class="author-category">
+                            Vincent Zhang
+                          </p>
+
+                          <p class="date-comments">
+                          <i class="fa fa-calendar-o"></i> February 28, 2017
+                          </p>
+
+                          <ul class="tags-cloud">
+                          
+                             <li><a href="../../tags/github"><i class="fa fa-tags"></i> Github</a></li>
+                          
+                             <li><a href="../../tags/sql"><i class="fa fa-tags"></i> SQL</a></li>
+                          
+                             <li><a href="../../tags/eda"><i class="fa fa-tags"></i> EDA</a></li>
+                          
+                          </ul>
+                   
+                            
+
+                          
+                  
+                      </div>
+                    </div>
+                  </br>
+
+<div class="row">
+   <div class="content-column-content">
+          <div class="col-lg-8">
+
+
+
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#data-gathering">Data Gathering</a></li>
+<li><a href="#research-question">Research Questions</a></li>
+</ul></li>
+</ul>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>An open source software (OSS) project meets a huge number of modifications everyday. Travis CI is a popular tool to test the quality of developers’ contribution in OSS projects. Often times when a broken build happens,it may cause subsequent broken builds. In order to fix broken builds, the process of debugging usually involves code review, community discussion, re-commits and testing through Travis CI, where we define it as a feedback loop since the process can be repeatable. In this paper, based on the data provided by Travis Torrent, we investigate this dynamic feedback loop for fixing broken builds in Travis CI. Considering the hierarchical structure of the data set, we propose multilevel models to understand the influential factors to developer productivity in this evolving software development process. We show that the contextual effects of branches and projects are important to model developer productivity. We found that a development pattern with more caution when commiting code rather than relying on frequent “break-fixing”&quot; should be advocated to improve the developer productivity. We also propose a model to predict the likelihood of fixing broken builds in FBLs.</p>
+<div id="data-gathering" class="section level3">
+<h3>Data Gathering</h3>
+<p>Our study is based on <a href="https://travistorrent.testroots.org/page_dataformat/">TravisTorrent Dataset</a>, the 11.1.2017 version. There are 1,283 projects with 3,702,595 Travis CI build job entries. We extracted Feedback Loops and relevant features from data based on our definition and research questions. The dataset contains a column called <strong>tr_prev_build</strong>, recording the previous build (if exist)of that entry, which we used it to extract a sequence of builds in a branch. With the attribute <strong>tr_status</strong>, we can categorize our feedback loops into two types: “broken-passed” and “broken-broken” loops. Besides,we found a lot of cases with missing values for the tests information, i.e tr_log num tests run. We decided to filter out those cases and focus on the data with records about the testing process for our research purpose.</p>
+</div>
+<div id="research-questions" class="section level3">
+<h3>Research Questions</h3>
+<ul>
+<li><strong>What are the important factors related to the time span for fixing sequential broken builds in a feedback loop?</strong></li>
+</ul>
+<p>It is known that time costs to fix bugs do vary obviously depending on programmer’s coding, collaboration and testing practices. From the TravisTorrent dataset, there is rich information tracking the programmers’ behaviors during the feedback loops, such as number of failed/errored (re-)commits, testing code change, file churn and pull requests for different branches and projects. Understanding how long it could take to fix sequential broken builds would be valuable for the team to evaluate the process and make more focused efforts with Travis CI.</p>
+<ul>
+<li><strong>What are the important factors related to the probability of sequential broken builds being fixed in a feedback loop? Can we build a model to predict the likelihood of sequential broken builds being fixed?</strong></li>
+</ul>
+<p>In order to avoid ecology fallacy, we are concerned about whether there is significant variance in the branch and the project levels in terms of the successful rate of fixing broken builds. Based on the the changes made in the feedback loop process and the metadata of a project, we ask if we can find factors related to probability of fixing broken builds in a FBL. Moreover, a prediction model could be built to give probability of the next build being bug free. Hence it could help improve the efficiency of sending and managing pull requests for developers and reduce the overload of building jobs on Travis CI.</p>
+</div>
+</div>
+
+
+
+
+      
+       </div>
+     </div>
+   </div>
+
+
+
+
+
+        <a href="#" class="back-to-top">
+        <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i>
+
+        </a>
+
+         <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'jpvincent';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+   
+
+          </div>
+      </div>
+  </div>
+  <script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/jquery.cookie.js"> </script>
+<script src="../../js/ekko-lightbox.js"></script>
+<script src="../../js/jquery.scrollTo.min.js"></script>
+<script src="../../js/masonry.pkgd.min.js"></script>
+<script src="../../js/imagesloaded.pkgd.min.js"></script>
+<script src="../../js/owl.carousel.min.js"></script>
+<script src="../../js/front.js"></script>
+<script src="../../js/backtotop.js"></script> 
+
+</body>
+</html>

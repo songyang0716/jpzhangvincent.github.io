@@ -23,7 +23,7 @@
 &lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#blogs&#34;&gt;Blogs&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#podcasts&#34;&gt;Podcasts&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#bookonline-courses-by-topics&#34;&gt;Books and Online Tutorials/Courses by Topics&lt;/a&gt;
+&lt;li&gt;&lt;a href=&#34;#bookonline-and-online-resources&#34;&gt;Books and Online Resources&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#getting-started-in-data-science&#34;&gt;General Guidance&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#probability-and-statistics&#34;&gt;Probability and Statistics&lt;/a&gt;&lt;/li&gt;
@@ -45,6 +45,10 @@
 &lt;/div&gt;
 &lt;div id=&#34;blogs&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Blogs&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.r-bloggers.com/&#34;&gt;R-Bloggers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://rweekly.org/&#34;&gt;RWeekly&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/div&gt;
 &lt;div id=&#34;podcasts&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Podcasts&lt;/h1&gt;
@@ -56,6 +60,18 @@
 &lt;/div&gt;
 &lt;div id=&#34;books-and-online-resources&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Books and Online Resources&lt;/h1&gt;
+&lt;div id=&#34;general-guidance&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;General Guidance&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.dataquest.io/blog/build-a-data-science-portfolio/&#34;&gt;Building a data science portfolio&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;time-series&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Time Series&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html&#34;&gt;Time Series Analysis in R&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
 &lt;div id=&#34;deep-learning&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Deep Learning&lt;/h2&gt;
 &lt;ul&gt;

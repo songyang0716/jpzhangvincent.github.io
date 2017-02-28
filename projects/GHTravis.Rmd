@@ -1,0 +1,38 @@
+---
+date: "2017-02-28"
+title: "TravisTorrent Data Challenge"
+showonlyimage: false
+draft: false
+image: "projects/img/travis.png"
+weight: 0
+type: "post"
+author: "Vincent Zhang"
+tags: ["Github","SQL", "EDA"]
+description: "TravisTorrent is a freely available data set synthesized from Travis CI and GitHub, which is uased as a data mining challenge from The International Conference on Mining Software Repositories(MSR)."
+---
+
+```{r, include = FALSE}
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+-   [Introduction](#introduction)
+    -   [Data Gathering](#data-gathering)
+    -   [Research Questions](#research-question)
+
+## Introduction
+
+An open source software (OSS) project meets a huge number of modifications everyday. Travis CI is a popular tool to test the quality of developers' contribution in OSS projects. Often times when a broken build happens,it may cause subsequent broken builds. In order to fix broken builds, the process of debugging usually involves code review, community discussion, re-commits and testing through Travis CI, where we define it as a feedback loop since the process can be repeatable. In this paper, based on the data provided by Travis Torrent, we investigate this dynamic feedback loop for fixing broken builds in Travis CI. Considering the hierarchical structure of the data set, we propose multilevel models to understand the influential factors to developer productivity in this evolving software development process. We show that the contextual effects of branches and projects are important to model developer productivity. We found that a development pattern with more caution when commiting code rather than relying on frequent "break-fixing"" should be advocated to improve the developer productivity. We also propose a model to predict the likelihood of fixing broken builds in FBLs.
+
+
+### Data Gathering
+Our study is based on [TravisTorrent Dataset](https://travistorrent.testroots.org/page_dataformat/), the 11.1.2017 version. There are 1,283 projects with 3,702,595 Travis CI build job entries. We extracted Feedback Loops and relevant features from data based on our definition and research questions. The dataset contains a column called __tr_prev_build__, recording the previous build (if exist)of that entry, which we used it to extract a sequence of builds in a branch. With the attribute __tr_status__, we can categorize our feedback loops into two types: "broken-passed" and "broken-broken" loops. Besides,we found a lot of cases with missing values for the tests information, i.e tr_log num tests run. We decided to filter out those cases and focus on the data with records about the testing process for our research purpose. 
+
+
+### Research Questions
+- __What are the important factors related to the time span for fixing sequential broken builds in a feedback loop?__
+
+It is known that time costs to fix bugs do vary obviously depending on programmer's coding, collaboration and testing practices. From the TravisTorrent dataset, there is rich information tracking the programmers' behaviors during the feedback loops, such as number of failed/errored (re-)commits, testing code change, file churn and pull requests for different branches and projects. Understanding how long it could take to fix sequential broken builds would be valuable for the team to evaluate the process and make more focused efforts with Travis CI.
+
+-  __What are the important factors related to the probability of sequential broken builds being fixed in a feedback loop? Can we build a model to predict the likelihood of sequential broken builds being fixed?__
+
+In order to avoid ecology fallacy, we are concerned about whether there is significant variance in the branch and the project levels in terms of the successful rate of fixing broken builds. Based on the the changes made in the feedback loop process and the metadata of a project, we ask if we can find factors related to probability of fixing broken builds in a FBL. Moreover, a prediction model could be built to give probability of the next build being bug free. Hence it could help improve the efficiency of sending and managing pull requests for developers and reduce the overload of building jobs on Travis CI.
