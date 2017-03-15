@@ -148,7 +148,7 @@ ga('send', 'pageview');
             <div class="row">
                   <div class="col-sm-4">
                     <div class="image">
-                      <img src="../../projects/img/gwl.png" class="img-responsive" alt="">
+                      <img src="../../projects/img/gwl.PNG" class="img-responsive" alt="">
                     </div>
                   </div>
 
@@ -374,7 +374,7 @@ gwl.arx &lt;- spT.Gibbs(formula = WSEL_transformed ~ ETO_avg + Sol_Rad_avg, data
 ## # Overall Acceptance Rate (phi) =  20.9 % 
 ## ## 
 ## ##
-## # Elapsed time: 8.5 Sec.
+## # Elapsed time: 8.86 Sec.
 ## ##
 ## 
 ## # Model: AR</code></pre>
@@ -507,7 +507,7 @@ gwl.arx$PMCC </code></pre>
 ## # nBurn =  1000 . Iterations =  5000 . 
 ## ## 
 ## ##
-## # Elapsed time: 7 Min. 58.92 Sec.
+## # Elapsed time: 7 Min. 42.81 Sec.
 ## ##</code></pre>
 <p>We can use the <code>Mean</code> sublist from the output as our predictions. The number of rows means the time range(in order) and the number of columns means the number of unique of locations.</p>
 <pre class="r"><code>dim(interpolation.ar$Mean)</code></pre>
@@ -536,10 +536,11 @@ lines(x = c(-100,100), y = c(-100,100))</code></pre>
 </div>
 <div id="other-ideas" class="section level2">
 <h2>Other ideas</h2>
-<p>In the project, I communicated and learned from domain experts to better understand the context, proposed ways to collect/aggregate useful information and tried to improve the spatial temporal model. However, this kind of modeling problem is challenging because it’s related to the complex climate system. And there is still a lot of room to verify our hypothesis and improve our modeling. A few other ideas are worthwhile to try:</p>
+<p>Being able to understand and predict groundwater level changes would give us insights like how to save energy and how to distribute water resource in a more efficient way. In the project, I communicated and learned from domain experts to better understand the context, proposed ways to collect/aggregate useful information and tried to improve the spatial temporal model. However, this kind of modeling problem is challenging because it’s related to the complex climate system. And there is still a lot of room to verify our hypothesis and improve our modeling. A few other ideas are worthwhile to try:</p>
 <ol style="list-style-type: decimal">
 <li>Bias correction for outlier cases through bootsrapped estimates through close points</li>
 <li>Try generative additive model or machine learning approach</li>
+<li>We can consider whether we could incorporate more factors like weather or geographic features into our original model to improve predictive power.</li>
 </ol>
 </div>
 
