@@ -209,7 +209,7 @@ gwl.arx &amp;lt;- spT.Gibbs(formula = WSEL_transformed ~ ETO_avg + Sol_Rad_avg, 
 ## # Overall Acceptance Rate (phi) =  20.9 % 
 ## ## 
 ## ##
-## # Elapsed time: 8.5 Sec.
+## # Elapsed time: 8.86 Sec.
 ## ##
 ## 
 ## # Model: AR&lt;/code&gt;&lt;/pre&gt;
@@ -342,7 +342,7 @@ gwl.arx$PMCC &lt;/code&gt;&lt;/pre&gt;
 ## # nBurn =  1000 . Iterations =  5000 . 
 ## ## 
 ## ##
-## # Elapsed time: 7 Min. 58.92 Sec.
+## # Elapsed time: 7 Min. 42.81 Sec.
 ## ##&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can use the &lt;code&gt;Mean&lt;/code&gt; sublist from the output as our predictions. The number of rows means the time range(in order) and the number of columns means the number of unique of locations.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(interpolation.ar$Mean)&lt;/code&gt;&lt;/pre&gt;
@@ -371,10 +371,11 @@ lines(x = c(-100,100), y = c(-100,100))&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;other-ideas&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Other ideas&lt;/h2&gt;
-&lt;p&gt;In the project, I communicated and learned from domain experts to better understand the context, proposed ways to collect/aggregate useful information and tried to improve the spatial temporal model. However, this kind of modeling problem is challenging because it’s related to the complex climate system. And there is still a lot of room to verify our hypothesis and improve our modeling. A few other ideas are worthwhile to try:&lt;/p&gt;
+&lt;p&gt;Being able to understand and predict groundwater level changes would give us insights like how to save energy and how to distribute water resource in a more efficient way. In the project, I communicated and learned from domain experts to better understand the context, proposed ways to collect/aggregate useful information and tried to improve the spatial temporal model. However, this kind of modeling problem is challenging because it’s related to the complex climate system. And there is still a lot of room to verify our hypothesis and improve our modeling. A few other ideas are worthwhile to try:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;Bias correction for outlier cases through bootsrapped estimates through close points&lt;/li&gt;
 &lt;li&gt;Try generative additive model or machine learning approach&lt;/li&gt;
+&lt;li&gt;We can consider whether we could incorporate more factors like weather or geographic features into our original model to improve predictive power.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 

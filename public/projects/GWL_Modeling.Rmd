@@ -3,7 +3,7 @@ date: "2017-03-08"
 title: "Modeling Groundwater Levels"
 showonlyimage: false
 draft: false
-image: "projects/img/gwl.png"
+image: "projects/img/gwl.PNG"
 weight: 0
 type: "post"
 author: "Vincent Zhang"
@@ -175,7 +175,7 @@ sj_gwl$place <- paste(sj_gwl$LONGITUDE,sj_gwl$LATITUDE,sep="_")
 target_locs <- sj_gwl %>% group_by(place, Year) %>% summarise(num_records = n()) %>% 
   reshape2::dcast(place ~ Year, value.var = "num_records") %>% 
   mutate(total_records = rowSums(.[2:7],na.rm = TRUE)) %>% arrange(desc(total_records)) %>% 
-  filter(total_records>15) %>% select(place)
+  filter(total_records>20) %>% select(place)
 target_locs <- target_locs$place
 target_train_data <- train_data[train_data$place %in% target_locs, ]
 ```
