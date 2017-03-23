@@ -222,10 +222,15 @@ They also have a leaderboard with more detailed information about the competitio
 <li>They don't provide the actual times that Curry shot the balls. This makes it difficult to apply a supervised learning algorithm. Maybe it leaves for competitors to get the information so that it's possible to use in a supervised training and testing framework, since it allows competitors to ultilize other data/resources. On the other hand, it's possible to be treated as a unsupervised problem, for example, anomaly detection based on the activity patterns. So I see there are two direction here.</li>
 <li>Note that they will evaluate the final score of our algorithm/model with another new dataset. So we need to be careful about generalization ability of our model.</li>
 <li>Interestingly, it asks to predict the interval of times and it would evaluate an overall score based on the following formula. 
-\begin{equation}
+$$
+\begin{array}{c}
 score = \frac{\sum_{i=1}^{|s|}I_{T_i}\frac{1}{1+s_{i2}-s_{i1}}}{|T|+(|S|-|T|)^2}
-\end{equation}
-where $S_i: \{(s_{i1}, s_{i2})\mid s_{i1} \leq s_{i2}\}$, $\| T\|=24$, $\|S\|\geq \|T\|$ and $I_{T_i}:\{1 \mid S_i \in T_i\}$.
+\end{array}
+$$
+where $$
+\begin{array}{c}
+S_i: \{(s_{i1}, s_{i2})\mid s_{i1} \leq s_{i2}\}$, $\| T\|=24$, $\|S\|\geq \|T\|$ and $I_{T_i}:\{1 \mid S_i \in T_i\}\end{array}
+$$.
 Thus, there is room and trade-off for us to determine the interval of the times to get a higher overall prediction score to win the competition.
 </li> 
 </ol>

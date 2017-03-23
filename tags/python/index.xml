@@ -325,7 +325,10 @@ rate_cate_cnt.iplot(kind = &#39;bar&#39;, barmode = &#39;stack&#39;, yTitle=&#39
                     colorscale = &#39;Paired&#39;, theme=&#39;white&#39;, labels = &#39;Rating&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/app_dist.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;div&gt;
+    &lt;a href=&#34;https://plot.ly/~mrapple/88/?share_key=abiT2xQYhOcwZ6mOlQy87q&#34; target=&#34;_blank&#34; title=&#34;Distribution of Apps by Category and Rating&#34; style=&#34;display: block; text-align: center;&#34;&gt;&lt;img src=&#34;https://plot.ly/~mrapple/88.png?share_key=abiT2xQYhOcwZ6mOlQy87q&#34; alt=&#34;Distribution of Apps by Category and Rating&#34; style=&#34;max-width: 100%;width: 600px;&#34;  width=&#34;600&#34; onerror=&#34;this.onerror=null;this.src=&#39;https://plot.ly/404.png&#39;;&#34; /&gt;&lt;/a&gt;
+    &lt;script data-plotly=&#34;mrapple:88&#34; sharekey-plotly=&#34;abiT2xQYhOcwZ6mOlQy87q&#34; src=&#34;https://plot.ly/embed.js&#34; async&gt;&lt;/script&gt;
+&lt;/div&gt;
 
 &lt;p&gt;We can see that the Entertainment, Lifestyle and Photo types of apps are the most popular in terms of number of apps in our collection. Besides, the health&amp;amp;Fitness and Photo categories have the largest portions of high rated apps(Overall rating &amp;gt; 4).&lt;/p&gt;
 
@@ -344,7 +347,10 @@ $$&lt;/p&gt;
 rating_df[[&#39;weighted_rating&#39;, &#39;current_rating&#39;,&#39;overall_rating&#39;]].iplot(kind=&#39;histogram&#39;, barmode=&#39;stack&#39;, theme=&#39;white&#39;, title = &#39;Distribution of Rating Metrics&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/rating_dist.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;div&gt;
+    &lt;a href=&#34;https://plot.ly/~mrapple/90/?share_key=QoqLZy8Zkn8B4MDhC1k7GN&#34; target=&#34;_blank&#34; title=&#34;Distribution of Rating Metrics&#34; style=&#34;display: block; text-align: center;&#34;&gt;&lt;img src=&#34;https://plot.ly/~mrapple/90.png?share_key=QoqLZy8Zkn8B4MDhC1k7GN&#34; alt=&#34;Distribution of Rating Metrics&#34; style=&#34;max-width: 100%;width: 600px;&#34;  width=&#34;600&#34; onerror=&#34;this.onerror=null;this.src=&#39;https://plot.ly/404.png&#39;;&#34; /&gt;&lt;/a&gt;
+    &lt;script data-plotly=&#34;mrapple:90&#34; sharekey-plotly=&#34;QoqLZy8Zkn8B4MDhC1k7GN&#34; src=&#34;https://plot.ly/embed.js&#34; async&gt;&lt;/script&gt;
+&lt;/div&gt;
 
 &lt;h3 id=&#34;does-in-app-purchases-significantly-affect-the-user-experiences-of-apps&#34;&gt;Does in-app purchases significantly affect the user experiences of apps?&lt;/h3&gt;
 
@@ -406,7 +412,7 @@ scipy.stats.kruskal(free, paid)
 * Latent Dirichlet Allocation is the most popular topic modeling technique. LDA assumes documents are produced from a mixture of topics. Those topics then generate words based on their probability distribution. Given a dataset of documents, LDA backtracks and tries to figure out what topics would create those documents in the first place. LDA is a matrix factorization technique. In vector space, any corpus (collection of documents) can be represented as a document-term matrix. The number of words we chose for every topic is 5.
 Here we used &lt;code&gt;pyLDAvis&lt;/code&gt; package to get the interactive topic modeling visualization. The screenshot of the topic modeling visualization is showed below:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/lda_plot.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/lda_plot.PNG&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;To explore the interective visualization, please go to the &lt;a href=&#34;https://github.com/jpzhangvincent/MobileAppMarketAnalysis/blob/master/notebooks/LDA%20for%20Topic%20Modeling%20(Q5).ipynb&#34;&gt;notebook&lt;/a&gt;. You can select specific topic using the selection bar on the left top. The right part shows the top 30 relevent terms for each topic. By comparing the comments for high-rated and low-rated apps, we found that&lt;/p&gt;
 
@@ -529,10 +535,15 @@ They also have a leaderboard with more detailed information about the competitio
 &lt;li&gt;They don&#39;t provide the actual times that Curry shot the balls. This makes it difficult to apply a supervised learning algorithm. Maybe it leaves for competitors to get the information so that it&#39;s possible to use in a supervised training and testing framework, since it allows competitors to ultilize other data/resources. On the other hand, it&#39;s possible to be treated as a unsupervised problem, for example, anomaly detection based on the activity patterns. So I see there are two direction here.&lt;/li&gt;
 &lt;li&gt;Note that they will evaluate the final score of our algorithm/model with another new dataset. So we need to be careful about generalization ability of our model.&lt;/li&gt;
 &lt;li&gt;Interestingly, it asks to predict the interval of times and it would evaluate an overall score based on the following formula. 
-\begin{equation}
+$$
+\begin{array}{c}
 score = \frac{\sum_{i=1}^{|s|}I_{T_i}\frac{1}{1+s_{i2}-s_{i1}}}{|T|+(|S|-|T|)^2}
-\end{equation}
-where $S_i: \{(s_{i1}, s_{i2})\mid s_{i1} \leq s_{i2}\}$, $\| T\|=24$, $\|S\|\geq \|T\|$ and $I_{T_i}:\{1 \mid S_i \in T_i\}$.
+\end{array}
+$$
+where $$
+\begin{array}{c}
+S_i: \{(s_{i1}, s_{i2})\mid s_{i1} \leq s_{i2}\}$, $\| T\|=24$, $\|S\|\geq \|T\|$ and $I_{T_i}:\{1 \mid S_i \in T_i\}\end{array}
+$$.
 Thus, there is room and trade-off for us to determine the interval of the times to get a higher overall prediction score to win the competition.
 &lt;/li&gt; 
 &lt;/ol&gt;
