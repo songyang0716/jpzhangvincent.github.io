@@ -247,7 +247,10 @@ rate_cate_cnt.iplot(kind = 'bar', barmode = 'stack', yTitle='Number of Apps', ti
                     colorscale = 'Paired', theme='white', labels = 'Rating')
 </code></pre>
 
-<p><img src="../AppMarketAnalysis_files/app_dist.png" class="img-responsive" style="display: block; margin: auto;" /></p>
+<div>
+    <a href="https://plot.ly/~mrapple/88/?share_key=abiT2xQYhOcwZ6mOlQy87q" target="_blank" title="Distribution of Apps by Category and Rating" style="display: block; text-align: center;"><img src="https://plot.ly/~mrapple/88.png?share_key=abiT2xQYhOcwZ6mOlQy87q" alt="Distribution of Apps by Category and Rating" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+    <script data-plotly="mrapple:88" sharekey-plotly="abiT2xQYhOcwZ6mOlQy87q" src="https://plot.ly/embed.js" async></script>
+</div>
 
 <p>We can see that the Entertainment, Lifestyle and Photo types of apps are the most popular in terms of number of apps in our collection. Besides, the health&amp;Fitness and Photo categories have the largest portions of high rated apps(Overall rating &gt; 4).</p>
 
@@ -266,7 +269,10 @@ $$</p>
 rating_df[['weighted_rating', 'current_rating','overall_rating']].iplot(kind='histogram', barmode='stack', theme='white', title = 'Distribution of Rating Metrics')
 </code></pre>
 
-<p><img src="../AppMarketAnalysis_files/rating_dist.png" class="img-responsive" style="display: block; margin: auto;" /></p>
+<div>
+    <a href="https://plot.ly/~mrapple/90/?share_key=QoqLZy8Zkn8B4MDhC1k7GN" target="_blank" title="Distribution of Rating Metrics" style="display: block; text-align: center;"><img src="https://plot.ly/~mrapple/90.png?share_key=QoqLZy8Zkn8B4MDhC1k7GN" alt="Distribution of Rating Metrics" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+    <script data-plotly="mrapple:90" sharekey-plotly="QoqLZy8Zkn8B4MDhC1k7GN" src="https://plot.ly/embed.js" async></script>
+</div>
 
 <h3 id="does-in-app-purchases-significantly-affect-the-user-experiences-of-apps">Does in-app purchases significantly affect the user experiences of apps?</h3>
 
@@ -328,7 +334,7 @@ scipy.stats.kruskal(free, paid)
 * Latent Dirichlet Allocation is the most popular topic modeling technique. LDA assumes documents are produced from a mixture of topics. Those topics then generate words based on their probability distribution. Given a dataset of documents, LDA backtracks and tries to figure out what topics would create those documents in the first place. LDA is a matrix factorization technique. In vector space, any corpus (collection of documents) can be represented as a document-term matrix. The number of words we chose for every topic is 5.
 Here we used <code>pyLDAvis</code> package to get the interactive topic modeling visualization. The screenshot of the topic modeling visualization is showed below:</p>
 
-<p><img src="../AppMarketAnalysis_files/lda_plot.png" class="img-responsive" style="display: block; margin: auto;" /></p>
+<p><img src="../AppMarketAnalysis_files/lda_plot.PNG" class="img-responsive" style="display: block; margin: auto;" /></p>
 
 <p>To explore the interective visualization, please go to the <a href="https://github.com/jpzhangvincent/MobileAppMarketAnalysis/blob/master/notebooks/LDA%20for%20Topic%20Modeling%20(Q5).ipynb">notebook</a>. You can select specific topic using the selection bar on the left top. The right part shows the top 30 relevent terms for each topic. By comparing the comments for high-rated and low-rated apps, we found that</p>
 
