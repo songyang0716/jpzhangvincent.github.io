@@ -12,6 +12,11 @@
   </url>
   
   <url>
+    <loc>/blog/AppMarketAnalysis/</loc>
+    <lastmod>2017-03-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/projects/PMC-project/</loc>
     <lastmod>2017-02-01T00:00:00+00:00</lastmod>
   </url>
@@ -58,7 +63,7 @@
   
   <url>
     <loc>/tags/eda/</loc>
-    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+    <lastmod>2017-03-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -81,6 +86,12 @@
   <url>
     <loc>/tags/ml/</loc>
     <lastmod>2017-01-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/mongodb/</loc>
+    <lastmod>2017-03-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

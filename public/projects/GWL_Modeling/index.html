@@ -222,7 +222,7 @@ all_data &lt;- merge(sj_gwl, eto_data,  by = c(&quot;Year&quot;, &quot;Month&quo
 cat(&#39;The number of well location in the San Joaquin Valley: &#39;, n_distinct(sj_gwl$LATITUDE, sj_gwl$LONGITUDE))</code></pre>
 <pre><code>## The number of well location in the San Joaquin Valley:  436</code></pre>
 <p>First, we want to have a sense about how many missing records for a well location on a Yearly basis. Idealy, we hope each location has 12 measurements each year. From the following table and the heatmap, we clearly see that there is a significant problem of missing sensor measurements in the monthly data and only a few wells keep track the groundwater levels throughout the year.</p>
-<pre class="r"><code>sj_gwl %&gt;% group_by(CASGEM_STATION_ID, LONGITUDE, Year) %&gt;% summarise(num_records = n()) %&gt;% 
+<pre class="r"><code>sj_gwl %&gt;% group_by(CASGEM_STATION_ID, Year) %&gt;% summarise(num_records = n()) %&gt;% 
   reshape2::dcast(CASGEM_STATION_ID ~ Year, value.var = &quot;num_records&quot;) %&gt;% 
   mutate(total_records = rowSums(.[2:7],na.rm = TRUE)) %&gt;% arrange(desc(total_records)) %&gt;% head(20)</code></pre>
 <pre><code>##    CASGEM_STATION_ID 2011 2012 2013 2014 2015 2016 total_records
@@ -341,7 +341,7 @@ train_data$LATITUDE = sapply(train_data[,&quot;place&quot;],function(x) as.numer
 target_locs &lt;- sj_gwl %&gt;% group_by(place, Year) %&gt;% summarise(num_records = n()) %&gt;% 
   reshape2::dcast(place ~ Year, value.var = &quot;num_records&quot;) %&gt;% 
   mutate(total_records = rowSums(.[2:7],na.rm = TRUE)) %&gt;% arrange(desc(total_records)) %&gt;% 
-  filter(total_records&gt;15) %&gt;% select(place)
+  filter(total_records&gt;20) %&gt;% select(place)
 target_locs &lt;- target_locs$place
 target_train_data &lt;- train_data[train_data$place %in% target_locs, ]</code></pre>
 <p>We decided to fit the spatial-temporal AR model. The AR model can be expressed as the following: <span class="math display">\[
@@ -364,17 +364,17 @@ gwl.arx &lt;- spT.Gibbs(formula = WSEL_transformed ~ ETO_avg + Sol_Rad_avg, data
 ##  Output: AR models 
 ## ---------------------------------------------------------------
 ##  Sampled: 5000 of 5000, 100.00%.
-##  Batch Acceptance Rate (phi): 20.90%
+##  Batch Acceptance Rate (phi): 27.95%
 ##  Checking Parameters: 
-##    phi: 0.0656, rho: 0.5466, sig2eps: 0.1447, sig2eta: 0.0921
-##    beta[1]: 2.0514   beta[2]: -0.7290   beta[3]: 0.0001
+##    phi: 0.0696, rho: 0.6664, sig2eps: 0.1337, sig2eta: 0.0837
+##    beta[1]: 1.5416   beta[2]: 1.0442   beta[3]: -0.0006
 ## ---------------------------------------------------------------
 ## ## 
 ## # nBurn =  1000 , Iterations =  5000 . 
-## # Overall Acceptance Rate (phi) =  20.9 % 
+## # Overall Acceptance Rate (phi) =  27.94 % 
 ## ## 
 ## ##
-## # Elapsed time: 8.86 Sec.
+## # Elapsed time: 5.04 Sec.
 ## ##
 ## 
 ## # Model: AR</code></pre>
@@ -382,7 +382,7 @@ gwl.arx &lt;- spT.Gibbs(formula = WSEL_transformed ~ ETO_avg + Sol_Rad_avg, data
 <pre class="r"><code># Model selection criteria
 gwl.arx$PMCC </code></pre>
 <pre><code>##         Goodness.of.fit Penalty   PMCC
-## values:           75.41  112.67 188.08</code></pre>
+## values:           38.96   78.82 117.78</code></pre>
 <p>Check the model fit.</p>
 <pre class="r"><code>spT.validation(target_train_data$WSEL_transformed[!is.na(target_train_data$WSEL_transformed)],                                      gwl.arx$fitted[,1][!is.na(target_train_data$WSEL_transformed)])</code></pre>
 <pre><code>## ##
@@ -394,8 +394,8 @@ gwl.arx$PMCC </code></pre>
 ##  Relative Bias (rBIAS) 
 ##  Relative Mean Separation (rMSEP)
 ## ##</code></pre>
-<pre><code>##     MSE    RMSE     MAE    MAPE    BIAS   rBIAS   rMSEP 
-##  0.1404  0.3747  0.2960  7.4068 -0.0041 -0.0010  0.5308</code></pre>
+<pre><code>##    MSE   RMSE    MAE   MAPE   BIAS  rBIAS  rMSEP 
+## 0.0808 0.2843 0.2199 5.6177 0.0021 0.0005 0.3134</code></pre>
 <p>From the metrics, it seems the model fits reasonably well. From the residual plots, it is not very promising since it seems to have a linear trend and there are some outlying cases at the tails.</p>
 <pre class="r"><code>plot(gwl.arx, residuals=TRUE)</code></pre>
 <p><img src="figures/unnamed-chunk-19-1.png" width="672" /><img src="figures/unnamed-chunk-19-2.png" width="672" /></p>
@@ -421,54 +421,38 @@ gwl.arx$PMCC </code></pre>
 ## [1] &quot;Distance: 0  Predicted location: 27  Fitted location: 6 &quot;
 ## [1] &quot;Distance: 0  Predicted location: 41  Fitted location: 7 &quot;
 ## [1] &quot;Distance: 0.54  Predicted location: 46  Fitted location: 7 &quot;
-## [1] &quot;Distance: 0  Predicted location: 49  Fitted location: 8 &quot;
-## [1] &quot;Distance: 0  Predicted location: 57  Fitted location: 9 &quot;
-## [1] &quot;Distance: 0  Predicted location: 58  Fitted location: 10 &quot;
-## [1] &quot;Distance: 1.35  Predicted location: 62  Fitted location: 10 &quot;
-## [1] &quot;Distance: 1.85  Predicted location: 62  Fitted location: 11 &quot;
-## [1] &quot;Distance: 0  Predicted location: 64  Fitted location: 11 &quot;
-## [1] &quot;Distance: 1.64  Predicted location: 65  Fitted location: 11 &quot;
-## [1] &quot;Distance: 1.92  Predicted location: 65  Fitted location: 12 &quot;
-## [1] &quot;Distance: 0.14  Predicted location: 76  Fitted location: 12 &quot;
-## [1] &quot;Distance: 0  Predicted location: 77  Fitted location: 12 &quot;
-## [1] &quot;Distance: 1.22  Predicted location: 88  Fitted location: 12 &quot;
-## [1] &quot;Distance: 1.56  Predicted location: 73  Fitted location: 13 &quot;
-## [1] &quot;Distance: 1.31  Predicted location: 74  Fitted location: 13 &quot;
-## [1] &quot;Distance: 0  Predicted location: 82  Fitted location: 13 &quot;
-## [1] &quot;Distance: 1.1  Predicted location: 87  Fitted location: 14 &quot;
-## [1] &quot;Distance: 1.94  Predicted location: 92  Fitted location: 14 &quot;
-## [1] &quot;Distance: 0  Predicted location: 96  Fitted location: 14 &quot;
-## [1] &quot;Distance: 1.75  Predicted location: 104  Fitted location: 14 &quot;
-## [1] &quot;Distance: 1.52  Predicted location: 105  Fitted location: 14 &quot;
-## [1] &quot;Distance: 0  Predicted location: 101  Fitted location: 15 &quot;
-## [1] &quot;Distance: 0.82  Predicted location: 112  Fitted location: 15 &quot;
-## [1] &quot;Distance: 1.85  Predicted location: 95  Fitted location: 16 &quot;
-## [1] &quot;Distance: 1.62  Predicted location: 129  Fitted location: 16 &quot;
-## [1] &quot;Distance: 0  Predicted location: 130  Fitted location: 16 &quot;
-## [1] &quot;Distance: 0  Predicted location: 226  Fitted location: 17 &quot;
-## [1] &quot;Distance: 1.8  Predicted location: 248  Fitted location: 17 &quot;
-## [1] &quot;Distance: 1.36  Predicted location: 233  Fitted location: 18 &quot;
-## [1] &quot;Distance: 1.1  Predicted location: 237  Fitted location: 18 &quot;
-## [1] &quot;Distance: 1  Predicted location: 249  Fitted location: 18 &quot;
-## [1] &quot;Distance: 0  Predicted location: 252  Fitted location: 18 &quot;
-## [1] &quot;Distance: 1.51  Predicted location: 264  Fitted location: 18 &quot;
-## [1] &quot;Distance: 0  Predicted location: 258  Fitted location: 19 &quot;
-## [1] &quot;Distance: 1.97  Predicted location: 274  Fitted location: 19 &quot;
-## [1] &quot;Distance: 1.48  Predicted location: 260  Fitted location: 20 &quot;
-## [1] &quot;Distance: 0  Predicted location: 268  Fitted location: 20 &quot;
-## [1] &quot;Distance: 1.99  Predicted location: 312  Fitted location: 21 &quot;
-## [1] &quot;Distance: 1.62  Predicted location: 316  Fitted location: 21 &quot;
-## [1] &quot;Distance: 0  Predicted location: 327  Fitted location: 21 &quot;
-## [1] &quot;Distance: 1.64  Predicted location: 331  Fitted location: 21 &quot;
-## [1] &quot;Distance: 1.57  Predicted location: 332  Fitted location: 21 &quot;
-## [1] &quot;Distance: 0  Predicted location: 362  Fitted location: 22 &quot;
-## [1] &quot;Distance: 2  Predicted location: 387  Fitted location: 23 &quot;
-## [1] &quot;Distance: 0  Predicted location: 393  Fitted location: 23 &quot;
-## [1] &quot;Distance: 1.53  Predicted location: 395  Fitted location: 23 &quot;
-## [1] &quot;Distance: 1.42  Predicted location: 397  Fitted location: 23 &quot;
-## [1] &quot;Distance: 0.96  Predicted location: 400  Fitted location: 23 &quot;
-## [1] &quot;Distance: 1.42  Predicted location: 406  Fitted location: 23 &quot;
-## [1] &quot;Distance: 0  Predicted location: 394  Fitted location: 24 &quot;
+## [1] &quot;Distance: 1.85  Predicted location: 62  Fitted location: 8 &quot;
+## [1] &quot;Distance: 0  Predicted location: 64  Fitted location: 8 &quot;
+## [1] &quot;Distance: 1.64  Predicted location: 65  Fitted location: 8 &quot;
+## [1] &quot;Distance: 1.1  Predicted location: 87  Fitted location: 9 &quot;
+## [1] &quot;Distance: 1.94  Predicted location: 92  Fitted location: 9 &quot;
+## [1] &quot;Distance: 0  Predicted location: 96  Fitted location: 9 &quot;
+## [1] &quot;Distance: 1.75  Predicted location: 104  Fitted location: 9 &quot;
+## [1] &quot;Distance: 1.52  Predicted location: 105  Fitted location: 9 &quot;
+## [1] &quot;Distance: 0  Predicted location: 226  Fitted location: 10 &quot;
+## [1] &quot;Distance: 1.8  Predicted location: 248  Fitted location: 10 &quot;
+## [1] &quot;Distance: 1.36  Predicted location: 233  Fitted location: 11 &quot;
+## [1] &quot;Distance: 1.1  Predicted location: 237  Fitted location: 11 &quot;
+## [1] &quot;Distance: 1  Predicted location: 249  Fitted location: 11 &quot;
+## [1] &quot;Distance: 0  Predicted location: 252  Fitted location: 11 &quot;
+## [1] &quot;Distance: 1.51  Predicted location: 264  Fitted location: 11 &quot;
+## [1] &quot;Distance: 0  Predicted location: 258  Fitted location: 12 &quot;
+## [1] &quot;Distance: 1.97  Predicted location: 274  Fitted location: 12 &quot;
+## [1] &quot;Distance: 1.48  Predicted location: 260  Fitted location: 13 &quot;
+## [1] &quot;Distance: 0  Predicted location: 268  Fitted location: 13 &quot;
+## [1] &quot;Distance: 1.99  Predicted location: 312  Fitted location: 14 &quot;
+## [1] &quot;Distance: 1.62  Predicted location: 316  Fitted location: 14 &quot;
+## [1] &quot;Distance: 0  Predicted location: 327  Fitted location: 14 &quot;
+## [1] &quot;Distance: 1.64  Predicted location: 331  Fitted location: 14 &quot;
+## [1] &quot;Distance: 1.57  Predicted location: 332  Fitted location: 14 &quot;
+## [1] &quot;Distance: 0  Predicted location: 362  Fitted location: 15 &quot;
+## [1] &quot;Distance: 2  Predicted location: 387  Fitted location: 16 &quot;
+## [1] &quot;Distance: 0  Predicted location: 393  Fitted location: 16 &quot;
+## [1] &quot;Distance: 1.53  Predicted location: 395  Fitted location: 16 &quot;
+## [1] &quot;Distance: 1.42  Predicted location: 397  Fitted location: 16 &quot;
+## [1] &quot;Distance: 0.96  Predicted location: 400  Fitted location: 16 &quot;
+## [1] &quot;Distance: 1.42  Predicted location: 406  Fitted location: 16 &quot;
+## [1] &quot;Distance: 0  Predicted location: 394  Fitted location: 17 &quot;
 ## #
 ## # Romove the locations and run again. 
 ## #
@@ -507,7 +491,7 @@ gwl.arx$PMCC </code></pre>
 ## # nBurn =  1000 . Iterations =  5000 . 
 ## ## 
 ## ##
-## # Elapsed time: 7 Min. 42.81 Sec.
+## # Elapsed time: 7 Min. 11.83 Sec.
 ## ##</code></pre>
 <p>We can use the <code>Mean</code> sublist from the output as our predictions. The number of rows means the time range(in order) and the number of columns means the number of unique of locations.</p>
 <pre class="r"><code>dim(interpolation.ar$Mean)</code></pre>

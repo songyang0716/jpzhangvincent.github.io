@@ -52,7 +52,7 @@ cat('The number of well location in the San Joaquin Valley: ', n_distinct(sj_gwl
 
 First, we want to have a sense about how many missing records for a well location on a Yearly basis. Idealy, we hope each location has 12 measurements each year. From the following table and the heatmap, we clearly see that there is a significant problem of missing sensor measurements in the monthly data and only a few wells keep track the groundwater levels throughout the year.
 ```{r}
-sj_gwl %>% group_by(CASGEM_STATION_ID, LONGITUDE, Year) %>% summarise(num_records = n()) %>% 
+sj_gwl %>% group_by(CASGEM_STATION_ID, Year) %>% summarise(num_records = n()) %>% 
   reshape2::dcast(CASGEM_STATION_ID ~ Year, value.var = "num_records") %>% 
   mutate(total_records = rowSums(.[2:7],na.rm = TRUE)) %>% arrange(desc(total_records)) %>% head(20)
 ```
