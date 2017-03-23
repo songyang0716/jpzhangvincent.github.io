@@ -12,7 +12,7 @@
   </url>
   
   <url>
-    <loc>/blog/AppMarketAnalysis/</loc>
+    <loc>/blog/ItuneAppMarketAnalysis/</loc>
     <lastmod>2017-03-22T00:00:00+00:00</lastmod>
   </url>
   
@@ -34,6 +34,38 @@
   <url>
     <loc>/blog/ChinaAirQualityAnalysis/</loc>
     <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/appmarketanalysis_files/bad_rev/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/appmarketanalysis_files/good_rev/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/appmarketanalysis_files/improved_apps/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/appmarketanalysis_files/worsen_apps/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/ituneappmarketanalysis_files/bad_rev/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/ituneappmarketanalysis_files/good_rev/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/ituneappmarketanalysis_files/improved_apps/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/ituneappmarketanalysis_files/worsen_apps/</loc>
   </url>
   
   <url>
