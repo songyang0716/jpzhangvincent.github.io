@@ -10,6 +10,233 @@
     <atom:link href="/tags/eda/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Mobile App Market Analysis</title>
+      <link>/blog/AppMarketAnalysis/</link>
+      <pubDate>Wed, 22 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/AppMarketAnalysis/</guid>
+      <description>&lt;p&gt;This is the summary of my group final project for STA141B Data Science and Technologies.
+&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#data-collection&#34;&gt;Data Collection&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#exploratory-data-analysis&#34;&gt;Exploratory Data Analysis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#nlp-&amp;amp;-machine-learning?&#34;&gt;NLP &amp;amp; Machine Learning&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#Conclusion&#34;&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script type=&#34;text/javascript&#34; src=&#34;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&#34;&gt;&lt;/script&gt;
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;The explosive growth of the mobile application (app) market has made it difficult for users to find the most interesting and relevant apps from the hundreds of thousands that exist today. We are interested to analyze the quality of apps and understand the user experiences of using mobile apps on the Itune App Store. We think these insights would be helpful for the developers to design better apps, as well as for Apple to better manage the App Store. For example, a good app recommendation system would rely on understanding the quality of apps by predicting their ratings. In this project, we would go through the data science cycle including problem/data curations, data management, data analytics and result-oriented presentations through data visualization.&lt;/p&gt;
+
+&lt;p&gt;We are particularily interested in the following questions:
+- How do we define the quality of an app?
+- Do in-app purchases significantly affect the apps&amp;rsquo; ratings, especially for gaming apps?
+- How do people comment on their user experiences of apps?
+- Are there any different characteristics/topics in new version descriptions for apps with their ratings improved/lowered?
+- Can we predict the rating of the new version for an app?&lt;/p&gt;
+
+&lt;p&gt;In our workflow, firstly, we used &lt;code&gt;scrapy&lt;/code&gt;, a high level web scraping framework to collect our data from Itune App Store and then stored the data in the NoSQL database - MongoDB. We explored our data with &lt;code&gt;pandas&lt;/code&gt; and &lt;code&gt;statsmodel&lt;/code&gt; for hypothesis testing. Then, we used &lt;code&gt;nltk&lt;/code&gt; for NLP, &lt;code&gt;sckit-learn&lt;/code&gt; for machine learning and &lt;code&gt;gensim&lt;/code&gt; for topic modeling. For visualization, we use &lt;code&gt;plotly&lt;/code&gt; and &lt;code&gt;pyLDAvis&lt;/code&gt; and we share our insights through &lt;code&gt;Jupyter notebook&lt;/code&gt;. We collaborate and manage the project on our shared &lt;a href=&#34;https://github.com/jpzhangvincent/MobileAppMarketAnalysis&#34;&gt;Github&lt;/a&gt; directory based on the &lt;a href=&#34;https://drivendata.github.io/cookiecutter-data-science/&#34;&gt;cookiecutter data science project template&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For the detailed report and &amp;ldquo;truly&amp;rdquo; interactive visualization, please refer to this &lt;a href=&#34;https://github.com/jpzhangvincent/MobileAppMarketAnalysis/blob/master/reports/STA141B%20Project%20Workflow.ipynb&#34;&gt;notebook&lt;/a&gt; or download the &lt;a href=&#34;https://github.com/jpzhangvincent/MobileAppMarketAnalysis/blob/master/reports/STA141B%2BProject%2BWorkflow.html&#34;&gt;html&lt;/a&gt; file.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/output_3_0.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;data-collection&#34;&gt;Data Collection&lt;/h2&gt;
+
+&lt;p&gt;To collect our data, we found the Apple&amp;rsquo;s app store websites provide a lot of useful information and they share a consistent web design pattern which makes web scraping easier. Note that we only collected the first indexing pages of different categories since they are shown as most popular apps. Then we scraped different links of apps. An example of &lt;a href=&#34;https://itunes.apple.com/us/app/spotify-music/id324684580?mt=8&#34;&gt;Spotify Music&lt;/a&gt; is showed below. Thus, our goal is to collect and store the various information on the web page for each app. We also identify some interesting characteristics, such as &lt;code&gt;Is_Multilingual&lt;/code&gt;, &lt;code&gt;Is_Multiplatform&lt;/code&gt; and &lt;code&gt;Has_InAppPurchased&lt;/code&gt;. In the end, we collected about 5600 unique apps from ITune App Store and sotred into the Mongo Database.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/output_6_0.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/output_7_0.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;exploratory-data-analysis&#34;&gt;Exploratory Data Analysis&lt;/h2&gt;
+
+&lt;h3 id=&#34;distribution-of-most-popular-apps-in-terms-of-category-and-overall-rating&#34;&gt;Distribution of most popular Apps in terms of category and overall rating&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s check out the distribution of apps in terms of category and rating first. First, we can read the data from the MongoDB database. The following is the code snippet to show how we connect to MongoDB and extract the data through simple query.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def read_mongo(collection, query={}, host=&#39;localhost&#39;, port=27017, username=None, password=None, no_id=True):
+    &amp;quot;&amp;quot;&amp;quot; Read from Mongo and Store into DataFrame &amp;quot;&amp;quot;&amp;quot;
+    # Connect to MongoDB and Make a query to the specific DB and Collection
+    with pymongo.MongoClient(host, port) as client:
+        table = client.appstore[collection]
+        df = pd.DataFrame(list(table.find(query)))
+        
+    # Delete the _id
+    if no_id:
+        del df[&#39;_id&#39;]
+
+    return df
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;apps_df = read_mongo(&#39;appitems&#39;)
+rating_cleaned = {&#39;1 star&#39;:1, &amp;quot;1 and a half stars&amp;quot;: 1.5, &#39;2 stars&#39;: 2, &#39;2 and a half stars&#39;:2.5, &amp;quot;3 stars&amp;quot;:3, &amp;quot;3 and a half stars&amp;quot;:3.5, &amp;quot;4 stars&amp;quot;: 4,
+                 &#39;4 and a half stars&#39;: 4.5, &amp;quot;5 stars&amp;quot;: 5}
+apps_df.overall_rating = apps_df.overall_rating.replace(rating_cleaned)
+cate_cnt = apps_df.groupby([&#39;category&#39;, &#39;overall_rating&#39;])[&#39;id&#39;].count().reset_index()
+rate_cate_cnt = cate_cnt.pivot_table(index = &#39;category&#39;, columns = &#39;overall_rating&#39;, values = &#39;id&#39;, fill_value= 0)
+rate_cate_cnt.iplot(kind = &#39;bar&#39;, barmode = &#39;stack&#39;, yTitle=&#39;Number of Apps&#39;, title=&#39;Distribution of Apps by Category and Rating&#39;, 
+                    colorscale = &#39;Paired&#39;, theme=&#39;white&#39;, labels = &#39;Rating&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/app_dist.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can see that the Entertainment, Lifestyle and Photo types of apps are the most popular in terms of number of apps in our collection. Besides, the health&amp;amp;Fitness and Photo categories have the largest portions of high rated apps(Overall rating &amp;gt; 4).&lt;/p&gt;
+
+&lt;h3 id=&#34;how-to-define-the-quality-of-apps&#34;&gt;How to define the quality of apps?&lt;/h3&gt;
+
+&lt;p&gt;We found that the dataset has current rating(numerical variable) and overall rating(categorical) and often times the overall rating won&amp;rsquo;t be updated until the new version releases, which could be biased. We have to define a more balanced metric to evaluate the quality of an app to facilitate our further analysis. Although our metric is not perfect, it does help correct the bias for apps that didn&amp;rsquo;t account for the new current ratings efficiently.&lt;/p&gt;
+
+&lt;p&gt;$$
+\begin{array}{c}
+\frac{number\;of\;current\;rating}{number\;of\;overall\;rating}* current\;rating + (1-\frac{number\;of\;current\;rating}{number\;of\;overall\;rating})* overall\;rating
+\end{array}
+$$&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;rating_df[&#39;weighted_rating&#39;] = map(lambda a, b, c,d: np.divide(a,b)*c+(1-np.divide(a,b))*d, rating_df[&#39;num_current_rating&#39;], 
+                                   rating_df[&#39;num_overall_rating&#39;], rating_df[&#39;current_rating&#39;], rating_df[&#39;overall_rating&#39;])
+rating_df[[&#39;weighted_rating&#39;, &#39;current_rating&#39;,&#39;overall_rating&#39;]].iplot(kind=&#39;histogram&#39;, barmode=&#39;stack&#39;, theme=&#39;white&#39;, title = &#39;Distribution of Rating Metrics&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/rating_dist.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;does-in-app-purchases-significantly-affect-the-user-experiences-of-apps&#34;&gt;Does in-app purchases significantly affect the user experiences of apps?&lt;/h3&gt;
+
+&lt;p&gt;When looking at the reviews, there seem to be two kinds of thoughts about paid apps among users. The first is the common folk wisdom that &amp;ldquo;you get what you pay for&amp;rdquo;, which is usually positive. The second kind of thought is that expensive apps are not worth buying, so those users would complain about the price tags. We want to run a statistical test to see whether in-app purchases significantly affect the user experiences of apps. Here, we would use the weighted rating we derived from the last step as the proxy of user experience for mobile apps.&lt;/p&gt;
+
+&lt;p&gt;We can answer this question by doing hypothesis testing. Since the distribution of ratings are not normal, obviously we can’t use t-test or one-way ANOVA test. Thus, we prefer to use Kruskal-Wallis H-test, a non-parametric test which only requires the independence assumption.&lt;/p&gt;
+
+&lt;p&gt;$H_0:$ The medians of two groups are the same. $H_1$: The medians of two groups are different.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;free_df = apps_df[(apps_df[&#39;is_InAppPurcased&#39;] == 0)&amp;amp;(pd.notnull(apps_df[&#39;overall_rating&#39;]))][[&amp;quot;name&amp;quot;,&amp;quot;overall_rating&amp;quot;, &amp;quot;current_rating&amp;quot;, &#39;num_current_rating&#39;, &amp;quot;num_overall_rating&amp;quot;]]
+paid_df = apps_df[(apps_df[&#39;is_InAppPurcased&#39;] == 1)&amp;amp;(pd.notnull(apps_df[&#39;overall_rating&#39;]))][[&amp;quot;name&amp;quot;,&amp;quot;overall_rating&amp;quot;, &amp;quot;current_rating&amp;quot;, &#39;num_current_rating&#39;, &amp;quot;num_overall_rating&amp;quot;]]
+free_df[&#39;weighted_rating&#39;] = map(lambda a, b, c,d: np.divide(a,b)*c+(1-np.divide(a,b))*d, free_df[&#39;num_current_rating&#39;], 
+                                   free_df[&#39;num_overall_rating&#39;], free_df[&#39;current_rating&#39;], free_df[&#39;overall_rating&#39;])
+paid_df[&#39;weighted_rating&#39;] = map(lambda a, b, c,d: np.divide(a,b)*c+(1-np.divide(a,b))*d, paid_df[&#39;num_current_rating&#39;], 
+                                   paid_df[&#39;num_overall_rating&#39;], paid_df[&#39;current_rating&#39;], paid_df[&#39;overall_rating&#39;])
+free = list(free_df[&#39;weighted_rating&#39;])
+paid = list(paid_df[&#39;weighted_rating&#39;])
+scipy.stats.kruskal(free, paid)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;KruskalResult(statistic=187.92790428584749, pvalue=9.0081895155668011e-43)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/output_23_0.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Thus, we can reject the null hypothesis. It&amp;rsquo;s significant that providing in-app purchases does influent the user experiences of an app. The density plot seems to verify that the median weighted rating for paid apps should be higher than that of apps without in-app purchases.&lt;/p&gt;
+
+&lt;h3 id=&#34;do-multiple-languages-influent-the-quality-of-apps&#34;&gt;Do multiple languages influent the quality of apps?&lt;/h3&gt;
+
+&lt;p&gt;Since apps with more than one languages can attract people with different native languages, so we get curious about the relationship between app quality(weighted rating) and whether the app has multiple languages. With the similar reasoning, we run a Kruskal-Wallis H-test.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/output_27_0.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The null hypothesis is median quality for single-language apps and median quality for apps with multiple languages are the same. The alternative hypothesis is that the median quality for these two samples are not the same. For the result, we got p value significantly smaller than 0.05; so we should reject null hypothesis at significance level 0.05. Thus, we should conclude that the median of quality for these two samples are not the same and multiple languages do influent the quality of an app. The density plot seems to verify that the median weighted rating for apps with multiple languages is higher than that of apps with single language.&lt;/p&gt;
+
+&lt;h2 id=&#34;nlp-machine-learning&#34;&gt;NLP &amp;amp; Machine Learning&lt;/h2&gt;
+
+&lt;h3 id=&#34;topic-modeling-how-do-people-comment-on-their-user-experiences-of-apps-how-do-developers-usually-talk-about-their-new-version-updates&#34;&gt;Topic Modeling: How do people comment on their user experiences of apps? How do developers usually talk about their new version updates?&lt;/h3&gt;
+
+&lt;p&gt;Discoverying the relevant and desired information from app reviews and new version description is useful for us to have a sense about the quality and problems of each app. For example, by analyzing the review comments, we can know what &amp;ldquo;topics&amp;rdquo; the users are most concerned about for an app; by analyzing the new version description and associating with the rating changes, we can investigate whether there are any different characteristics/topics in new version descriptions for apps with their ratings improved/lowered. One such technique in the field of text mining is Topic Modeling, which can be used to fetch the information that we are looking for. Topic Modeling is a process to automatically identify topics present in a text object and to derive hidden patterns exhibited by a text corpus. It&amp;rsquo;s different from rule-based text mining approaches that use regular expressions or dictionary based keyword searching techniques. It is an unsupervised learning approach used for finding and observing the relavant key words in large clusters of texts.&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Questions:&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;a. For app reviews analysis, here we define the good and bad quality apps based on the quality metric we created. Meanwhile, we choose the good reviews and bad reviews based on the review rating. If the review rating is no less than 4.0, it can be seen as a good review. If the review rating is no more than 2.5, it can be seen as a bad review. For details, please refer to this &lt;a href=&#34;https://github.com/jpzhangvincent/MobileAppMarketAnalysis/blob/master/notebooks/LDA%20for%20Topic%20Modeling%20(Q5).ipynb&#34;&gt;notebook&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;b. For new version desctiption analysis, we used histogram to show the distribution of the ratio of number of current rating to overall rating as, which is used as a criterion to reduce the influences of lack of number of ratings for new version. We only used the app data whose ratio is over 10%. We diveded the rest data into two parts by using the difference between current rating and overall rating. we defined the improved apps as the differences are larger than 0.1, the worsen appes as the differences are smaller than -0.1. For details, please refer to this &lt;a href=&#34;https://github.com/jpzhangvincent/MobileAppMarketAnalysis/blob/master/notebooks/patterns%20for%20the%20apps%20improving%20higher%20current%20version%20ratings%20comparing%20to%20overall%20ratings.ipynb&#34;&gt;notebook&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Cleaning and Preprocessing:&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;Data cleaning is essencial for generating a useful topic model. The steps below are common to most natural language processing methods:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Tokenizing: converting a document to its atomic elements.&lt;/li&gt;
+&lt;li&gt;Stopping: removing meaningless words.&lt;/li&gt;
+&lt;li&gt;Stemming: merging words that are equivalent in meaning.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;b&gt;Latent Dirichlet Allocation&lt;/b&gt;
+* Latent Dirichlet Allocation is the most popular topic modeling technique. LDA assumes documents are produced from a mixture of topics. Those topics then generate words based on their probability distribution. Given a dataset of documents, LDA backtracks and tries to figure out what topics would create those documents in the first place. LDA is a matrix factorization technique. In vector space, any corpus (collection of documents) can be represented as a document-term matrix. The number of words we chose for every topic is 5.
+Here we used &lt;code&gt;pyLDAvis&lt;/code&gt; package to get the interactive topic modeling visualization. The screenshot of the topic modeling visualization is showed below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/lda_plot.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To explore the interective visualization, please go to the &lt;a href=&#34;https://github.com/jpzhangvincent/MobileAppMarketAnalysis/blob/master/notebooks/LDA%20for%20Topic%20Modeling%20(Q5).ipynb&#34;&gt;notebook&lt;/a&gt;. You can select specific topic using the selection bar on the left top. The right part shows the top 30 relevent terms for each topic. By comparing the comments for high-rated and low-rated apps, we found that&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;For good apps, the comments have common features like:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;It&amp;rsquo;s free have some good features that satisfy customers&amp;rsquo;demand.&lt;/li&gt;
+&lt;li&gt;It has good content and display, and customers are comfortable at vision, like screen.&lt;/li&gt;
+&lt;li&gt;The speed is fast and low latency.&lt;/li&gt;
+&lt;li&gt;It provids some help when customers using it.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;For the bad apps, from the result, we can see most topics include the word &amp;ldquo;time&amp;rdquo;. We can infer that the speed and latency is the priority concern for users. Also, &amp;ldquo;money&amp;rdquo;, &amp;ldquo;price&amp;rdquo; and &amp;ldquo;payment&amp;rdquo; occur, which shows price or in-app purchases can be disturbing.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We did similar topic modeling on the new version description with 3 topics since we have smaller corpus. This &lt;a href=&#34;https://github.com/jpzhangvincent/MobileAppMarketAnalysis/blob/master/notebooks/patterns%20for%20the%20apps%20improving%20higher%20current%20version%20ratings%20comparing%20to%20overall%20ratings.ipynb&#34;&gt;notebook&lt;/a&gt; contains the interactive visualization. Note that firstly we just filtered the common stop words then we found that main topics of the two parts apps are similar, they both contains &amp;lsquo;fixed bugs&amp;rsquo;, &amp;lsquo;new features&amp;rsquo;, &amp;lsquo;upgrade&amp;rsquo;, which means there is no different topics for the improved and worse apps&amp;rsquo; new version description. Then, we tried to add the same key topic words of two parts into the stop words. Interestingly, we got more different key topic words of improved apps and worsen apps. For the improved apps, the new version description usually refer to &amp;ldquo;some improvements on interface&amp;rdquo;, &amp;ldquo;ask for feedbacks&amp;rdquo; and &amp;ldquo;ask for reviews on app store&amp;rdquo;. And for the worsen apps, the common main topics reflects on  issues related to &amp;ldquo;ipad version&amp;rdquo;, &amp;ldquo;music and video functions&amp;rdquo; and &amp;ldquo;account&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Tips to improve results for LDA&lt;/b&gt;
+* Running LDA Model (Batch Wise LDA)
+  * In order to retrieve most important topic terms, a corpus can be divided into batches of fixed sizes. Running LDA multiple times on these batches will provide different results, however, the best topic terms will be the intersection of all batches.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Part of Speech Tag Filter
+
+&lt;ul&gt;
+&lt;li&gt;POS tag filter is more about the context of the features than frequencies of features. Topic Modelling tries to map out the recurring patterns of terms into topics. However, every term might not be equally important contextually. For example, POS tag IN contain terms such as - &amp;ldquo;within&amp;rdquo;, &amp;ldquo;upon&amp;rdquo;, &amp;ldquo;except&amp;rdquo;. &amp;ldquo;CD&amp;rdquo; contains - &amp;ldquo;one&amp;rdquo;,&amp;ldquo;two&amp;rdquo;, &amp;ldquo;hundred etc. &amp;ldquo;MD&amp;rdquo; contains &amp;ldquo;may&amp;rdquo;&amp;ldquo;, &amp;ldquo;must&amp;rdquo; etc. These terms are the supporting words of a language and can be removed by studying their post tags.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;supervised-learning-can-you-predict-the-rating-of-the-new-version-for-an-app&#34;&gt;Supervised learning: Can you predict the rating of the new version for an app?&lt;/h3&gt;
+
+&lt;p&gt;As we know, new versions &amp;amp; updates are very common and important for developers to improve their apps quality as well as collect feedback. We would like to build a model to predict the app rating when new version is released. This could be valuable for developer to have a better sense about their product. What&amp;rsquo;s more, it could be useful for recommendation system for new apps when the ratings are not available yet. We extracted some useful features from the dataset. Note that our goal is to predict the new version rating, thus it doesn&amp;rsquo;t make sense to use features that are relavent to the period after the new version release. We can&amp;rsquo;t use the features like user reviews and number of current ratings. We will use the following features:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;App characteristics&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;overall rating(category)&lt;/li&gt;
+&lt;li&gt;App category (category)&lt;/li&gt;
+&lt;li&gt;Is_InAppPurcase(category)&lt;/li&gt;
+&lt;li&gt;Is_multilingual(category)&lt;/li&gt;
+&lt;li&gt;Is_multiplatform(category)&lt;/li&gt;
+&lt;li&gt;Number of overall rating(log transform)&lt;/li&gt;
+&lt;li&gt;AppFileSize(log transform)&lt;/li&gt;
+&lt;li&gt;Time range between release date and extraction date(log transform)
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Text Features from descriptions&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;lengthOfText(character level)&lt;/li&gt;
+&lt;li&gt;NumOfwords(word level)&lt;/li&gt;
+&lt;li&gt;polarity&lt;/li&gt;
+&lt;li&gt;subjectivity&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Aftet we clean the data and feature extraction, we are ready for building our machine learning model. Since the target variable current_rating is a continuous variable, it&amp;rsquo;s obviously a regression problem. With the fantastic scikit-learn package, we used the ElasticNet and RandomForestRegressor models since they are good at controlling overfitting and have fast computation. For the time being, we have experimented and compared these two models based on the features extracted from the last step. With proper cross validation model evaluation and parameter tuning, the prediction results on the test set are  shown below. For more details, please check out the &lt;a href=&#34;https://github.com/jpzhangvincent/MobileAppMarketAnalysis/blob/master/notebooks/PredictNewAppVersionRating(Q7).ipynb&#34;&gt;notebook&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/output_42_0.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; height=&#34;300&#34; width=&#34;400&#34;/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;../AppMarketAnalysis_files/output_43_0.png&#34; class=&#34;img-responsive&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can see that the optimized Random Forest Regressor performs a little better. However, there is room to improve the model performance considering the R square is just about 0.547. To improve the prediction, since the description usually reveals the features of the apps, we can try to incorporate the raw text data and see whether we can improve our model performance, which could indicate the desciption has some predictive power for user experiences and app quality. In future, we can combine the word representation features into the &lt;code&gt;pipeline&lt;/code&gt; with &lt;code&gt;FeatureUnion&lt;/code&gt; in &lt;code&gt;sckit-learn&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;There have been surveys showing that people spend more and more time on mobile devices. It shows that mobile apps are becoming increasingly ubiquitous in our daily life. In this project, we analyze the mobile market from different angles. From the developer&amp;rsquo;s perscpective, how to create a good app and what’s the users’ biggest concern are the most important questions. From the user and App Store administrator&amp;rsquo;s perspective, how to measure and predict the app quality would be of greatest interest. We used statistical and machine learning methods to solve these questions. For data collecting, we established the infrastructure to smoothly collect data with the Scrapy framework, store and manage data in MongoDB. By creating customized metric to define the quality of apps, we conducted exploratory data analysis to answer questions like whether in-app purchases and multiple languages significantly affect the app’s ratings. Meanwhile, we applied Latent Dirichlet Allocation for topic modeling method to explore how people comment on user experiences of apps and what kind of characteristics for new version description of apps could have impact on improving or decreasing the app ratings. To predict the ratings of the new version for an app, we applied generalized linear model and random forest regression which achieve reasonable performance. In future, we plan to improve our ratings prediction model and build a Flask web Dashboard to better engage with possible stakeholders - app users, developers/marketers and App Store Adminstrators.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Predict when Stephen Curry shoots the ball</title>
       <link>/projects/PMC-project/</link>
       <pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>
@@ -2975,7 +3202,7 @@ all_data &amp;lt;- merge(sj_gwl, eto_data,  by = c(&amp;quot;Year&amp;quot;, &am
 cat(&amp;#39;The number of well location in the San Joaquin Valley: &amp;#39;, n_distinct(sj_gwl$LATITUDE, sj_gwl$LONGITUDE))&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## The number of well location in the San Joaquin Valley:  436&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;First, we want to have a sense about how many missing records for a well location on a Yearly basis. Idealy, we hope each location has 12 measurements each year. From the following table and the heatmap, we clearly see that there is a significant problem of missing sensor measurements in the monthly data and only a few wells keep track the groundwater levels throughout the year.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sj_gwl %&amp;gt;% group_by(CASGEM_STATION_ID, LONGITUDE, Year) %&amp;gt;% summarise(num_records = n()) %&amp;gt;% 
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sj_gwl %&amp;gt;% group_by(CASGEM_STATION_ID, Year) %&amp;gt;% summarise(num_records = n()) %&amp;gt;% 
   reshape2::dcast(CASGEM_STATION_ID ~ Year, value.var = &amp;quot;num_records&amp;quot;) %&amp;gt;% 
   mutate(total_records = rowSums(.[2:7],na.rm = TRUE)) %&amp;gt;% arrange(desc(total_records)) %&amp;gt;% head(20)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;##    CASGEM_STATION_ID 2011 2012 2013 2014 2015 2016 total_records
@@ -3094,7 +3321,7 @@ train_data$LATITUDE = sapply(train_data[,&amp;quot;place&amp;quot;],function(x) 
 target_locs &amp;lt;- sj_gwl %&amp;gt;% group_by(place, Year) %&amp;gt;% summarise(num_records = n()) %&amp;gt;% 
   reshape2::dcast(place ~ Year, value.var = &amp;quot;num_records&amp;quot;) %&amp;gt;% 
   mutate(total_records = rowSums(.[2:7],na.rm = TRUE)) %&amp;gt;% arrange(desc(total_records)) %&amp;gt;% 
-  filter(total_records&amp;gt;15) %&amp;gt;% select(place)
+  filter(total_records&amp;gt;20) %&amp;gt;% select(place)
 target_locs &amp;lt;- target_locs$place
 target_train_data &amp;lt;- train_data[train_data$place %in% target_locs, ]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We decided to fit the spatial-temporal AR model. The AR model can be expressed as the following: &lt;span class=&#34;math display&#34;&gt;\[
@@ -3117,17 +3344,17 @@ gwl.arx &amp;lt;- spT.Gibbs(formula = WSEL_transformed ~ ETO_avg + Sol_Rad_avg, 
 ##  Output: AR models 
 ## ---------------------------------------------------------------
 ##  Sampled: 5000 of 5000, 100.00%.
-##  Batch Acceptance Rate (phi): 20.90%
+##  Batch Acceptance Rate (phi): 27.95%
 ##  Checking Parameters: 
-##    phi: 0.0656, rho: 0.5466, sig2eps: 0.1447, sig2eta: 0.0921
-##    beta[1]: 2.0514   beta[2]: -0.7290   beta[3]: 0.0001
+##    phi: 0.0696, rho: 0.6664, sig2eps: 0.1337, sig2eta: 0.0837
+##    beta[1]: 1.5416   beta[2]: 1.0442   beta[3]: -0.0006
 ## ---------------------------------------------------------------
 ## ## 
 ## # nBurn =  1000 , Iterations =  5000 . 
-## # Overall Acceptance Rate (phi) =  20.9 % 
+## # Overall Acceptance Rate (phi) =  27.94 % 
 ## ## 
 ## ##
-## # Elapsed time: 8.86 Sec.
+## # Elapsed time: 5.04 Sec.
 ## ##
 ## 
 ## # Model: AR&lt;/code&gt;&lt;/pre&gt;
@@ -3135,7 +3362,7 @@ gwl.arx &amp;lt;- spT.Gibbs(formula = WSEL_transformed ~ ETO_avg + Sol_Rad_avg, 
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Model selection criteria
 gwl.arx$PMCC &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;##         Goodness.of.fit Penalty   PMCC
-## values:           75.41  112.67 188.08&lt;/code&gt;&lt;/pre&gt;
+## values:           38.96   78.82 117.78&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Check the model fit.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;spT.validation(target_train_data$WSEL_transformed[!is.na(target_train_data$WSEL_transformed)],                                      gwl.arx$fitted[,1][!is.na(target_train_data$WSEL_transformed)])&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## ##
@@ -3147,8 +3374,8 @@ gwl.arx$PMCC &lt;/code&gt;&lt;/pre&gt;
 ##  Relative Bias (rBIAS) 
 ##  Relative Mean Separation (rMSEP)
 ## ##&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##     MSE    RMSE     MAE    MAPE    BIAS   rBIAS   rMSEP 
-##  0.1404  0.3747  0.2960  7.4068 -0.0041 -0.0010  0.5308&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    MSE   RMSE    MAE   MAPE   BIAS  rBIAS  rMSEP 
+## 0.0808 0.2843 0.2199 5.6177 0.0021 0.0005 0.3134&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;From the metrics, it seems the model fits reasonably well. From the residual plots, it is not very promising since it seems to have a linear trend and there are some outlying cases at the tails.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(gwl.arx, residuals=TRUE)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;#####../content/projects/GWL_Modeling_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;#####../content/projects/GWL_Modeling_files/figure-html/unnamed-chunk-19-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
@@ -3174,54 +3401,38 @@ gwl.arx$PMCC &lt;/code&gt;&lt;/pre&gt;
 ## [1] &amp;quot;Distance: 0  Predicted location: 27  Fitted location: 6 &amp;quot;
 ## [1] &amp;quot;Distance: 0  Predicted location: 41  Fitted location: 7 &amp;quot;
 ## [1] &amp;quot;Distance: 0.54  Predicted location: 46  Fitted location: 7 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 49  Fitted location: 8 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 57  Fitted location: 9 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 58  Fitted location: 10 &amp;quot;
-## [1] &amp;quot;Distance: 1.35  Predicted location: 62  Fitted location: 10 &amp;quot;
-## [1] &amp;quot;Distance: 1.85  Predicted location: 62  Fitted location: 11 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 64  Fitted location: 11 &amp;quot;
-## [1] &amp;quot;Distance: 1.64  Predicted location: 65  Fitted location: 11 &amp;quot;
-## [1] &amp;quot;Distance: 1.92  Predicted location: 65  Fitted location: 12 &amp;quot;
-## [1] &amp;quot;Distance: 0.14  Predicted location: 76  Fitted location: 12 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 77  Fitted location: 12 &amp;quot;
-## [1] &amp;quot;Distance: 1.22  Predicted location: 88  Fitted location: 12 &amp;quot;
-## [1] &amp;quot;Distance: 1.56  Predicted location: 73  Fitted location: 13 &amp;quot;
-## [1] &amp;quot;Distance: 1.31  Predicted location: 74  Fitted location: 13 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 82  Fitted location: 13 &amp;quot;
-## [1] &amp;quot;Distance: 1.1  Predicted location: 87  Fitted location: 14 &amp;quot;
-## [1] &amp;quot;Distance: 1.94  Predicted location: 92  Fitted location: 14 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 96  Fitted location: 14 &amp;quot;
-## [1] &amp;quot;Distance: 1.75  Predicted location: 104  Fitted location: 14 &amp;quot;
-## [1] &amp;quot;Distance: 1.52  Predicted location: 105  Fitted location: 14 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 101  Fitted location: 15 &amp;quot;
-## [1] &amp;quot;Distance: 0.82  Predicted location: 112  Fitted location: 15 &amp;quot;
-## [1] &amp;quot;Distance: 1.85  Predicted location: 95  Fitted location: 16 &amp;quot;
-## [1] &amp;quot;Distance: 1.62  Predicted location: 129  Fitted location: 16 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 130  Fitted location: 16 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 226  Fitted location: 17 &amp;quot;
-## [1] &amp;quot;Distance: 1.8  Predicted location: 248  Fitted location: 17 &amp;quot;
-## [1] &amp;quot;Distance: 1.36  Predicted location: 233  Fitted location: 18 &amp;quot;
-## [1] &amp;quot;Distance: 1.1  Predicted location: 237  Fitted location: 18 &amp;quot;
-## [1] &amp;quot;Distance: 1  Predicted location: 249  Fitted location: 18 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 252  Fitted location: 18 &amp;quot;
-## [1] &amp;quot;Distance: 1.51  Predicted location: 264  Fitted location: 18 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 258  Fitted location: 19 &amp;quot;
-## [1] &amp;quot;Distance: 1.97  Predicted location: 274  Fitted location: 19 &amp;quot;
-## [1] &amp;quot;Distance: 1.48  Predicted location: 260  Fitted location: 20 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 268  Fitted location: 20 &amp;quot;
-## [1] &amp;quot;Distance: 1.99  Predicted location: 312  Fitted location: 21 &amp;quot;
-## [1] &amp;quot;Distance: 1.62  Predicted location: 316  Fitted location: 21 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 327  Fitted location: 21 &amp;quot;
-## [1] &amp;quot;Distance: 1.64  Predicted location: 331  Fitted location: 21 &amp;quot;
-## [1] &amp;quot;Distance: 1.57  Predicted location: 332  Fitted location: 21 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 362  Fitted location: 22 &amp;quot;
-## [1] &amp;quot;Distance: 2  Predicted location: 387  Fitted location: 23 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 393  Fitted location: 23 &amp;quot;
-## [1] &amp;quot;Distance: 1.53  Predicted location: 395  Fitted location: 23 &amp;quot;
-## [1] &amp;quot;Distance: 1.42  Predicted location: 397  Fitted location: 23 &amp;quot;
-## [1] &amp;quot;Distance: 0.96  Predicted location: 400  Fitted location: 23 &amp;quot;
-## [1] &amp;quot;Distance: 1.42  Predicted location: 406  Fitted location: 23 &amp;quot;
-## [1] &amp;quot;Distance: 0  Predicted location: 394  Fitted location: 24 &amp;quot;
+## [1] &amp;quot;Distance: 1.85  Predicted location: 62  Fitted location: 8 &amp;quot;
+## [1] &amp;quot;Distance: 0  Predicted location: 64  Fitted location: 8 &amp;quot;
+## [1] &amp;quot;Distance: 1.64  Predicted location: 65  Fitted location: 8 &amp;quot;
+## [1] &amp;quot;Distance: 1.1  Predicted location: 87  Fitted location: 9 &amp;quot;
+## [1] &amp;quot;Distance: 1.94  Predicted location: 92  Fitted location: 9 &amp;quot;
+## [1] &amp;quot;Distance: 0  Predicted location: 96  Fitted location: 9 &amp;quot;
+## [1] &amp;quot;Distance: 1.75  Predicted location: 104  Fitted location: 9 &amp;quot;
+## [1] &amp;quot;Distance: 1.52  Predicted location: 105  Fitted location: 9 &amp;quot;
+## [1] &amp;quot;Distance: 0  Predicted location: 226  Fitted location: 10 &amp;quot;
+## [1] &amp;quot;Distance: 1.8  Predicted location: 248  Fitted location: 10 &amp;quot;
+## [1] &amp;quot;Distance: 1.36  Predicted location: 233  Fitted location: 11 &amp;quot;
+## [1] &amp;quot;Distance: 1.1  Predicted location: 237  Fitted location: 11 &amp;quot;
+## [1] &amp;quot;Distance: 1  Predicted location: 249  Fitted location: 11 &amp;quot;
+## [1] &amp;quot;Distance: 0  Predicted location: 252  Fitted location: 11 &amp;quot;
+## [1] &amp;quot;Distance: 1.51  Predicted location: 264  Fitted location: 11 &amp;quot;
+## [1] &amp;quot;Distance: 0  Predicted location: 258  Fitted location: 12 &amp;quot;
+## [1] &amp;quot;Distance: 1.97  Predicted location: 274  Fitted location: 12 &amp;quot;
+## [1] &amp;quot;Distance: 1.48  Predicted location: 260  Fitted location: 13 &amp;quot;
+## [1] &amp;quot;Distance: 0  Predicted location: 268  Fitted location: 13 &amp;quot;
+## [1] &amp;quot;Distance: 1.99  Predicted location: 312  Fitted location: 14 &amp;quot;
+## [1] &amp;quot;Distance: 1.62  Predicted location: 316  Fitted location: 14 &amp;quot;
+## [1] &amp;quot;Distance: 0  Predicted location: 327  Fitted location: 14 &amp;quot;
+## [1] &amp;quot;Distance: 1.64  Predicted location: 331  Fitted location: 14 &amp;quot;
+## [1] &amp;quot;Distance: 1.57  Predicted location: 332  Fitted location: 14 &amp;quot;
+## [1] &amp;quot;Distance: 0  Predicted location: 362  Fitted location: 15 &amp;quot;
+## [1] &amp;quot;Distance: 2  Predicted location: 387  Fitted location: 16 &amp;quot;
+## [1] &amp;quot;Distance: 0  Predicted location: 393  Fitted location: 16 &amp;quot;
+## [1] &amp;quot;Distance: 1.53  Predicted location: 395  Fitted location: 16 &amp;quot;
+## [1] &amp;quot;Distance: 1.42  Predicted location: 397  Fitted location: 16 &amp;quot;
+## [1] &amp;quot;Distance: 0.96  Predicted location: 400  Fitted location: 16 &amp;quot;
+## [1] &amp;quot;Distance: 1.42  Predicted location: 406  Fitted location: 16 &amp;quot;
+## [1] &amp;quot;Distance: 0  Predicted location: 394  Fitted location: 17 &amp;quot;
 ## #
 ## # Romove the locations and run again. 
 ## #
@@ -3260,7 +3471,7 @@ gwl.arx$PMCC &lt;/code&gt;&lt;/pre&gt;
 ## # nBurn =  1000 . Iterations =  5000 . 
 ## ## 
 ## ##
-## # Elapsed time: 7 Min. 42.81 Sec.
+## # Elapsed time: 7 Min. 11.83 Sec.
 ## ##&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can use the &lt;code&gt;Mean&lt;/code&gt; sublist from the output as our predictions. The number of rows means the time range(in order) and the number of columns means the number of unique of locations.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(interpolation.ar$Mean)&lt;/code&gt;&lt;/pre&gt;

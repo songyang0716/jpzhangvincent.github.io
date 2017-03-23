@@ -35,12 +35,14 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 
 # Introduction
 
-As we know, data science is an interdisplinary field. My personal definition of data science is the problem-solving process of using data munging, data analytics and data visualization to generate actionable insights for business. There is just so much to learn. This is by no means a comprehensive and most relevant list for learning Data Science. So open for suggestions!  
+As we know, data science is an interdisplinary field. My personal definition of data science is the problem-solving process of using data munging, data analytics and data visualization to generate actionable insights. There is just so much to explore. This is by no means a comprehensive and most relevant list for learning Data Science. So open for suggestions!  
 
 
 # Blogs
 - [R-Bloggers](https://www.r-bloggers.com/)
 - [RWeekly](https://rweekly.org/)
+- [rOpenSci](http://ropensci.org/blog/)
+- [Kaggle's Blog - No Free Lunch](http://blog.kaggle.com/)
 - [Forecasting by Rob J Hyndman](http://robjhyndman.com/hyndsight/forecasting/)
 - [Statistical Modeling, Causal Inference, and Social Science](http://andrewgelman.com/)
 - [Variance Explained](http://varianceexplained.org/)
@@ -56,6 +58,8 @@ As we know, data science is an interdisplinary field. My personal definition of 
 ## General Guidance
 - [Building a data science portfolio](https://www.dataquest.io/blog/build-a-data-science-portfolio/)
 - [Learn Data Science with Python from scratch](https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/)
+- [Data.world: Platform for hosting Open Dataset](https://data.world/)
+- [Kaggle: Platform for Data Science Competition]()
 
 ## Time Series
 - [Time Series Analysis in R](http://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html)
@@ -82,7 +86,8 @@ As we know, data science is an interdisplinary field. My personal definition of 
 ## Others
 - [Datasets for Machine Learning](https://docs.google.com/spreadsheets/d/1AQvZ7-Kg0lSZtG1wlgbIsrm90HaTZrJGQMz-uKRRlFw/edit#gid=0)
 - [Spatial Data Analysis Tutorial](http://www.nickeubank.com/gis-in-r/)
-- [](https://www.dataquest.io/)
+- [Dataquest - Learn Data Science](https://www.dataquest.io/)
+- [Git/Github Tutorial](http://kbroman.org/github_tutorial/)
 
 I will keep updating! 
 

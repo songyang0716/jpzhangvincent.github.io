@@ -41,13 +41,15 @@
 &lt;/ul&gt;
 &lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Introduction&lt;/h1&gt;
-&lt;p&gt;As we know, data science is an interdisplinary field. My personal definition of data science is the problem-solving process of using data munging, data analytics and data visualization to generate actionable insights for business. There is just so much to learn. This is by no means a comprehensive and most relevant list for learning Data Science. So open for suggestions!&lt;/p&gt;
+&lt;p&gt;As we know, data science is an interdisplinary field. My personal definition of data science is the problem-solving process of using data munging, data analytics and data visualization to generate actionable insights. There is just so much to explore. This is by no means a comprehensive and most relevant list for learning Data Science. So open for suggestions!&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;blogs&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Blogs&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.r-bloggers.com/&#34;&gt;R-Bloggers&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://rweekly.org/&#34;&gt;RWeekly&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://ropensci.org/blog/&#34;&gt;rOpenSci&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://blog.kaggle.com/&#34;&gt;Kaggle’s Blog - No Free Lunch&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://robjhyndman.com/hyndsight/forecasting/&#34;&gt;Forecasting by Rob J Hyndman&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://andrewgelman.com/&#34;&gt;Statistical Modeling, Causal Inference, and Social Science&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://varianceexplained.org/&#34;&gt;Variance Explained&lt;/a&gt;&lt;/li&gt;
@@ -68,6 +70,8 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.dataquest.io/blog/build-a-data-science-portfolio/&#34;&gt;Building a data science portfolio&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/&#34;&gt;Learn Data Science with Python from scratch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://data.world/&#34;&gt;Data.world: Platform for hosting Open Dataset&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;&#34;&gt;Kaggle: Platform for Data Science Competition&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div id=&#34;time-series&#34; class=&#34;section level2&#34;&gt;
@@ -112,7 +116,8 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.google.com/spreadsheets/d/1AQvZ7-Kg0lSZtG1wlgbIsrm90HaTZrJGQMz-uKRRlFw/edit#gid=0&#34;&gt;Datasets for Machine Learning&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.nickeubank.com/gis-in-r/&#34;&gt;Spatial Data Analysis Tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.dataquest.io/&#34;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.dataquest.io/&#34;&gt;Dataquest - Learn Data Science&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://kbroman.org/github_tutorial/&#34;&gt;Git/Github Tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;I will keep updating!&lt;/p&gt;
 &lt;/div&gt;
