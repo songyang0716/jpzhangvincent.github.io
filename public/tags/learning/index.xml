@@ -60,6 +60,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://dataskeptic.com/podcast&#34;&gt;Data Skeptic&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://lineardigressions.com/&#34;&gt;Linear Digression&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://partiallyderivative.com/&#34;&gt;Partially Derivative&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://twimlai.com/&#34;&gt;This Week in Machine Learning and AI&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -71,7 +72,8 @@
 &lt;li&gt;&lt;a href=&#34;https://www.dataquest.io/blog/build-a-data-science-portfolio/&#34;&gt;Building a data science portfolio&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/&#34;&gt;Learn Data Science with Python from scratch&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://data.world/&#34;&gt;Data.world: Platform for hosting Open Dataset&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;&#34;&gt;Kaggle: Platform for Data Science Competition&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.kaggle.com/competitions&#34;&gt;Kaggle: Platform for Data Science Competition&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/Data4Democracy&#34;&gt;Data for Democracy&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div id=&#34;time-series&#34; class=&#34;section level2&#34;&gt;
@@ -108,7 +110,7 @@
 &lt;li&gt;&lt;a href=&#34;https://raw.githubusercontent.com/HFTrader/DeepLearningBook/master/DeepLearningBook.pdf&#34;&gt;The Deep Learning Textbook (Bengio Book - PDF)&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://monik.in/a-noobs-guide-to-implementing-rnn-lstm-using-tensorflow/&#34;&gt;Design a RNN LSTM in Tensorflow&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://danijar.com/structuring-your-tensorflow-models/&#34;&gt;Structuring your tensorflow models&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://web.stanford.edu/class/cs20si/index.html?utm_campaign=Data%2BElixir&amp;amp;utm_medium=email&amp;amp;utm_source=Data_Elixir_122&#34;&gt;Tensorflow class&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://web.stanford.edu/class/cs20si/index.html?utm_campaign=Data%2BElixir&amp;amp;utm_medium=email&amp;amp;utm_source=Data_Elixir_122&#34;&gt;Standford Tensorflow class&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div id=&#34;others&#34; class=&#34;section level2&#34;&gt;

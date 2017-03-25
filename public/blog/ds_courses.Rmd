@@ -51,6 +51,7 @@ As we know, data science is an interdisplinary field. My personal definition of 
 # Podcasts & Subscribtion Email List
 - [Data Skeptic](http://dataskeptic.com/podcast)
 - [Linear Digression](http://lineardigressions.com/)
+- [Partially Derivative](http://partiallyderivative.com/)
 - [This Week in Machine Learning and AI](https://twimlai.com/)
 
 # Books and Online Resources
@@ -59,7 +60,8 @@ As we know, data science is an interdisplinary field. My personal definition of 
 - [Building a data science portfolio](https://www.dataquest.io/blog/build-a-data-science-portfolio/)
 - [Learn Data Science with Python from scratch](https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/)
 - [Data.world: Platform for hosting Open Dataset](https://data.world/)
-- [Kaggle: Platform for Data Science Competition]()
+- [Kaggle: Platform for Data Science Competition](https://www.kaggle.com/competitions)
+- [Data for Democracy](https://github.com/Data4Democracy)
 
 ## Time Series
 - [Time Series Analysis in R](http://a-little-book-of-r-for-time-series.readthedocs.io/en/latest/src/timeseries.html)
@@ -81,7 +83,7 @@ As we know, data science is an interdisplinary field. My personal definition of 
 - [The Deep Learning Textbook (Bengio Book - PDF)](https://raw.githubusercontent.com/HFTrader/DeepLearningBook/master/DeepLearningBook.pdf)
 - [Design a RNN LSTM in Tensorflow](http://monik.in/a-noobs-guide-to-implementing-rnn-lstm-using-tensorflow/)
 - [Structuring your tensorflow models](http://danijar.com/structuring-your-tensorflow-models/)
-- [Tensorflow class](https://web.stanford.edu/class/cs20si/index.html?utm_campaign=Data%2BElixir&utm_medium=email&utm_source=Data_Elixir_122)
+- [Standford Tensorflow class](https://web.stanford.edu/class/cs20si/index.html?utm_campaign=Data%2BElixir&utm_medium=email&utm_source=Data_Elixir_122)
 
 ## Others
 - [Datasets for Machine Learning](https://docs.google.com/spreadsheets/d/1AQvZ7-Kg0lSZtG1wlgbIsrm90HaTZrJGQMz-uKRRlFw/edit#gid=0)
