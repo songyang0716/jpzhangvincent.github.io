@@ -32,7 +32,7 @@
 &lt;/ul&gt;
 &lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;Groundwater monitoring and management is an essential issue in California because groundwater has tremendous values as a component of the hydrologic cycle for the environment and argriculture. This quarter I’m working at the Center for Water-Electricity Efficiency on campus for an interesting project about modeling groundwater levels. We aim to research on groundwater basins to support decisions around water reliability and resource sustainability by better understanding the groundwater levels change with respects to time and space. Through some literature research, spatial-temporal analysis and modeling is suitable for this project.&lt;/p&gt;
+&lt;p&gt;Groundwater monitoring and management is an essential issue in California because groundwater has tremendous values as a component of the hydrologic cycle for the environment and agriculture. This quarter I’m working at the Center for Water-Electricity Efficiency on campus for an interesting project about modeling groundwater levels. We aim to research on groundwater basins to support decisions around water reliability and resource sustainability by better understanding the groundwater levels change with respects to time and space. Through some literature research, spatial-temporal analysis and modeling is suitable for this project.&lt;/p&gt;
 &lt;div id=&#34;data&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Data&lt;/h3&gt;
 &lt;p&gt;The data is provided from the Center for Water-Electricity Efficiency, which is also public available from the &lt;a href=&#34;http://www.water.ca.gov/groundwater/data_and_monitoring/index.cfm&#34;&gt;California Department of Water Resources&lt;/a&gt;. Besides, as we know that groundwater is very related to argriculture usage, we are specially interested in some probably useful variables to predict the ground water levels. Thus, we incorporate the evapotranspiration(ETo) data from the &lt;a href=&#34;http://wwwcimis.water.ca.gov/SpatialData.aspx&#34;&gt;California Irrigation Management Information System (CIMIS)&lt;/a&gt; which currently manages over 145 active weather stations throughout the state. ETo data is often used as a proxy metric to indicate the demand of argriculture water usage. Most of the CIMIS stations produce estimates of reference evapotranspiration (ETo) for the station location and their immediate surroundings, often in agricultural areas. In the end, we had to clean and process the data sources to merge the well information, monthly ETo data and the groundwater measurement data. Note that we focused on the San Joquain Valley as our first investigation, since the spatial-temporal analysis and modeling tends to be more robust and sound in the relatively same area. We used the data from 2011 to 2016 as the training set to train our model and the data of 2017 as the test set for model evaluation. Outlying cases had been removed for robustness concern in modeling. The initial data cleaning script can be found &lt;a href=&#34;https://github.com/jpzhangvincent/GroundwaterLevelSpatialDataProject/blob/master/Analysis/Data_Cleaning.R&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
@@ -210,7 +210,7 @@ gwl.arx &amp;lt;- spT.Gibbs(formula = WSEL_transformed ~ ETO_avg + Sol_Rad_avg, 
 ## # Overall Acceptance Rate (phi) =  27.94 % 
 ## ## 
 ## ##
-## # Elapsed time: 5.04 Sec.
+## # Elapsed time: 4.7 Sec.
 ## ##
 ## 
 ## # Model: AR&lt;/code&gt;&lt;/pre&gt;
@@ -327,7 +327,7 @@ gwl.arx$PMCC &lt;/code&gt;&lt;/pre&gt;
 ## # nBurn =  1000 . Iterations =  5000 . 
 ## ## 
 ## ##
-## # Elapsed time: 7 Min. 11.83 Sec.
+## # Elapsed time: 6 Min. 57.69 Sec.
 ## ##&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can use the &lt;code&gt;Mean&lt;/code&gt; sublist from the output as our predictions. The number of rows means the time range(in order) and the number of columns means the number of unique of locations.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(interpolation.ar$Mean)&lt;/code&gt;&lt;/pre&gt;
@@ -477,7 +477,7 @@ lines(x = c(-100,100), y = c(-100,100))&lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#iidata-2017-predictive-modeling-competition&#34;&gt;IIDATA 2017 Predictive Modeling Competition&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#exploratory-data-analysis&#34;&gt;Exploratory Data Analysis&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#first-shot&#34;&gt;Fisrt Shot&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#first-shot&#34;&gt;First Shot&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#can-we-get-the-labels?&#34;&gt;Can we get the labels?&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#can-we-use-the-labels?&#34;&gt;Can we use the labels?&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#identify-the-offense-movement-patterns&#34;&gt;Identify the offense movement patterns&lt;/a&gt;&lt;/li&gt;
