@@ -1,5 +1,5 @@
 ---
-date: "2016-01-10"
+date: "2017-03-26"
 title: "Forecasting Air Quality in Beijing with Prophet"
 showonlyimage: false
 draft: false

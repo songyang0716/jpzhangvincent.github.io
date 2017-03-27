@@ -22,17 +22,17 @@
   </url>
   
   <url>
+    <loc>/blog/ChinaAirQualityAnalysis2/</loc>
+    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/projects/GWL_Modeling/</loc>
     <lastmod>2017-03-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/blog/ChinaAirQualityAnalysis/</loc>
-    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/blog/ChinaAirQualityAnalysis2/</loc>
     <lastmod>2016-01-10T00:00:00+00:00</lastmod>
   </url>
   
@@ -62,13 +62,13 @@
   
   <url>
     <loc>/tags/airquality/</loc>
-    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -85,7 +85,7 @@
   
   <url>
     <loc>/tags/forecasting/</loc>
-    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -137,7 +137,7 @@
   
   <url>
     <loc>/tags/r/</loc>
-    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -169,7 +169,7 @@
   
   <url>
     <loc>/tags/timeseries/</loc>
-    <lastmod>2016-01-10T00:00:00+00:00</lastmod>
+    <lastmod>2017-03-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
