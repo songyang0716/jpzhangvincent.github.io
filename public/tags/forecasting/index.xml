@@ -12,10 +12,24 @@
     <item>
       <title>Forecasting Air Quality in Beijing with Prophet</title>
       <link>/blog/ChinaAirQualityAnalysis2/</link>
-      <pubDate>Sun, 10 Jan 2016 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>/blog/ChinaAirQualityAnalysis2/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+      <description>---
+date: &#34;2016-01-10&#34;
+title: &#34;Forecasting Air Quality in Beijing with Prophet&#34;
+showonlyimage: false
+draft: false
+image: &#34;blog/img/ForecastingProphet.JPG&#34;
+weight: 0
+type: &#34;post&#34;
+author: &#34;Vincent Zhang&#34;
+description: &#34;PART II - Forecasting Air quality in Beijing.&#34;
+tags: [&#34;Forecasting&#34;, &#34;R&#34;, &#34;TimeSeries&#34;, &#34;AirQuality&#34;]
+---
+
+
+&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 
