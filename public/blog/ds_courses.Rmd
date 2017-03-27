@@ -90,6 +90,7 @@ As we know, data science is an interdisplinary field. My personal definition of 
 - [Spatial Data Analysis Tutorial](http://www.nickeubank.com/gis-in-r/)
 - [Dataquest - Learn Data Science](https://www.dataquest.io/)
 - [Git/Github Tutorial](http://kbroman.org/github_tutorial/)
+- [R packages View](https://bearloga.shinyapps.io/taskviewr/)
 
 I will keep updating! 
 

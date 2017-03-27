@@ -96,7 +96,7 @@ results_df <- do.call("rbind", results_ls) %>%
 
 ## Time series plot for Beijing city
 
-With filtering out some nonsense/missing values, we draw the rough time series plot first to observe the trend. Note that 
+With filtering out some nonsense/missing values, we draw the crude time series plot first to observe the trend. 
 ```{r}
 # draw exploratory graph
 results_df %>% filter(value > 0) %>% 

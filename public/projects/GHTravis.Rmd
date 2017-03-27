@@ -2,7 +2,7 @@
 date: "2017-02-28"
 title: "TravisTorrent Data Challenge"
 showonlyimage: false
-draft: false
+draft: true
 image: "projects/img/travis.png"
 weight: 0
 type: "post"
