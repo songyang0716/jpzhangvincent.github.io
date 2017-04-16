@@ -15,21 +15,7 @@
       <pubDate>Sun, 26 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>/blog/ChinaAirQualityAnalysis2/</guid>
-      <description>---
-date: &#34;2016-01-10&#34;
-title: &#34;Forecasting Air Quality in Beijing with Prophet&#34;
-showonlyimage: false
-draft: false
-image: &#34;blog/img/ForecastingProphet.JPG&#34;
-weight: 0
-type: &#34;post&#34;
-author: &#34;Vincent Zhang&#34;
-description: &#34;PART II - Forecasting Air quality in Beijing.&#34;
-tags: [&#34;Forecasting&#34;, &#34;R&#34;, &#34;TimeSeries&#34;, &#34;AirQuality&#34;]
----
-
-
-&lt;!-- BLOGDOWN-BODY-BEFORE
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 
@@ -52,8 +38,10 @@ tags: [&#34;Forecasting&#34;, &#34;R&#34;, &#34;TimeSeries&#34;, &#34;AirQuality
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# API scraping
 library(ropenaq) # sourced from OpenAQ, see https://github.com/ropensci/ropenaq
 # Data Munging
-library(tidyverse)
-library(lubridate)
+library(tidyverse)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: package &amp;#39;ggplot2&amp;#39; was built under R version 3.3.3&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: package &amp;#39;readr&amp;#39; was built under R version 3.3.3&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lubridate)
 # Data Visualization
 library(ggplot2)
 # Time Series Analysis
@@ -85,12 +73,12 @@ tail(bj_df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 6 × 2
 ##          Day    avg_AQ
 ##       &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt;
-## 1 2017-03-23 126.33333
-## 2 2017-03-24  67.05000
-## 3 2017-03-25  35.60000
-## 4 2017-03-26  11.70000
-## 5 2017-03-27  13.31579
-## 6 2017-03-28  49.83333&lt;/code&gt;&lt;/pre&gt;
+## 1 2017-04-12  38.25000
+## 2 2017-04-13  52.35000
+## 3 2017-04-14  73.95000
+## 4 2017-04-15  42.10526
+## 5 2017-04-16  81.60000
+## 6 2017-04-17 125.40000&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;From the crude time series, we can spot that some high peaks are around the end of years. Note that there exists some gaps in the time series too, which causes a challenge to directly apply generative time series model, like ARIMA model.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;bj_df %&amp;gt;% 
   ggplot(aes(x = Day, y = avg_AQ)) + geom_line() +
@@ -138,9 +126,9 @@ m &amp;lt;- prophet(fit_df, interval.width = 0.95, holidays = holidays_df, mcmc.
 ## Chain 1, Iteration: 400 / 500 [ 80%]  (Sampling)
 ## Chain 1, Iteration: 450 / 500 [ 90%]  (Sampling)
 ## Chain 1, Iteration: 500 / 500 [100%]  (Sampling)
-##  Elapsed Time: 12.1 seconds (Warm-up)
-##                9.102 seconds (Sampling)
-##                21.202 seconds (Total)
+##  Elapsed Time: 14.054 seconds (Warm-up)
+##                10.374 seconds (Sampling)
+##                24.428 seconds (Total)
 ## 
 ## [1] &amp;quot;The following numerical problems occured the indicated number of times after warmup on chain 1&amp;quot;
 ##                                                                                 count
@@ -163,13 +151,13 @@ m &amp;lt;- prophet(fit_df, interval.width = 0.95, holidays = holidays_df, mcmc.
 ## Chain 2, Iteration: 400 / 500 [ 80%]  (Sampling)
 ## Chain 2, Iteration: 450 / 500 [ 90%]  (Sampling)
 ## Chain 2, Iteration: 500 / 500 [100%]  (Sampling)
-##  Elapsed Time: 11.548 seconds (Warm-up)
-##                9.552 seconds (Sampling)
-##                21.1 seconds (Total)
+##  Elapsed Time: 12.033 seconds (Warm-up)
+##                9.147 seconds (Sampling)
+##                21.18 seconds (Total)
 ## 
 ## [1] &amp;quot;The following numerical problems occured the indicated number of times after warmup on chain 2&amp;quot;
 ##                                                                                 count
-## Exception thrown at line 46: normal_log: Scale parameter is 0, but must be &amp;gt; 0!     2
+## Exception thrown at line 46: normal_log: Scale parameter is 0, but must be &amp;gt; 0!     3
 ## [1] &amp;quot;When a numerical problem occurs, the Hamiltonian proposal gets rejected.&amp;quot;
 ## [1] &amp;quot;See http://mc-stan.org/misc/warnings.html#exception-hamiltonian-proposal-rejected&amp;quot;
 ## [1] &amp;quot;If the number in the &amp;#39;count&amp;#39; column is small,  do not ask about this message on stan-users.&amp;quot;
@@ -188,13 +176,13 @@ m &amp;lt;- prophet(fit_df, interval.width = 0.95, holidays = holidays_df, mcmc.
 ## Chain 3, Iteration: 400 / 500 [ 80%]  (Sampling)
 ## Chain 3, Iteration: 450 / 500 [ 90%]  (Sampling)
 ## Chain 3, Iteration: 500 / 500 [100%]  (Sampling)
-##  Elapsed Time: 12.6 seconds (Warm-up)
-##                9.786 seconds (Sampling)
-##                22.386 seconds (Total)
+##  Elapsed Time: 11.369 seconds (Warm-up)
+##                9.606 seconds (Sampling)
+##                20.975 seconds (Total)
 ## 
 ## [1] &amp;quot;The following numerical problems occured the indicated number of times after warmup on chain 3&amp;quot;
 ##                                                                                 count
-## Exception thrown at line 46: normal_log: Scale parameter is 0, but must be &amp;gt; 0!     2
+## Exception thrown at line 46: normal_log: Scale parameter is 0, but must be &amp;gt; 0!     3
 ## [1] &amp;quot;When a numerical problem occurs, the Hamiltonian proposal gets rejected.&amp;quot;
 ## [1] &amp;quot;See http://mc-stan.org/misc/warnings.html#exception-hamiltonian-proposal-rejected&amp;quot;
 ## [1] &amp;quot;If the number in the &amp;#39;count&amp;#39; column is small,  do not ask about this message on stan-users.&amp;quot;
@@ -213,9 +201,9 @@ m &amp;lt;- prophet(fit_df, interval.width = 0.95, holidays = holidays_df, mcmc.
 ## Chain 4, Iteration: 400 / 500 [ 80%]  (Sampling)
 ## Chain 4, Iteration: 450 / 500 [ 90%]  (Sampling)
 ## Chain 4, Iteration: 500 / 500 [100%]  (Sampling)
-##  Elapsed Time: 11.096 seconds (Warm-up)
-##                9.784 seconds (Sampling)
-##                20.88 seconds (Total)
+##  Elapsed Time: 12.021 seconds (Warm-up)
+##                6.519 seconds (Sampling)
+##                18.54 seconds (Total)
 ## 
 ## [1] &amp;quot;The following numerical problems occured the indicated number of times after warmup on chain 4&amp;quot;
 ##                                                                                 count
@@ -226,12 +214,12 @@ m &amp;lt;- prophet(fit_df, interval.width = 0.95, holidays = holidays_df, mcmc.
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;future &amp;lt;- make_future_dataframe(m, periods = num_to_forecast+1)
 tail(future)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;##              ds
-## 1040 2017-03-23
-## 1041 2017-03-24
-## 1042 2017-03-25
-## 1043 2017-03-26
-## 1044 2017-03-27
-## 1045 2017-03-28&lt;/code&gt;&lt;/pre&gt;
+## 1060 2017-04-12
+## 1061 2017-04-13
+## 1062 2017-04-14
+## 1063 2017-04-15
+## 1064 2017-04-16
+## 1065 2017-04-17&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;As with most modeling procedures in R, we can use the generic predict function to get our forecast. The forecast object is a dataframe with a column &lt;code&gt;yhat&lt;/code&gt; containing the forecast. It has additional columns for uncertainty intervals and seasonal components.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;forecast &amp;lt;- predict(m, future)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Finally, we can evaluate our model via the convinient build-in visualization functions. The following plot shows the forecasts with the actual data points. The most obvious fuctuations are for the holiday periods that we were trying to fit. It seems overall the forecasts capture the trend reasonably.&lt;/p&gt;
@@ -246,23 +234,23 @@ tail(future)&lt;/code&gt;&lt;/pre&gt;
   arrange(desc(SpringFestival)) %&amp;gt;% 
   head(10)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;##            ds SpringFestival
-## 1  2014-01-31      1.1962072
-## 2  2015-02-19      1.1962072
-## 3  2016-02-08      1.1962072
-## 4  2017-01-28      1.1962072
-## 5  2014-02-01      0.6943397
-## 6  2016-02-09      0.6943397
-## 7  2017-01-29      0.6943397
-## 8  2015-02-14      0.6187398
-## 9  2016-02-03      0.6187398
-## 10 2017-01-23      0.6187398&lt;/code&gt;&lt;/pre&gt;
+## 1  2014-01-31      1.2070383
+## 2  2015-02-19      1.2070383
+## 3  2016-02-08      1.2070383
+## 4  2017-01-28      1.2070383
+## 5  2014-02-01      0.7252441
+## 6  2016-02-09      0.7252441
+## 7  2017-01-29      0.7252441
+## 8  2015-02-14      0.5842104
+## 9  2016-02-03      0.5842104
+## 10 2017-01-23      0.5842104&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can calculate the MAE(mean absolute error) and MAPE (mean absolute percentage error) as a measure for forecast accuracy. The metrics looks promising while there’s still room for improvement. However, I might be also supposed to add a baseline ARIMA model for comparison. I will complete the part of model comparision later.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fore_values &amp;lt;- forecast[forecast$ds &amp;gt; &amp;#39;2016-12-31&amp;#39;,]$yhat
 true_values &amp;lt;- forecast_df$y
 cat(&amp;quot;The MAE is &amp;quot;, mean(abs(true_values - fore_values)), &amp;#39;\n&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The MAE is  1.0346&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The MAE is  0.9202783&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cat(&amp;quot;The MAPE is &amp;quot;, mean(abs((true_values - fore_values)/true_values)), &amp;#39;\n&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The MAPE is  0.3168523&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The MAPE is  0.2771196&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To improve our model, We could also try to use the nonlinear growth specification(&lt;code&gt;growth&lt;/code&gt; = ‘logistic’). What’s more, based on the form of logistic growth curve: &lt;span class=&#34;math display&#34;&gt;\[
 g(t) = \frac{C}{1+e^{-k(t-b)}}
 \]&lt;/span&gt; the &lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt; means the capacity of the growth, which can be time dependent. In &lt;code&gt;prophet&lt;/code&gt;, we can manually specify “capacities” or the upper limit of the growth curve, allowing us to inject our own prior information about how the forecast will grow (or decline). Empiricaly saying, let’s simply use the historically 90 percentiles of monthly air quality index as the time-dependent “capacities”.&lt;/p&gt;
@@ -286,10 +274,16 @@ forecast_df &amp;lt;- nbj_df %&amp;gt;% filter(ds &amp;gt; &amp;#39;2016-12-31&a
 ## Chain 1, Iteration: 400 / 500 [ 80%]  (Sampling)
 ## Chain 1, Iteration: 450 / 500 [ 90%]  (Sampling)
 ## Chain 1, Iteration: 500 / 500 [100%]  (Sampling)
-##  Elapsed Time: 11.81 seconds (Warm-up)
-##                11.422 seconds (Sampling)
-##                23.232 seconds (Total)
+##  Elapsed Time: 11.373 seconds (Warm-up)
+##                6.682 seconds (Sampling)
+##                18.055 seconds (Total)
 ## 
+## [1] &amp;quot;The following numerical problems occured the indicated number of times after warmup on chain 1&amp;quot;
+##                                                                                 count
+## Exception thrown at line 69: normal_log: Scale parameter is 0, but must be &amp;gt; 0!     3
+## [1] &amp;quot;When a numerical problem occurs, the Hamiltonian proposal gets rejected.&amp;quot;
+## [1] &amp;quot;See http://mc-stan.org/misc/warnings.html#exception-hamiltonian-proposal-rejected&amp;quot;
+## [1] &amp;quot;If the number in the &amp;#39;count&amp;#39; column is small,  do not ask about this message on stan-users.&amp;quot;
 ## 
 ## SAMPLING FOR MODEL &amp;#39;prophet_logistic_growth&amp;#39; NOW (CHAIN 2).
 ## 
@@ -305,13 +299,13 @@ forecast_df &amp;lt;- nbj_df %&amp;gt;% filter(ds &amp;gt; &amp;#39;2016-12-31&a
 ## Chain 2, Iteration: 400 / 500 [ 80%]  (Sampling)
 ## Chain 2, Iteration: 450 / 500 [ 90%]  (Sampling)
 ## Chain 2, Iteration: 500 / 500 [100%]  (Sampling)
-##  Elapsed Time: 12.535 seconds (Warm-up)
-##                6.148 seconds (Sampling)
-##                18.683 seconds (Total)
+##  Elapsed Time: 12.792 seconds (Warm-up)
+##                12.607 seconds (Sampling)
+##                25.399 seconds (Total)
 ## 
 ## [1] &amp;quot;The following numerical problems occured the indicated number of times after warmup on chain 2&amp;quot;
 ##                                                                                 count
-## Exception thrown at line 69: normal_log: Scale parameter is 0, but must be &amp;gt; 0!     3
+## Exception thrown at line 69: normal_log: Scale parameter is 0, but must be &amp;gt; 0!     2
 ## [1] &amp;quot;When a numerical problem occurs, the Hamiltonian proposal gets rejected.&amp;quot;
 ## [1] &amp;quot;See http://mc-stan.org/misc/warnings.html#exception-hamiltonian-proposal-rejected&amp;quot;
 ## [1] &amp;quot;If the number in the &amp;#39;count&amp;#39; column is small,  do not ask about this message on stan-users.&amp;quot;
@@ -330,9 +324,9 @@ forecast_df &amp;lt;- nbj_df %&amp;gt;% filter(ds &amp;gt; &amp;#39;2016-12-31&a
 ## Chain 3, Iteration: 400 / 500 [ 80%]  (Sampling)
 ## Chain 3, Iteration: 450 / 500 [ 90%]  (Sampling)
 ## Chain 3, Iteration: 500 / 500 [100%]  (Sampling)
-##  Elapsed Time: 12.311 seconds (Warm-up)
-##                6.247 seconds (Sampling)
-##                18.558 seconds (Total)
+##  Elapsed Time: 10.95 seconds (Warm-up)
+##                10.61 seconds (Sampling)
+##                21.56 seconds (Total)
 ## 
 ## [1] &amp;quot;The following numerical problems occured the indicated number of times after warmup on chain 3&amp;quot;
 ##                                                                                 count
@@ -355,16 +349,9 @@ forecast_df &amp;lt;- nbj_df %&amp;gt;% filter(ds &amp;gt; &amp;#39;2016-12-31&a
 ## Chain 4, Iteration: 400 / 500 [ 80%]  (Sampling)
 ## Chain 4, Iteration: 450 / 500 [ 90%]  (Sampling)
 ## Chain 4, Iteration: 500 / 500 [100%]  (Sampling)
-##  Elapsed Time: 11.647 seconds (Warm-up)
-##                7.311 seconds (Sampling)
-##                18.958 seconds (Total)
-## 
-## [1] &amp;quot;The following numerical problems occured the indicated number of times after warmup on chain 4&amp;quot;
-##                                                                                 count
-## Exception thrown at line 69: normal_log: Scale parameter is 0, but must be &amp;gt; 0!     3
-## [1] &amp;quot;When a numerical problem occurs, the Hamiltonian proposal gets rejected.&amp;quot;
-## [1] &amp;quot;See http://mc-stan.org/misc/warnings.html#exception-hamiltonian-proposal-rejected&amp;quot;
-## [1] &amp;quot;If the number in the &amp;#39;count&amp;#39; column is small,  do not ask about this message on stan-users.&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+##  Elapsed Time: 11.196 seconds (Warm-up)
+##                12.362 seconds (Sampling)
+##                23.558 seconds (Total)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;future2 &amp;lt;- make_future_dataframe(m2, periods = num_to_forecast+1)
 future2 &amp;lt;- future2 %&amp;gt;% mutate(mon = month(ds)) %&amp;gt;% left_join(cap_by_mon, by = &amp;quot;mon&amp;quot;) %&amp;gt;% select(-mon)
 forecast2 &amp;lt;- predict(m2, future2)&lt;/code&gt;&lt;/pre&gt;
@@ -375,9 +362,9 @@ forecast2 &amp;lt;- predict(m2, future2)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fore_values &amp;lt;- forecast2[forecast2$ds &amp;gt; &amp;#39;2016-12-31&amp;#39;,]$yhat
 true_values &amp;lt;- forecast_df$y
 cat(&amp;quot;The MAE is &amp;quot;, mean(abs(true_values - fore_values)), &amp;#39;\n&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The MAE is  1.045254&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The MAE is  0.9314889&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cat(&amp;quot;The MAPE is &amp;quot;, mean(abs((true_values - fore_values)/true_values)), &amp;#39;\n&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The MAPE is  0.3234382&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The MAPE is  0.283599&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;It seems the logistic growth doesn’t help improve the forecasts.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;closing-remarks&#34; class=&#34;section level1&#34;&gt;
