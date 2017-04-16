@@ -1,0 +1,16 @@
+---
+date: "2017-04-01"
+title: "Notes on Stats/CS Seminars"
+showonlyimage: true
+draft: true
+image: "blog/img/DataSci_Resources.jpg"
+weight: 1
+type: "post"
+author: "Vincent Zhang"
+tags: ["Learning"]
+description: "Notes taken when attending Academic Seminar Series in Statistics/Cs department"
+---
+
+```{r, include = FALSE}
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```

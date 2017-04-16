@@ -4,7 +4,7 @@ title: "Forecasting Air Quality in Beijing with Prophet"
 showonlyimage: false
 draft: false
 image: "blog/img/ForecastingProphet.JPG"
-weight: 0
+weight: 3
 type: "post"
 author: "Vincent Zhang"
 description: "PART II - Forecasting Air quality in Beijing."
